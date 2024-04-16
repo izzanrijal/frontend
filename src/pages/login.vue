@@ -37,47 +37,53 @@ onMounted(async () => {
   }
 });
 
-const login = async () => {
+const login = async (tokenRecaptcha) => {
   try {
-    if (form.email == "") {
-      loginError.value = "email is required";
-      return
-    }
+    // Execute reCAPTCHA
+    grecaptcha.ready(async function() {
+      try {
+        // const tokenRecaptcha = await grecaptcha.execute('6LfXRJ8pAAAAAOt1gKzRNIj1GOYGtp-DB_tz73OR', { action: 'submit' });
+        console.log("rec resp: ",tokenRecaptcha)
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const response = await axios.post('/api/student/login', {
+          email: form.email,
+          password: form.password,
+          'g-recaptcha-response': tokenRecaptcha, // Include reCAPTCHA token in the request
+        });
 
-    if (!emailRegex.test(form.email)) {
-      loginError.value = "Invalid email format";
-      return;
-    }
+        console.log(response);
 
-    if (form.password == "") {
-      loginError.value = "password is required";
-      return
-    }
-    
-    const response = await axios.post('http://localhost:8000/api/student/login', {
-      email: form.email,
-      password: form.password,
-    })
+        // Assuming your backend returns a token upon successful login
+        const token = response.data.token;
 
-    console.log(response);
+        console.log(token);
 
-    // Assuming your backend returns a token upon successful login
-    token = response.data.token
+        // Save the token in local storage or Vuex store for future requests
+        localStorage.setItem('token', token);
 
-    console.log(token);
+        // Redirect to the desired route upon successful login
+        router.push('/dashboard');
+      } catch (error) {
+        // Handle login error (display error message, redirect, etc.)
+        console.error('Login failed:', error);
+        if (error.response && error.response.data) {
+          loginError.value = error.response.data.errors;
 
-    // Save the token in local storage or Vuex store for future requests
-    localStorage.setItem('token', token)
-
-    // Redirect to the desired route upon successful login
-    router.push('/dashboard')
+          // Check if the user does not exist and store email in local storage
+          if (error.response.data.is_exist === false) {
+            localStorage.setItem('email', form.email);
+            router.push('/register');
+          }
+        } else {
+          loginError.value = 'An unexpected error occurred during login.';
+        }
+      }
+    });
   } catch (error) {
     // Handle login error (display error message, redirect, etc.)
     console.error('Login failed:', error)
     if (error.response && error.response.data) {
-      loginError.value = error.response.data.errors.email[0];
+      loginError.value = error.response.data.errors;
 
       // Check if the user does not exist and store email in local storage
       if (error.response.data.is_exist === false) {
@@ -155,13 +161,15 @@ const login = async () => {
               </div>
 
               <!-- login button -->
-              <VBtn
-                block
-                type="submit"
-                color="#0080ff"
-              >
-                Login
-              </VBtn>
+              <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-callback="login">
+                <VBtn
+                  block
+                  type="submit"
+                  color="#0080ff"
+                >
+                  Login
+                </VBtn>
+              </div>
 
               <div v-if="loginError" class="mt-2 text-danger" style="color: #ff5252;">
                 {{ loginError }}

@@ -1,10 +1,10 @@
 <script setup>
-import AnalyticsAward from '@/views/dashboard/AnalyticsAward.vue'
 import AnalyticsDepositWithdraw from '@/views/dashboard/AnalyticsDepositWithdraw.vue'
 import AnalyticsSalesByCountries from '@/views/dashboard/AnalyticsSalesByCountries.vue'
 import AnalyticsTotalEarning from '@/views/dashboard/AnalyticsTotalEarning.vue'
 import AnalyticsTransactions from '@/views/dashboard/AnalyticsTransactions.vue'
 import AnalyticsWeeklyOverview from '@/views/dashboard/AnalyticsWeeklyOverview.vue'
+import Membership from '@/views/dashboard/Membership.vue'
 
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
@@ -26,7 +26,7 @@ onMounted(async () => {
   
   if (token) {
     try {
-      const response = await axios.get('http://localhost:8000/api/student/profile', {
+      const response = await axios.get('/api/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -54,7 +54,7 @@ onMounted(async () => {
       cols="12"
       sm="3"
     >
-      <AnalyticsAward />
+      <Membership :userProfile="userProfile" />
     </VCol>
 
     <VCol

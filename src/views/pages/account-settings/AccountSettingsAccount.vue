@@ -1,25 +1,69 @@
 <script setup>
-import avatar1 from '@images/avatars/avatar-1.png'
+import avatar1 from '@images/avatars/avatar-1.png';
+import axios from 'axios';
+import { onMounted, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const accountData = {
+const router = useRouter();
+const accountDataLocal = reactive({
   avatarImg: avatar1,
-  firstName: 'john',
-  lastName: 'Doe',
-  email: 'johnDoe@example.com',
-  org: 'ThemeSelection',
-  phone: '+1 (917) 543-9876',
-  address: '123 Main St, New York, NY 10001',
-  state: 'New York',
-  zip: '10001',
-  country: 'USA',
-  language: 'English',
+  firstName: '',
+  lastName: '',
+  email: '',
+  role: '',
+  phone: '',
+  year_of_entry: '',
+  gender: '',
+  target_exam_date: '',
+  university: '',
+  educational_status: '',
   timezone: '(GMT-11:00) International Date Line West',
   currency: 'USD',
-}
+})
 
-const refInputEl = ref()
-const accountDataLocal = ref(structuredClone(accountData))
 const isAccountDeactivated = ref(false)
+
+const token = localStorage.getItem('token')
+
+onMounted(async () => {
+  try {
+      const response = await axios.get('/api/student/profile', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const profile = response.data.profile
+
+      accountDataLocal.email = profile.email
+      // Splitting the full name into an array
+      const fullNameArray = profile.name.split(' ');
+
+      // Extracting first name and last name
+      accountDataLocal.firstName = fullNameArray[0];
+      accountDataLocal.lastName = fullNameArray.slice(1).join(' ');
+
+      accountDataLocal.phone = profile.phone_number
+      accountDataLocal.role = profile.role
+      accountDataLocal.gender = profile.gender
+      accountDataLocal.year_of_entry = profile.year_of_entry
+      accountDataLocal.target_exam_date = profile.target_exam_date
+
+      await fetchEducationalStatusDetail(profile.educational_status_id)
+      await fetchUniversityDetail(profile.university_id)
+
+      console.log("resp profile: ", response.data.profile);
+      console.log("name: ", response.data.profile.name);
+    } catch (error) {
+      console.log("err: ", error);
+      if (error.response && error.response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('profile');
+        // Redirect to login page if the response status is 401
+        router.push('/login');
+      }
+    }
+});
 
 const resetForm = () => {
   accountDataLocal.value = structuredClone(accountData)
@@ -98,6 +142,43 @@ const currencies = [
   'HUF',
   'INR',
 ]
+
+// Fetch univeristy options from the API
+const fetchUniversityDetail = async (id) => {
+  try {
+    console.log("param universitas: ", id)
+    const response = await axios.get('http://localhost:8000/api/student/master/university/detail?id='+id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    console.log("response universitas: ", response)
+    const universityData = response.data.university
+
+    accountDataLocal.university = universityData.name
+  } catch (error) {
+    console.error('Error fetching university options:', error)
+  }
+}
+
+// Fetch educational status options from the API
+const fetchEducationalStatusDetail = async (id) => {
+  try {
+    console.log("param edu: ", id)
+    const response = await axios.get('/api/student/master/educational-status/detail?id='+id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    console.log("response edu: ", response)
+    // Assuming the API response has an array of educational statuses
+    const educationalData = response.data.educational_status
+
+    accountDataLocal.educational_status = educationalData.name
+  } catch (error) {
+    console.error('Error fetching educational status options:', error)
+  }
+}
 </script>
 
 <template>
@@ -114,7 +195,7 @@ const currencies = [
           />
 
           <!-- 👉 Upload Photo -->
-          <form class="d-flex flex-column justify-center gap-5">
+          <!-- <form class="d-flex flex-column justify-center gap-5">
             <div class="d-flex flex-wrap gap-2">
               <VBtn
                 color="primary"
@@ -153,7 +234,7 @@ const currencies = [
             <p class="text-body-1 mb-0">
               Allowed JPG, GIF or PNG. Max size of 800K
             </p>
-          </form>
+          </form> -->
         </VCardText>
 
         <VDivider />
@@ -171,6 +252,7 @@ const currencies = [
                   v-model="accountDataLocal.firstName"
                   placeholder="John"
                   label="First Name"
+                  readonly
                 />
               </VCol>
 
@@ -183,6 +265,7 @@ const currencies = [
                   v-model="accountDataLocal.lastName"
                   placeholder="Doe"
                   label="Last Name"
+                  readonly
                 />
               </VCol>
 
@@ -196,6 +279,7 @@ const currencies = [
                   label="E-mail"
                   placeholder="johndoe@gmail.com"
                   type="email"
+                  readonly
                 />
               </VCol>
 
@@ -205,9 +289,10 @@ const currencies = [
                 md="6"
               >
                 <VTextField
-                  v-model="accountDataLocal.org"
-                  label="Organization"
-                  placeholder="ThemeSelection"
+                  v-model="accountDataLocal.role"
+                  label="Role"
+                  placeholder="Student"
+                  readonly
                 />
               </VCol>
 
@@ -220,87 +305,91 @@ const currencies = [
                   v-model="accountDataLocal.phone"
                   label="Phone Number"
                   placeholder="+1 (917) 543-9876"
+                  readonly
                 />
               </VCol>
 
-              <!-- 👉 Address -->
+              <!-- 👉 Gender -->
               <VCol
                 cols="12"
                 md="6"
               >
                 <VTextField
-                  v-model="accountDataLocal.address"
-                  label="Address"
+                  v-model="accountDataLocal.gender"
+                  label="Jenis Kelamin"
                   placeholder="123 Main St, New York, NY 10001"
+                  readonly
                 />
               </VCol>
 
-              <!-- 👉 State -->
+              <!-- 👉 Year of Entry -->
               <VCol
                 cols="12"
                 md="6"
               >
                 <VTextField
-                  v-model="accountDataLocal.state"
-                  label="State"
+                  v-model="accountDataLocal.year_of_entry"
+                  label="Tahun Masuk"
                   placeholder="New York"
+                  readonly
                 />
               </VCol>
 
-              <!-- 👉 Zip Code -->
+              <!-- 👉 Target Exam Date -->
               <VCol
                 cols="12"
                 md="6"
               >
                 <VTextField
-                  v-model="accountDataLocal.zip"
-                  label="Zip Code"
+                  v-model="accountDataLocal.target_exam_date"
+                  label="Tanggal Ujian"
                   placeholder="10001"
+                  readonly
                 />
               </VCol>
 
-              <!-- 👉 Country -->
+              <!-- 👉 Univeristy -->
               <VCol
                 cols="12"
                 md="6"
               >
-                <VSelect
-                  v-model="accountDataLocal.country"
-                  label="Country"
-                  :items="['USA', 'Canada', 'UK', 'India', 'Australia']"
-                  placeholder="Select Country"
+                <VTextField
+                  v-model="accountDataLocal.university"
+                  label="Universitas"
+                  placeholder="10001"
+                  readonly
                 />
               </VCol>
 
-              <!-- 👉 Language -->
+              <!-- 👉 Educational Status -->
               <VCol
                 cols="12"
                 md="6"
               >
-                <VSelect
-                  v-model="accountDataLocal.language"
-                  label="Language"
-                  placeholder="Select Language"
-                  :items="['English', 'Spanish', 'Arabic', 'Hindi', 'Urdu']"
+                <VTextField
+                  v-model="accountDataLocal.educational_status"
+                  label="Status Edukasi"
+                  placeholder="10001"
+                  readonly
                 />
               </VCol>
 
               <!-- 👉 Timezone -->
-              <VCol
+              <!-- <VCol
                 cols="12"
                 md="6"
               >
                 <VSelect
-                  v-model="accountDataLocal.timezone"
-                  label="Timezone"
+                  v-model="accountDataLocal.status"
+                  label="Status"
                   placeholder="Select Timezone"
                   :items="timezones"
                   :menu-props="{ maxHeight: 200 }"
                 />
-              </VCol>
+              </VCol> -->
 
               <!-- 👉 Currency -->
-              <VCol
+              <!-- <VCol
                 cols="12"
                 md="6"
               >
@@ -311,10 +400,10 @@ const currencies = [
                   :items="currencies"
                   :menu-props="{ maxHeight: 200 }"
                 />
-              </VCol>
+              </VCol> -->
 
               <!-- 👉 Form Actions -->
-              <VCol
+              <!-- <VCol
                 cols="12"
                 class="d-flex flex-wrap gap-4"
               >
@@ -328,16 +417,16 @@ const currencies = [
                 >
                   Reset
                 </VBtn>
-              </VCol>
+              </VCol> -->
             </VRow>
           </VForm>
         </VCardText>
       </VCard>
     </VCol>
 
-    <VCol cols="12">
+    <!-- <VCol cols="12"> -->
       <!-- 👉 Deactivate Account -->
-      <VCard title="Deactivate Account">
+      <!-- <VCard title="Deactivate Account">
         <VCardText>
           <div>
             <VCheckbox
@@ -355,6 +444,6 @@ const currencies = [
           </VBtn>
         </VCardText>
       </VCard>
-    </VCol>
+    </VCol> -->
   </VRow>
 </template>

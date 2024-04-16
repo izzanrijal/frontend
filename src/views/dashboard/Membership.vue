@@ -1,4 +1,5 @@
 <script setup>
+const { props } = defineProps(['userProfile']);
 </script>
 
 <template>
@@ -6,14 +7,14 @@
     <VCardText>
       <div class="mb-2">
         <VBtn size="small" class="custom-rounded-button" color="#0080ff">
-          <i class="ri-verified-badge-line"></i> Silver
+          <i class="ri-verified-badge-line"></i> {{ userProfile && userProfile.profile && userProfile.profile.membership && userProfile.profile.membership.name }}
         </VBtn>
         <div class="text-body-1">
           Masa Langganan Tersisa
         </div>
       </div>
       <h4 class="text-h4 text-primary">
-        <span style="color: #0080ff;">75</span> <span class="text-high-emphasis">Hari</span>
+        <span style="color: #0080ff;">{{ userProfile && userProfile.profile && userProfile.profile.membership && userProfile.profile.membership.activation_left }}</span> <span class="text-high-emphasis">Hari</span>
       </h4>
     </VCardText>
   </VCard>

@@ -1,31 +1,80 @@
 <script setup>
-import { ref } from 'vue';
+import { emitter } from '@/main';
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+ // Replace with the actual key you use for the token
+const question = ref({});
+const router = useRouter();
+const route = useRoute()
+const options = ref([])
+var token = localStorage.getItem('token');
+
+onMounted(async () => {
+  emitter.on('refreshQuestion', (evt) => {
+    console.log("run emit trigger: ", evt.number)
+    selectedOption.value = null
+    selectedOptionYakin.value = null
+    getQuestion()
+  })
+
+  await getQuestion()
+});
+
+const getQuestion = async () => {
+  if (token) {
+    try {
+      const routeQuestionPacketID = localStorage.getItem('paket')
+      const number = localStorage.getItem('number')
+      const response = await axios.get('/api/student/question?id='+routeQuestionPacketID+'&number='+number, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      question.value = response.data.data;
+      localStorage.setItem('question_id', response.data.data.id)
+
+      console.log('question: ', question)
+
+      const optionA = { label: response.data.data.option_a, value: 'A', color: "#0080ff" };
+      const optionB = { label: response.data.data.option_b, value: 'B', color: "#0080ff" };
+      const optionC = { label: response.data.data.option_c, value: 'C', color: "#0080ff" };
+      const optionD = { label: response.data.data.option_d, value: 'D', color: "#0080ff" };
+      const optionE = { label: response.data.data.option_e, value: 'E', color: "#0080ff" };
+
+      options.value = [optionA, optionB, optionC, optionD, optionE]
+      console.log('option: ', options)
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        // Redirect to login page if the response status is 401
+        localStorage.removeItem('token');
+        localStorage.removeItem('profile');
+        router.push('/login');
+      }
+    }
+  } else {
+    // Redirect to login page if token is not present
+    router.push('/login');
+  }
+};
 
 const selectedOption = ref(null);
 const selectedOptionYakin = ref(null);
-const options = [
-  { label: 'A Keracunan makanan', value: 'a' },
-  { label: 'B Keracunan amonia', value: 'b' },
-  { label: 'C Kecapaian', value: 'c' },
-  { label: 'D Kebanyakan minum alkohol', value: 'd' },
-  { label: 'E Keracunan urea', value: 'e' },
-];
 
 const keyakinan = [
   { label: 'Sangat Yakin', value: 'yakin', color: 'success' },
   { label: 'Masih Ragu', value: 'ragu', color: 'warning' },
-  { label: 'Saya tidak tahu untuk jawaban soal ini', value: 'tidak_tahu', color: 'danger' },
+  { label: 'Saya tidak tahu untuk jawaban soal ini', value: 'tidak tahu', color: 'danger' },
 ];
 
 const saveToLocalStorage = () => {
   console.log("selected option: ", selectedOption.value)
-  // Save the selected option to local storage
   localStorage.setItem('answer', selectedOption.value);
 };
 
 const saveYakinToLocalStorage = () => {
   console.log("selected option yakin: ", selectedOptionYakin.value)
-  // Save the selected option to local storage
   localStorage.setItem('answerValue', selectedOptionYakin.value);
 };
 </script>
@@ -33,11 +82,13 @@ const saveYakinToLocalStorage = () => {
 <template>
   <VCard>
     <VCardItem class="outlined-card-item">
-      <VCardTitle><span style="color: #0080ff;">1.</span></VCardTitle>
+      <VCardTitle><span style="color: #0080ff;">{{ question.question_number }}</span></VCardTitle>
+      <VImg v-if="question.image_url != ''" :src="question.image_url" style="block-size: 350px; inline-size: 350px;" />
       <p style="color: black;" class="font-weight-semibold mb-1">
-        Seorang wanita berusia 48 tahun, dalam keadaan tidak sadar dibawa oleh keluarganya ke puskesmas. Berdasarkan heteroanamnesis pihak keluarga, wanita ini telah sering menjalani opname dirumah sakit karena gejala sakit yang sama. Mulai tadi pagi ia tidak sadarkan diri. Sebelum tidak sadar, malam harinya ia mengadakan pesta perkawinan anaknya dan ia makan banyak sekali, yang pada keadaan biasa ia tidak nafsu makan. Hasil pemeriksaan fisik diapatkan ascites, sklera mata berwarna kuning, tangan dan tungkai kurus, terdapat edema di kedua kakunya, dan ada fetor ex ore. Ada gambaran vena kolateral di abdomen. 
-
-Keadaan tidak sadar dari penderita ini kemungkinan disebabkan oleh...
+        {{ question.scenario }}
+      </p>
+      <p style="color: black; padding-block-start: 15px;" class="font-weight-semibold mb-1">
+        {{ question.question }}
       </p>
       <div class="me-n3" style="padding: 20px;">
         <VRow align="center">
@@ -82,9 +133,8 @@ Keadaan tidak sadar dari penderita ini kemungkinan disebabkan oleh...
 
 <style lang="scss" scoped>
 .outlined-card-item {
-  border: 1px solid #cccccc; /* Customize the color and size as needed */
+  border: 1px solid #ccc; /* Customize the color and size as needed */
   border-radius: 5px; /* Optional: Add border radius for rounded corners */
-
   margin: 10px;
 }
 </style>

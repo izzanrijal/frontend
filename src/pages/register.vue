@@ -44,7 +44,7 @@ const saveFormData = () => {
     return;
   }
 
-  if (form.password == "") {
+  if (form.password == "") {0
     loginError.value = "password is required";
     return
   }
@@ -74,10 +74,12 @@ onMounted(() => {
   // Retrieve the email from local storage
   const storedEmail = localStorage.getItem('email');
   const queryEmail = route.query.email
+  const queryName = route.query.name
   if (queryEmail){
     console.log("email get route: ", queryEmail)
     form.email = queryEmail
     localStorage.setItem('email', form.email)
+    localStorage.setItem('name', queryName)
     router.push('/register');
   }
 

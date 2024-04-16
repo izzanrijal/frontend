@@ -10,7 +10,7 @@ const profile = ref(null)
 
 onMounted(async () => {
   try {
-      const response = await axios.get('http://localhost:8000/api/student/profile', {
+      const response = await axios.get('/api/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -30,6 +30,24 @@ onMounted(async () => {
       }
     }
 });
+
+const profilePage = async () => {
+  try {
+    console.log("profile: ", profile)
+    router.push('/profile/account');
+  } catch (error) {
+    console.error('Profile error:', error);
+  }
+};
+
+const membershipPage = async () => {
+  try {
+    console.log("profile: ", profile)
+    router.push('/upgrade/membership');
+  } catch (error) {
+    console.error('Profile error:', error);
+  }
+};
 
 const logout = async () => {
   try {
@@ -118,7 +136,7 @@ const logout = async () => {
         <VDivider class="my-2" />
 
         <!-- 👉 Profile -->
-        <VListItem link>
+        <VListItem @click="profilePage">
           <template #prepend>
             <VIcon
               class="me-2"
@@ -128,6 +146,22 @@ const logout = async () => {
           </template>
 
           <VListItemTitle>Profile</VListItemTitle>
+        </VListItem>
+
+        <!-- Divider -->
+        <VDivider class="my-2" />
+
+        <!-- 👉 Upgrade Membership -->
+        <VListItem @click="membershipPage">
+          <template #prepend>
+            <VIcon
+              class="me-2"
+              icon="ri-vip-crown-line"
+              size="22"
+            />
+          </template>
+
+          <VListItemTitle>Upgrade Membership</VListItemTitle>
         </VListItem>
 
         <!-- Divider -->

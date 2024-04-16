@@ -46,7 +46,7 @@ onMounted(async () => {
   // Retrieve the email from local storage
   if (token) {
     try {
-      const response = await axios.get('http://localhost:8000/api/student/profile', {
+      const response = await axios.get('/api/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

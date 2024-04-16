@@ -1,7 +1,5 @@
 <script setup>
-import Question from '@/views/question-packet/Question.vue';
-import QuestionHeader from '@/views/question-packet/QuestionHeader.vue';
-import QuestionOrder from '@/views/question-packet/QuestionOrder.vue';
+import MembershipDashboard from '@/views/membership/MembershipDashboard.vue';
 
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
@@ -40,23 +38,7 @@ onMounted(async () => {
       cols="12"
       md="12"
     >
-      <QuestionHeader />
-    </VCol>
-  </VRow>
-
-  <VRow class="match-height">
-    <VCol
-      cols="12"
-      md="9"
-    >
-      <Question />
-    </VCol>
-
-    <VCol
-      cols="12"
-      md="3"
-    >
-      <QuestionOrder />
+      <MembershipDashboard />
     </VCol>
   </VRow>
 </template>

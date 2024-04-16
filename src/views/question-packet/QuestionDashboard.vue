@@ -1,126 +1,40 @@
 <script setup>
-const questions = [
-  {
-    id: 1,
-    title: 'Paket Soal Uji Coba (Trial)',
-    start_date: '17 Februari 2024',
-    finish_date: '18 Februari 2024',
-    topics: [
-      {
-        title: "Reproduksi: Gangguan Pada Kehamilan"
-      },
-      {
-        title: "Reproduksi: Persalinan Dan Nifas"
-      },
-      {
-        title: "THT: Hidung"
-      },
-      {
-        title: "Respirasi: Gawat Paru"
-      },
-      {
-        title: "Dan Lainya"
-      },
-    ],
-    is_active: true,
-  },
-  {
-    id: 2,
-    title: 'Paket Tryout UKMPPD 1',
-    start_date: '17 Februari 2024',
-    finish_date: '18 Februari 2024',
-    topics: [
-      {
-        title: "Reproduksi: Gangguan Pada Kehamilan"
-      },
-      {
-        title: "Reproduksi: Persalinan Dan Nifas"
-      },
-      {
-        title: "THT: Hidung"
-      },
-      {
-        title: "Respirasi: Gawat Paru"
-      },
-      {
-        title: "Dan Lainya"
-      },
-    ],
-    is_active: true,
-  },
-  {
-    id: 3,
-    title: 'Paket Tryout UKMPPD 2',
-    start_date: '17 Februari 2024',
-    finish_date: '18 Februari 2024',
-    topics: [
-      {
-        title: "Reproduksi: Gangguan Pada Kehamilan"
-      },
-      {
-        title: "Reproduksi: Persalinan Dan Nifas"
-      },
-      {
-        title: "THT: Hidung"
-      },
-      {
-        title: "Respirasi: Gawat Paru"
-      },
-      {
-        title: "Dan Lainya"
-      },
-    ],
-    is_active: true,
-  },
-  {
-    id: 4,
-    title: 'Paket Tryout UKMPPD 4',
-    start_date: '27 Februari 2024',
-    finish_date: '-',
-    topics: [
-      {
-        title: "Reproduksi: Gangguan Pada Kehamilan"
-      },
-      {
-        title: "Reproduksi: Persalinan Dan Nifas"
-      },
-      {
-        title: "THT: Hidung"
-      },
-      {
-        title: "Respirasi: Gawat Paru"
-      },
-      {
-        title: "Dan Lainya"
-      },
-    ],
-    is_active: true,
-  },
-  {
-    id: 5,
-    title: 'Paket Tryout UKMPPD 5',
-    start_date: '27 Februari 2024',
-    finish_date: '-',
-    topics: [
-      {
-        title: "Reproduksi: Gangguan Pada Kehamilan"
-      },
-      {
-        title: "Reproduksi: Persalinan Dan Nifas"
-      },
-      {
-        title: "THT: Hidung"
-      },
-      {
-        title: "Respirasi: Gawat Paru"
-      },
-      {
-        title: "Dan Lainya"
-      },
-    ],
-    is_active: false,
-  }, 
-]
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+ // Replace with the actual key you use for the token
+const questions = ref([]);
+const router = useRouter();
+var token = localStorage.getItem('token');
+
+onMounted(async () => {
+  if (token) {
+    try {
+      const response = await axios.get('/api/student/question-packet', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      questions.value = response.data.data;
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        // Redirect to login page if the response status is 401
+        localStorage.removeItem('token');
+        localStorage.removeItem('profile');
+        router.push('/login');
+      }
+    }
+  } else {
+    // Redirect to login page if token is not present
+    router.push('/login');
+  }
+});
+
+const openDetail = (id) => {
+  localStorage.setItem('paket', id)
+  router.push("/detail")
+}
 </script>
 
 <template>
@@ -135,7 +49,7 @@ const questions = [
           <VCardItem>
             <VRow align="center" class="d-flex flex-wrap row-item-parent">
               <VAvatar
-                    :color="item.is_active ? '#0080ff' : '#cccccc'"
+                    :color="item.is_accessed ? '#0080ff' : '#cccccc'"
                     rounded
                     size="40"
                     class="elevation-2"
@@ -148,46 +62,60 @@ const questions = [
               <div class="me-n3" style="padding: 20px;">
                 
                 <VCardTitle><span style="color: black;">{{ item.title }}</span></VCardTitle>
-                <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date === '-' && item.is_active === true">
+                <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_can_be_done === true && item.answer === 0">
+                  Belum dikerjakan
+                </p>
+                <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_can_be_done === true && item.answer > 0 && item.start_date !== null && item.finish_date === null">
+                  Mulai dikerjakan: {{ item.start_date }}
+                </p>
+                <!-- <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date === '-' && item.is_active === true">
                   Mulai dikerjakan: {{ item.start_date }}
                 </p>
                 <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date !== '-' && item.is_active === true">
                   Diselesaikan: {{ item.finish_date }}
-                </p>
+                </p> -->
                 <a
-                  v-if="item.is_active === false"
+                  v-if="item.is_accessed === false"
                   style="color: #0080ff;"
                   href="javascript:void(0)"
-                >Langganan Paket Gold untuk melanjutkan</a>
+                >Silahkan upgrade membership untuk melanjutkan</a>
               </div>
             </VRow>
 
             <template #append>
-              <VBtn v-if="item.finish_date === '-' && item.is_active === true"
+              <VBtn v-if="item.is_accessed === true && item.is_can_be_done === true && item.answer === 0"
                     block
                     type="submit"
-                    to="/soal"
-                    :color="item.is_active ? '#0080ff' : '#cccccc'"
+                    @click="openDetail(item.id)"
+                    :color="item.is_accessed ? '#0080ff' : '#cccccc'"
+                  >
+                  Kerjakan Sekarang
+              </VBtn>
+              <VBtn v-if="item.is_accessed === true && item.is_can_be_done === true && item.answer > 0 && item.start_date !== null && item.finish_date === null"
+                    block
+                    type="submit"
+                    @click="openDetail(item.id)"
+                    :color="item.is_accessed ? '#0080ff' : '#cccccc'"
                   >
                   Lanjutkan
               </VBtn>
-              <h6 class="text-h6" v-if="item.finish_date !== '-'">
+              <!-- <h6 class="text-h6" v-else="item.finish_date !== '-'">
                 <a
-                  :style="{ color: item.is_active ? '#0080ff' : '#cccccc' }"
+                  :style="{ color: item.is_accessed ? '#0080ff' : '#cccccc' }"
                   href="javascript:void(0)"
                 >Detail & Pembahasan</a>
-              </h6>
+              </h6> -->
             </template>
           </VCardItem>
           <VRow align="center" class="d-flex flex-wrap row-item">
             <div class="d-flex align-center flex-wrap mb-3">
               <VChip
                 class="d-flex flex-wrap v-item"
-                :color="item.is_active ? '#0080ff' : '#cccccc'"
+                :color="item.is_accessed ? '#0080ff' : '#cccccc'"
                 size="small"
                 v-for="child in item.topics"
               >
-                {{ child.title }}
+                {{ child }}
               </VChip>
             </div>
           </VRow>
@@ -199,13 +127,13 @@ const questions = [
 <style lang="scss" scoped>
 
 .custom-title-style {
-  margin-bottom: 0px !important;
+  margin-block-end: 0 !important;
 }
 
 /* Add custom styling for scroll and reduce gap */
 .vcardtext-container {
+  margin-block-end: -10px; /* Adjust this margin to reduce the gap between rows */
   overflow-y: auto;
-  margin-bottom: -10px; /* Adjust this margin to reduce the gap between rows */
 }
 
 .vcardtext-container{
@@ -213,12 +141,15 @@ const questions = [
 }
 
 .row-item-parent{
-  margin-left: 4px;
-  margin-right: 1px; /* Remove bottom margin for the last row */
+  margin-inline: 4px 1px;
+
+  /* Remove bottom margin for the last row */
 }
+
 .row-item{
-  margin-left: 14px;
-  margin-right: 1px; /* Remove bottom margin for the last row */
+  margin-inline: 14px 1px;
+
+  /* Remove bottom margin for the last row */
 }
 
 .v-item {

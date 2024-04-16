@@ -18,7 +18,7 @@ const form = reactive({
   phone_number: '',
   gender: '',
   year_of_entry: '',
-  target_exam_date: '',
+  exam_date_id: '',
   university_id: '',
   educational_status_id: '',
   privacyPolicies: false,
@@ -51,7 +51,7 @@ const register = async () => {
       return
     }
 
-    if (form.year_of_entry == "") {
+    if (form.exam_date_id == "") {
       errorMessage.value = "tahun masuk is required";
       return
     }
@@ -79,7 +79,7 @@ const register = async () => {
       gender: form.gender.toLowerCase(),
       phone_number: form.phone_number,
       year_of_entry: form.year_of_entry,
-      target_exam_date: form.target_exam_date,
+      exam_date_id: form.exam_date_id.toString(),
       university_id: form.university_id.toString(),
       educational_status_id: form.educational_status_id.toString()
     })
@@ -104,7 +104,11 @@ const register = async () => {
 
 onMounted(() => {
   // Retrieve the email from local storage
+  fetchUniversityOptions()
+  fetchEducationalStatusOptions()
+  fetchExamDateOptions()
   const storedEmail = localStorage.getItem('email');
+  form.name = localStorage.getItem('name');
   const storedPassword = localStorage.getItem('password');
   const storedConfirmPassword = localStorage.getItem('confirm_password');
   console.log("email r 2: ", storedEmail);
@@ -121,13 +125,28 @@ const genderOptions = [
       ]
 
 // Initialize educationalStatusOptions as an empty array
+const examDateOptions = ref([])
 const universityOptions = ref([])
 const educationalStatusOptions = ref([])
 
 // Fetch univeristy options from the API
+const fetchExamDateOptions = async () => {
+  try {
+    const response = await axios.get('/api/student/exam-date')
+    // Assuming the API response has an array of educational statuses
+    examDateOptions.value = response.data.data.map(examDate => ({
+      id: examDate.id,
+      name: examDate.name,
+    }))
+  } catch (error) {
+    console.error('Error fetching exam date options:', error)
+  }
+}
+
+// Fetch univeristy options from the API
 const fetchUniversityOptions = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/api/student/university')
+    const response = await axios.get('/api/student/university')
     // Assuming the API response has an array of educational statuses
     universityOptions.value = response.data.data.map(edu => ({
       id: edu.id,
@@ -141,7 +160,7 @@ const fetchUniversityOptions = async () => {
 // Fetch educational status options from the API
 const fetchEducationalStatusOptions = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/api/student/educational-status')
+    const response = await axios.get('/api/student/educational-status')
     // Assuming the API response has an array of educational statuses
     educationalStatusOptions.value = response.data.data.map(edu => ({
       id: edu.id,
@@ -151,12 +170,6 @@ const fetchEducationalStatusOptions = async () => {
     console.error('Error fetching educational status options:', error)
   }
 }
-
-// Call the fetchEducationalStatusOptions method when the component is mounted
-onMounted(() => {
-  fetchUniversityOptions()
-  fetchEducationalStatusOptions()
-})
 </script>
 
 <template>
@@ -219,13 +232,14 @@ onMounted(() => {
 
             <VCol cols="12">
               <!-- Target Exam Date -->
-              <VTextField
-                v-model="form.target_exam_date"
+              <VSelect
+                v-model="form.exam_date_id"
                 label="Target Exam Date"
-                placeholder="Target Exam Date"
-                type="date"
-                :min="today"
-              />
+                :items="examDateOptions"
+                placeholder="Select target exam date"
+                item-value="id"
+                item-title="name"   
+              ></VSelect>
             </VCol>
 
             <!-- University -->
