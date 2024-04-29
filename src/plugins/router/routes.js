@@ -17,6 +17,14 @@ export const routes = [
         component: () => import('@/pages/question-packet-detail.vue'),
       },
       {
+        path: 'review',
+        component: () => import('@/pages/question-packet-review.vue'),
+      },
+      {
+        path: 'result',
+        component: () => import('@/pages/question-packet-result.vue'),
+      },
+      {
         path: 'soal',
         component: () => import('@/pages/question-packet.vue'),
       },

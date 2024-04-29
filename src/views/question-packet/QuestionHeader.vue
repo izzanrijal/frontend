@@ -1,33 +1,47 @@
 <script setup>
-import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const selectedOption = ref(null);
-const selectedOptionYakin = ref(null);
-const options = [
-  { label: 'A Keracunan makanan', value: 'a' },
-  { label: 'B Keracunan amonia', value: 'b' },
-  { label: 'C Kecapaian', value: 'c' },
-  { label: 'D Kebanyakan minum alkohol', value: 'd' },
-  { label: 'E Keracunan urea', value: 'e' },
-];
+const router = useRouter();
 
-const keyakinan = [
-  { label: 'Sangat Yakin', value: 'yakin', color: 'success' },
-  { label: 'Masih Ragu', value: 'ragu', color: 'warning' },
-  { label: 'Saya tidak tahu untuk jawaban soal ini', value: 'tidak_tahu', color: 'danger' },
-];
+var token = localStorage.getItem('token');
 
-const saveToLocalStorage = () => {
-  console.log("selected option: ", selectedOption.value)
-  // Save the selected option to local storage
-  localStorage.setItem('answer', selectedOption.value);
-};
+onMounted(async () => {
+  if (token) {
+    console.log("question packet detail run: ")
+    try {
+      const routeQuestionPacketID = localStorage.getItem('paket');
+      console.log("question packet detail id: ", routeQuestionPacketID)
+      const response = await axios.get('/api/student/question-packet/detail?id='+routeQuestionPacketID, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-const saveYakinToLocalStorage = () => {
-  console.log("selected option yakin: ", selectedOptionYakin.value)
-  // Save the selected option to local storage
-  localStorage.setItem('answerValue', selectedOptionYakin.value);
-};
+      console.log("question packet detail resp: ", response.data.data)
+      questionsPacket.value = response.data.data;
+      console.log("question packet detail: ", questionsPacket)
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        // Redirect to login page if the response status is 401
+        localStorage.removeItem('token');
+        localStorage.removeItem('profile');
+        router.push('/login');
+      }
+    }
+  } else {
+    // Redirect to login page if token is not present
+    router.push('/login');
+  }
+});
+
+const openReview = async () => {
+  try {
+    router.push("/review")
+  } catch (error) {
+    // Handle login error (display error message, redirect, etc.)
+    console.error('review failed:', error);
+  }
+}
 </script>
 
 <template>
@@ -72,7 +86,7 @@ const saveYakinToLocalStorage = () => {
               <VBtn
                     block
                     type="submit"
-                    to="/soal"
+                    @click="openReview"
                     color="#0080ff"
                   >
                   Selesaikan Test
