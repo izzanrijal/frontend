@@ -147,7 +147,7 @@ const currencies = [
 const fetchUniversityDetail = async (id) => {
   try {
     console.log("param universitas: ", id)
-    const response = await axios.get('http://localhost:8000/api/student/master/university/detail?id='+id, {
+    const response = await axios.get('/api/student/master/university/detail?id='+id, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

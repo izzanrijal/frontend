@@ -71,7 +71,7 @@ const register = async () => {
     console.log("university: ", form.university_id);
     console.log("educational: ", form.educational_status_id);
     console.log("name: ", form.name);
-    const response = await axios.post('http://localhost:8000/api/student/register', {
+    const response = await axios.post('/api/student/register', {
       email: form.email,
       password: form.password,
       password_confirmation: form.password_confirmation,
