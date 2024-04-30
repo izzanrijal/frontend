@@ -1,6 +1,6 @@
 <script setup>
-import { useTheme } from 'vuetify'
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
+import { useTheme } from 'vuetify';
 
 const router = useRouter()
 
@@ -18,7 +18,7 @@ const handleAuthProviderClick = async (provider) => {
   try {
     // Make a request to your backend to initiate the Google login
     // You may need to adjust the actual endpoint based on your backend setup
-    const response = await fetch('/api/student/login/google/redirect', {
+    const response = await fetch('https://gateway.berkompeten.com/api/student/login/google/redirect', {
       method: 'GET',
       mode: 'no-cors',
       // Add any necessary headers or credentials here

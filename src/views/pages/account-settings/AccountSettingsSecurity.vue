@@ -17,7 +17,7 @@ const token = localStorage.getItem('token')
 
 onMounted(async () => {
   try {
-      const response = await axios.get('/api/student/change-password/status', {
+      const response = await axios.get('https://gateway.berkompeten.com/api/student/change-password/status', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -40,7 +40,7 @@ const resetPassword = async () => {
   try {
     console.log("token reset password: ", token)
     // Make a request to the logout endpoint on your backend
-    const response = await axios.get('/api/student/reset-password', {
+    const response = await axios.get('https://gateway.berkompeten.com/api/student/reset-password', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -61,7 +61,7 @@ const changePassword = async () => {
       return
     }
     
-    const response = await axios.post('/api/student/change-password',  {
+    const response = await axios.post('https://gateway.berkompeten.com/api/student/change-password',  {
       password: newPassword.value,
       password_confirmation: confirmPassword.value,
     }, {

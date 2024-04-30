@@ -45,7 +45,7 @@ const login = async (tokenRecaptcha) => {
         // const tokenRecaptcha = await grecaptcha.execute('6LfXRJ8pAAAAAOt1gKzRNIj1GOYGtp-DB_tz73OR', { action: 'submit' });
         console.log("rec resp: ",tokenRecaptcha)
 
-        const response = await axios.post('/api/student/login', {
+        const response = await axios.post('https://gateway.berkompeten.com/api/student/login', {
           email: form.email,
           password: form.password,
           'g-recaptcha-response': tokenRecaptcha, // Include reCAPTCHA token in the request
