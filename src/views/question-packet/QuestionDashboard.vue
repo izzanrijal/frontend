@@ -10,7 +10,7 @@ var token = localStorage.getItem('token');
 onMounted(async () => {
   if (token) {
     try {
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/question-packet', {
+      const response = await axios.get('/api/student/question-packet', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

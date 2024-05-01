@@ -26,7 +26,7 @@ onMounted(async () => {
   
   if (token) {
     try {
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/profile', {
+      const response = await axios.get('/api/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

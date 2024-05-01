@@ -33,7 +33,7 @@ const getOrderNumber = async () => {
     try {
       routeQuestionPacketID.value = localStorage.getItem('paket')
       soal.value = localStorage.getItem('number')
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/questions/orders?id='+routeQuestionPacketID.value, {
+      const response = await axios.get('/api/student/questions/orders?id='+routeQuestionPacketID.value, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -96,7 +96,7 @@ const nextPage = async () => {
     console.log("answer: ",answer)
     console.log("answer val: ",answerValue)
 
-    const response = await axios.post('https://gateway.berkompeten.com/api/student/user/answer/add', {
+    const response = await axios.post('/api/student/user/answer/add', {
       question_packet_id: question_packet_id,
       question_id: question_id,
       answer: answer,
