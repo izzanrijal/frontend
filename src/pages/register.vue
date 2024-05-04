@@ -80,7 +80,7 @@ onMounted(() => {
     form.email = queryEmail
     localStorage.setItem('email', form.email)
     localStorage.setItem('name', queryName)
-    router.push('https://gateway.berkompeten.com/register');
+    router.push('/register');
   }
 
   console.log("email: ", storedEmail);

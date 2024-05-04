@@ -40,7 +40,7 @@ onMounted(async () => {
     localStorage.setItem('token', token);
     console.log("token from route: ", token)
     
-    router.push('https://gateway.berkompeten.com/dashboard');
+    router.push('/dashboard');
   }
 
   // Retrieve the email from local storage
@@ -61,12 +61,12 @@ onMounted(async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
         // Redirect to login page if the response status is 401
-        router.push('https://gateway.berkompeten.com/login');
+        router.push('/login');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('https://gateway.berkompeten.com/login');
+    router.push('/login');
   }
 
   if(routeToken){

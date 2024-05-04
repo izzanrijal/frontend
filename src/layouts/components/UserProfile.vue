@@ -26,7 +26,7 @@ onMounted(async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
         // Redirect to login page if the response status is 401
-        router.push('https://gateway.berkompeten.com/login');
+        router.push('/login');
       }
     }
 });
@@ -34,7 +34,7 @@ onMounted(async () => {
 const profilePage = async () => {
   try {
     console.log("profile: ", profile)
-    router.push('https://gateway.berkompeten.com/profile/account');
+    router.push('/profile/account');
   } catch (error) {
     console.error('Profile error:', error);
   }
@@ -43,7 +43,7 @@ const profilePage = async () => {
 const membershipPage = async () => {
   try {
     console.log("profile: ", profile)
-    router.push('https://gateway.berkompeten.com/upgrade/membership');
+    router.push('/upgrade/membership');
   } catch (error) {
     console.error('Profile error:', error);
   }
@@ -64,7 +64,7 @@ const logout = async () => {
     localStorage.removeItem('profile');
 
     // Redirect to the login page or perform any other necessary actions
-    router.push('https://gateway.berkompeten.com/login');
+    router.push('/login');
   } catch (error) {
     console.error('Logout error:', error);
   }

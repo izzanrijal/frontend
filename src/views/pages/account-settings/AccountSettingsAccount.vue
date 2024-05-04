@@ -60,7 +60,7 @@ onMounted(async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
         // Redirect to login page if the response status is 401
-        router.push('https://gateway.berkompeten.com/login');
+        router.push('/login');
       }
     }
 });

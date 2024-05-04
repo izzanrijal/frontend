@@ -31,7 +31,7 @@ onMounted(async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
         // Redirect to login page if the response status is 401
-        router.push('https://gateway.berkompeten.com/login');
+        router.push('/login');
       }
     }
 });
@@ -71,7 +71,7 @@ const changePassword = async () => {
     });
     console.log("change password otp: ", response)
     successMessage.value = response.data.message;
-    router.push('https://gateway.berkompeten.com/profile/security')
+    router.push('/profile/security')
   } catch (error) {
     if (error.response && error.response.data) {
       errorMessage.value = error.response.data.errors;

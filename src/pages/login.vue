@@ -33,7 +33,7 @@ onMounted(async () => {
   console.log("token login: ", token)
 
   if (token) {
-    router.push('https://gateway.berkompeten.com/dashboard');
+    router.push('/dashboard');
   }
 });
 
@@ -44,6 +44,15 @@ const login = async (tokenRecaptcha) => {
       try {
         // const tokenRecaptcha = await grecaptcha.execute('6LfXRJ8pAAAAAOt1gKzRNIj1GOYGtp-DB_tz73OR', { action: 'submit' });
         console.log("rec resp: ",tokenRecaptcha)
+        if (form.email === "") {
+          loginError.value = "email is required"
+          return
+        }
+
+        if (form.password === "") {
+          loginError.value = "password is required"
+          return
+        }
 
         const response = await axios.post('https://gateway.berkompeten.com/api/student/login', {
           email: form.email,
@@ -62,7 +71,7 @@ const login = async (tokenRecaptcha) => {
         localStorage.setItem('token', token);
 
         // Redirect to the desired route upon successful login
-        router.push('https://gateway.berkompeten.com/dashboard');
+        router.push('/dashboard');
       } catch (error) {
         // Handle login error (display error message, redirect, etc.)
         console.error('Login failed:', error);
@@ -72,7 +81,7 @@ const login = async (tokenRecaptcha) => {
           // Check if the user does not exist and store email in local storage
           if (error.response.data.is_exist === false) {
             localStorage.setItem('email', form.email);
-            router.push('https://gateway.berkompeten.com/register');
+            router.push('/register');
           }
         } else {
           loginError.value = 'An unexpected error occurred during login.';
@@ -88,7 +97,7 @@ const login = async (tokenRecaptcha) => {
       // Check if the user does not exist and store email in local storage
       if (error.response.data.is_exist === false) {
         localStorage.setItem('email', form.email);
-        router.push('https://gateway.berkompeten.com/register');
+        router.push('/register');
       }
     } else {
       loginError.value = 'An unexpected error occurred during login.';

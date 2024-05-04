@@ -22,12 +22,12 @@ onMounted(async () => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
-        router.push('https://gateway.berkompeten.com/login');
+        router.push('/login');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('https://gateway.berkompeten.com/login');
+    router.push('/login');
   }
 });
 </script>

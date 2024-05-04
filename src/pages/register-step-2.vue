@@ -90,7 +90,7 @@ const register = async () => {
     localStorage.removeItem('password');
     localStorage.removeItem('confirm_password');
     // Redirect to the desired route upon successful login
-    router.push('https://gateway.berkompeten.com/login')
+    router.push('/login')
   } catch (error) {
     // Handle login error (display error message, redirect, etc.)
     console.error('Register failed:', error)

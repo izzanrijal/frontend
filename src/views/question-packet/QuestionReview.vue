@@ -32,12 +32,12 @@ const getQuestionPacketReview = async () => {
         // Redirect to login page if the response status is 401
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
-        router.push('https://gateway.berkompeten.com/login');
+        router.push('/login');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('https://gateway.berkompeten.com/login');
+    router.push('/login');
   }
 };
 
@@ -56,17 +56,17 @@ const getSkipQuestions = async () => {
         // Redirect to login page if the response status is 401
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
-        router.push('https://gateway.berkompeten.com/login');
+        router.push('/login');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('https://gateway.berkompeten.com/login');
+    router.push('/login');
   }
 };
 
 const previousPage = () => {
-  router.push('https://gateway.berkompeten.com/soal')
+  router.push('/soal')
 };
 
 const finishTest = async () => {
@@ -84,7 +84,7 @@ const finishTest = async () => {
       },
     });
     
-    router.push('https://gateway.berkompeten.com/result')
+    router.push('/result')
   } catch (error) {
     // Handle login error (display error message, redirect, etc.)
     console.error('answer failed:', error);
