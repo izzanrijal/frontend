@@ -10,7 +10,7 @@ const profile = ref(null)
 
 onMounted(async () => {
   try {
-      const response = await axios.get('/api/student/profile', {
+      const response = await axios.get('https://gateway.berkompeten.com/api/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -26,7 +26,7 @@ onMounted(async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
         // Redirect to login page if the response status is 401
-        router.push('/login');
+        router.push('https://gateway.berkompeten.com/login');
       }
     }
 });
@@ -34,7 +34,7 @@ onMounted(async () => {
 const profilePage = async () => {
   try {
     console.log("profile: ", profile)
-    router.push('/profile/account');
+    router.push('https://gateway.berkompeten.com/profile/account');
   } catch (error) {
     console.error('Profile error:', error);
   }
@@ -43,7 +43,7 @@ const profilePage = async () => {
 const membershipPage = async () => {
   try {
     console.log("profile: ", profile)
-    router.push('/upgrade/membership');
+    router.push('https://gateway.berkompeten.com/upgrade/membership');
   } catch (error) {
     console.error('Profile error:', error);
   }
@@ -52,7 +52,7 @@ const membershipPage = async () => {
 const logout = async () => {
   try {
     // Make a request to the logout endpoint on your backend
-    const response = await axios.post('/api/student/logout', null, {
+    const response = await axios.post('https://gateway.berkompeten.com/api/student/logout', null, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -64,7 +64,7 @@ const logout = async () => {
     localStorage.removeItem('profile');
 
     // Redirect to the login page or perform any other necessary actions
-    router.push('/login');
+    router.push('https://gateway.berkompeten.com/login');
   } catch (error) {
     console.error('Logout error:', error);
   }

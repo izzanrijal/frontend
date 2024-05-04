@@ -33,7 +33,7 @@ onMounted(async () => {
   console.log("token login: ", token)
 
   if (token) {
-    router.push('/dashboard');
+    router.push('https://gateway.berkompeten.com/dashboard');
   }
 });
 
@@ -45,7 +45,7 @@ const login = async (tokenRecaptcha) => {
         // const tokenRecaptcha = await grecaptcha.execute('6LfXRJ8pAAAAAOt1gKzRNIj1GOYGtp-DB_tz73OR', { action: 'submit' });
         console.log("rec resp: ",tokenRecaptcha)
 
-        const response = await axios.post('/api/student/login', {
+        const response = await axios.post('https://gateway.berkompeten.com/api/student/login', {
           email: form.email,
           password: form.password,
           'g-recaptcha-response': tokenRecaptcha, // Include reCAPTCHA token in the request
@@ -62,7 +62,7 @@ const login = async (tokenRecaptcha) => {
         localStorage.setItem('token', token);
 
         // Redirect to the desired route upon successful login
-        router.push('/dashboard');
+        router.push('https://gateway.berkompeten.com/dashboard');
       } catch (error) {
         // Handle login error (display error message, redirect, etc.)
         console.error('Login failed:', error);
@@ -72,7 +72,7 @@ const login = async (tokenRecaptcha) => {
           // Check if the user does not exist and store email in local storage
           if (error.response.data.is_exist === false) {
             localStorage.setItem('email', form.email);
-            router.push('/register');
+            router.push('https://gateway.berkompeten.com/register');
           }
         } else {
           loginError.value = 'An unexpected error occurred during login.';
@@ -88,7 +88,7 @@ const login = async (tokenRecaptcha) => {
       // Check if the user does not exist and store email in local storage
       if (error.response.data.is_exist === false) {
         localStorage.setItem('email', form.email);
-        router.push('/register');
+        router.push('https://gateway.berkompeten.com/register');
       }
     } else {
       loginError.value = 'An unexpected error occurred during login.';

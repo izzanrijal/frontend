@@ -21,7 +21,7 @@ const getQuestionPacketReview = async () => {
   if (token) {
     try {
       const routeQuestionPacketID = localStorage.getItem('paket')
-      const response = await axios.get('/api/student/user/test/review?id='+routeQuestionPacketID, {
+      const response = await axios.get('https://gateway.berkompeten.com/api/student/user/test/review?id='+routeQuestionPacketID, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -32,12 +32,12 @@ const getQuestionPacketReview = async () => {
         // Redirect to login page if the response status is 401
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
-        router.push('/login');
+        router.push('https://gateway.berkompeten.com/login');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('/login');
+    router.push('https://gateway.berkompeten.com/login');
   }
 };
 
@@ -45,7 +45,7 @@ const getSkipQuestions = async () => {
   if (token) {
     try {
       const routeQuestionPacketID = localStorage.getItem('paket')
-      const response = await axios.get('/api/student/user/skip/questions?id='+routeQuestionPacketID, {
+      const response = await axios.get('https://gateway.berkompeten.com/api/student/user/skip/questions?id='+routeQuestionPacketID, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -56,17 +56,17 @@ const getSkipQuestions = async () => {
         // Redirect to login page if the response status is 401
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
-        router.push('/login');
+        router.push('https://gateway.berkompeten.com/login');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('/login');
+    router.push('https://gateway.berkompeten.com/login');
   }
 };
 
 const previousPage = () => {
-  router.push('/soal')
+  router.push('https://gateway.berkompeten.com/soal')
 };
 
 const finishTest = async () => {
@@ -76,7 +76,7 @@ const finishTest = async () => {
     // const tokenRecaptcha = await grecaptcha.execute('6LfXRJ8pAAAAAOt1gKzRNIj1GOYGtp-DB_tz73OR', { action: 'submit' });
     console.log("paket id: ",question_packet_id)
 
-    const response = await axios.post('/api/student/user/finish-the-test', {
+    const response = await axios.post('https://gateway.berkompeten.com/api/student/user/finish-the-test', {
       question_packet_id: question_packet_id
     }, {
       headers: {
@@ -84,7 +84,7 @@ const finishTest = async () => {
       },
     });
     
-    router.push('/result')
+    router.push('https://gateway.berkompeten.com/result')
   } catch (error) {
     // Handle login error (display error message, redirect, etc.)
     console.error('answer failed:', error);
