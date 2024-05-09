@@ -32,29 +32,40 @@ const isConfirmPasswordVisible = ref(false)
 const registerError = ref(null)
 
 const saveFormData = () => {
+  registerError.value = "";
+  
   if (form.email == "") {
-      loginError.value = "email is required";
+    registerError.value = "email is required";
       return
     }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!emailRegex.test(form.email)) {
-    loginError.value = "Invalid email format";
+    registerError.value = "Invalid email format";
     return;
   }
 
   if (form.password == "") {0
-    loginError.value = "password is required";
+    registerError.value = "password is required";
+    return
+  }
+
+  if (form.password.length < 8) {
+    registerError.value = "password length must be 8 character or more";
     return
   }
 
   if (form.confirm_password == "") {
-    loginError.value = "confirm password is required";
+    registerError.value = "confirm password is required";
     return
   }
 
-  registerError.value = "";
+  if (form.confirm_password.length < 8) {
+    registerError.value = "confirm password length must be 8 character or more";
+    return
+  }
+
   // Save email and password to local storage
   if (form.password !== form.confirm_password) {
     // Handle the case where passwords do not match (you can show an error message or take appropriate action)
@@ -62,8 +73,7 @@ const saveFormData = () => {
     registerError.value = "Password and confirm password do not match"
     return
   }
-  console.log("email save: ", form.email);
-  console.log("password save: ", form.email)
+
   localStorage.setItem('email', form.email)
   localStorage.setItem('password', form.password)
   localStorage.setItem('confirm_password', form.confirm_password)

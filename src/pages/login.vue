@@ -54,6 +54,11 @@ const login = async (tokenRecaptcha) => {
           return
         }
 
+        if (form.password.length < 8) {
+          loginError.value = "password length must be 8 character or more";
+          return
+        }
+
         const response = await axios.post('https://gateway.berkompeten.com/api/student/login', {
           email: form.email,
           password: form.password,

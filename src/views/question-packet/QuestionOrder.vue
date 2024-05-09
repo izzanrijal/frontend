@@ -64,8 +64,16 @@ const getOrderNumber = async () => {
 };
 
 
-const previousPage = () => {
-  // Implement logic for going to the previous page
+const previousPage = async () => {
+  localStorage.setItem('number', previousNumber)
+  await getOrderNumber()
+  emitter.emit('refreshQuestion', {'number': previousNumber})
+};
+
+const jumpPage = async (number) => {
+  localStorage.setItem('number', number)
+  await getOrderNumber()
+  emitter.emit('refreshQuestion', {'number': number})
 };
 
 const nextPage = async () => {
@@ -166,6 +174,7 @@ const nextPage = async () => {
                 :variant="item.is_fill ? 'tonal' : 'outlined'"
                 class="mb-1"
                 style=" block-size: 40px;inline-size: 40px;"
+                @click="jumpPage(item.number)"
               >
                 <span class="d-sm-block">{{ item.number }}</span>
               </VBtn>
