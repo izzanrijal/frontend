@@ -5,6 +5,7 @@ import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
 import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
 import authV1Tree from '@images/pages/auth-v1-tree.png'
+import axios from 'axios'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
@@ -31,30 +32,41 @@ const isConfirmPasswordVisible = ref(false)
 
 const registerError = ref(null)
 
-const saveFormData = () => {
+const saveFormData = async () => {
+  registerError.value = "";
+  
   if (form.email == "") {
-      loginError.value = "email is required";
+    registerError.value = "email is required";
       return
     }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!emailRegex.test(form.email)) {
-    loginError.value = "Invalid email format";
+    registerError.value = "Invalid email format";
     return;
   }
 
   if (form.password == "") {0
-    loginError.value = "password is required";
+    registerError.value = "password is required";
+    return
+  }
+
+  if (form.password.length < 8) {
+    registerError.value = "password length must be 8 character or more";
     return
   }
 
   if (form.confirm_password == "") {
-    loginError.value = "confirm password is required";
+    registerError.value = "confirm password is required";
     return
   }
 
-  registerError.value = "";
+  if (form.confirm_password.length < 8) {
+    registerError.value = "confirm password length must be 8 character or more";
+    return
+  }
+
   // Save email and password to local storage
   if (form.password !== form.confirm_password) {
     // Handle the case where passwords do not match (you can show an error message or take appropriate action)
@@ -62,12 +74,29 @@ const saveFormData = () => {
     registerError.value = "Password and confirm password do not match"
     return
   }
-  console.log("email save: ", form.email);
-  console.log("password save: ", form.email)
-  localStorage.setItem('email', form.email)
-  localStorage.setItem('password', form.password)
-  localStorage.setItem('confirm_password', form.confirm_password)
-  router.push("/register-step-2")
+
+  try {
+    const response = await axios.post('https://gateway.berkompeten.com/api/student/register/step/1', {
+      email: form.email,
+      password: form.password
+    })
+    
+    console.log("RESPONSE STEP 1: ", response)
+    
+    localStorage.setItem('email', form.email)
+    localStorage.setItem('password', form.password)
+    localStorage.setItem('confirm_password', form.confirm_password)
+    router.push("/register-step-2")
+  } catch (error) {
+    console.error('Login failed:', error)
+    if (error.response && error.response.data) {
+      if (error.response.data.errors.email) {
+        registerError.value = error.response.data.errors.email[0]
+        return
+      }
+      registerError.value = error.response.data.errors;
+    }
+  }
 }
 
 onMounted(() => {

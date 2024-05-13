@@ -10,6 +10,7 @@ const router = useRouter();
 const route = useRoute()
 const options = ref([])
 var token = localStorage.getItem('token');
+const dialog = ref(false); // Added for dialog control
 
 onMounted(async () => {
   emitter.on('refreshQuestion', (evt) => {
@@ -83,7 +84,7 @@ const saveYakinToLocalStorage = () => {
   <VCard>
     <VCardItem class="outlined-card-item">
       <VCardTitle><span style="color: #0080ff;">{{ question.question_number }}</span></VCardTitle>
-      <VImg v-if="question.image_url != ''" :src="question.image_url" style="block-size: 350px; inline-size: 350px;" />
+      <VImg v-if="question.image_url != ''" :src="question.image_url" style="block-size: 350px; cursor: pointer; inline-size: 350px;" @click="dialog = true" />
       <p style="color: black;" class="font-weight-semibold mb-1">
         {{ question.scenario }}
       </p>
@@ -128,6 +129,18 @@ const saveYakinToLocalStorage = () => {
         </VRow>
       </div>
     </VCardItem>
+
+    <!-- Dialog content -->
+    <v-dialog v-model="dialog" max-width="600px">
+      <v-card>
+        <v-card-text>
+          <VImg v-if="question.image_url !== ''" :src="question.image_url" style="max-inline-size: 100%;" />
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" text @click="dialog = false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </VCard>
 </template>
 

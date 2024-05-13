@@ -54,6 +54,11 @@ const login = async (tokenRecaptcha) => {
           return
         }
 
+        if (form.password.length < 8) {
+          loginError.value = "password length must be 8 character or more";
+          return
+        }
+
         const response = await axios.post('https://gateway.berkompeten.com/api/student/login', {
           email: form.email,
           password: form.password,
@@ -76,15 +81,21 @@ const login = async (tokenRecaptcha) => {
         // Handle login error (display error message, redirect, etc.)
         console.error('Login failed:', error);
         if (error.response && error.response.data) {
-          loginError.value = error.response.data.errors;
+          loginError.value = error.response.data.message;
+
+          if (error.response.data.errors){
+            loginError.value = error.response.data.errors;
+          }
 
           // Check if the user does not exist and store email in local storage
           if (error.response.data.is_exist === false) {
             localStorage.setItem('email', form.email);
             router.push('/register');
           }
+          return
         } else {
           loginError.value = 'An unexpected error occurred during login.';
+          return
         }
       }
     });
@@ -99,8 +110,10 @@ const login = async (tokenRecaptcha) => {
         localStorage.setItem('email', form.email);
         router.push('/register');
       }
+      return
     } else {
       loginError.value = 'An unexpected error occurred during login.';
+      return
     }
   }
 }
