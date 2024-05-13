@@ -14,7 +14,6 @@ const userProfile = ref(null);
 const router = useRouter();
 const route = useRoute();
 var token = localStorage.getItem('token');
-const baseUrl = process.env.VUE_APP_BASE_URL;
 
 
 onMounted(async () => {
@@ -35,7 +34,6 @@ onMounted(async () => {
       });
 
       console.log(response)
-      console.log("BASE URL: ", process.env.BASE_URL)
 
       userProfile.value = response.data;
     } catch (error) {

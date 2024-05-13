@@ -1,5 +1,4 @@
 import App from '@/App.vue'
-import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.min.css'
 import { registerPlugins } from '@core/utils/plugins'
 import mitt from 'mitt'
 import { createApp } from 'vue'
