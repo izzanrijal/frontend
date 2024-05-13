@@ -20,7 +20,6 @@ const handleAuthProviderClick = async (provider) => {
     // You may need to adjust the actual endpoint based on your backend setup
     const response = await fetch('https://gateway.berkompeten.com/api/student/login/google/redirect', {
       method: 'GET',
-      mode: 'no-cors',
       // Add any necessary headers or credentials here
     })
 
