@@ -14,6 +14,8 @@ const userProfile = ref(null);
 const router = useRouter();
 const route = useRoute();
 var token = localStorage.getItem('token');
+const baseUrl = process.env.VUE_APP_BASE_URL;
+
 
 onMounted(async () => {
   const routeToken = route.query.token;
@@ -27,10 +29,13 @@ onMounted(async () => {
   if (token) {
     try {
       const response = await axios.get('https://gateway.berkompeten.com/api/student/profile', {
-        headers: {
+        headers: {  
           Authorization: `Bearer ${token}`,
         },
       });
+
+      console.log(response)
+      console.log("BASE URL: ", process.env.BASE_URL)
 
       userProfile.value = response.data;
     } catch (error) {

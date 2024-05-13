@@ -5,6 +5,7 @@ import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
 import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
 import authV1Tree from '@images/pages/auth-v1-tree.png'
+import axios from 'axios'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
@@ -31,7 +32,7 @@ const isConfirmPasswordVisible = ref(false)
 
 const registerError = ref(null)
 
-const saveFormData = () => {
+const saveFormData = async () => {
   registerError.value = "";
   
   if (form.email == "") {
@@ -74,10 +75,28 @@ const saveFormData = () => {
     return
   }
 
-  localStorage.setItem('email', form.email)
-  localStorage.setItem('password', form.password)
-  localStorage.setItem('confirm_password', form.confirm_password)
-  router.push("/register-step-2")
+  try {
+    const response = await axios.post('https://gateway.berkompeten.com/api/student/register/step/1', {
+      email: form.email,
+      password: form.password
+    })
+    
+    console.log("RESPONSE STEP 1: ", response)
+    
+    localStorage.setItem('email', form.email)
+    localStorage.setItem('password', form.password)
+    localStorage.setItem('confirm_password', form.confirm_password)
+    router.push("/register-step-2")
+  } catch (error) {
+    console.error('Login failed:', error)
+    if (error.response && error.response.data) {
+      if (error.response.data.errors.email) {
+        registerError.value = error.response.data.errors.email[0]
+        return
+      }
+      registerError.value = error.response.data.errors;
+    }
+  }
 }
 
 onMounted(() => {

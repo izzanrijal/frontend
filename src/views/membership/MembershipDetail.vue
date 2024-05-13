@@ -32,7 +32,7 @@ onMounted(async () => {
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('https://gateway.berkompeten.com/login');
+    router.push('/login');
   }
 });
 

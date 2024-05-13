@@ -38,5 +38,5 @@ src/plugins/iconify/icons.css
 public/mockServiceWorker.js
 
 # Env files
-.env*
-!.env.example
+.env
+.env.development
