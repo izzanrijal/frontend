@@ -3,7 +3,7 @@ import axios from 'axios';
 import { onMounted } from 'vue';
 
  // Replace with the actual key you use for the token
-var countdown = 0;
+var countdown = ref(0);
 var token = localStorage.getItem('token');
 
 onMounted(async () => {
@@ -18,7 +18,8 @@ const getCountDown = async () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      countdown = response.data.data.count_down
+      countdown.value = response.data.data.count_down
+      
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
