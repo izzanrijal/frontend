@@ -2,8 +2,8 @@
 import AnalyticsDepositWithdraw from '@/views/dashboard/AnalyticsDepositWithdraw.vue'
 import AnalyticsSalesByCountries from '@/views/dashboard/AnalyticsSalesByCountries.vue'
 import AnalyticsTotalEarning from '@/views/dashboard/AnalyticsTotalEarning.vue'
-import AnalyticsTransactions from '@/views/dashboard/AnalyticsTransactions.vue'
 import AnalyticsWeeklyOverview from '@/views/dashboard/AnalyticsWeeklyOverview.vue'
+import CountDownExamDate from '@/views/dashboard/CountDownExamDate.vue'
 import Membership from '@/views/dashboard/Membership.vue'
 
 import axios from 'axios'
@@ -64,7 +64,7 @@ onMounted(async () => {
       cols="12"
       sm="3"
     >
-      <AnalyticsTransactions />
+      <CountDownExamDate />
     </VCol>
 
     <VCol
