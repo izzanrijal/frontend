@@ -19,13 +19,7 @@ const getCountDown = async () => {
         },
       });
       countdown.value = response.data.data.count_down
-
-      if (error.response && error.response.status === 401) {
-        // Redirect to login page if the response status is 401
-        localStorage.removeItem('token');
-        localStorage.removeItem('profile');
-        router.push('/login');
-      }
+      
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
