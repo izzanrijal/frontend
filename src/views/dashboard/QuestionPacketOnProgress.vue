@@ -1,10 +1,12 @@
 <script setup>
 import axios from 'axios';
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
  // Replace with the actual key you use for the token
 var questionPackets = ref([]);
 var token = localStorage.getItem('token');
+const router = useRouter();
 
 onMounted(async () => {
   getQuestionPacketOnProgress()
