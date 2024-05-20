@@ -1,10 +1,10 @@
 <script setup>
 import AnalyticsDepositWithdraw from '@/views/dashboard/AnalyticsDepositWithdraw.vue'
-import AnalyticsSalesByCountries from '@/views/dashboard/AnalyticsSalesByCountries.vue'
 import AnalyticsTotalEarning from '@/views/dashboard/AnalyticsTotalEarning.vue'
 import AnalyticsWeeklyOverview from '@/views/dashboard/AnalyticsWeeklyOverview.vue'
 import CountDownExamDate from '@/views/dashboard/CountDownExamDate.vue'
 import Membership from '@/views/dashboard/Membership.vue'
+import QuestionPacketOnProgress from '@/views/dashboard/QuestionPacketOnProgress.vue'
 
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
@@ -85,7 +85,7 @@ onMounted(async () => {
       cols="12"
       md="6"
     >
-      <AnalyticsSalesByCountries />
+      <QuestionPacketOnProgress />
     </VCol>
 
     <VCol
