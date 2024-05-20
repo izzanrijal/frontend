@@ -60,11 +60,10 @@ const openDetail = (id) => {
               icon="ri-apps-line"
             />
           </VAvatar>
-          <VRow align="center">
+          <VRow align="center" v-for="item in questionPackets">
             <VCol
               cols="12"
               md="6"
-              v-for="item in questionPackets"
             >
               <div class="d-flex flex-column ms-1" style="padding: 10px;">
                 <p class="font-weight-semibold mb-1">
