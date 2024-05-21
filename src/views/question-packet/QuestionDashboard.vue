@@ -80,8 +80,8 @@ const openMembership = () => {
                 </p> -->
                 <a
                   v-if="item.is_accessed === false"
-                  style="color: #0080ff;"
-                  @click="openMembership()"
+                  style="color: #0080ff; cursor: pointer; text-decoration: underline;"
+                  @click="openMembership"
                 >Silahkan upgrade membership untuk melanjutkan</a>
               </div>
             </VRow>
