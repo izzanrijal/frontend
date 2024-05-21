@@ -1,8 +1,8 @@
 <script setup>
 import AnalyticsDepositWithdraw from '@/views/dashboard/AnalyticsDepositWithdraw.vue'
-import AnalyticsTotalEarning from '@/views/dashboard/AnalyticsTotalEarning.vue'
 import CountDownExamDate from '@/views/dashboard/CountDownExamDate.vue'
 import Membership from '@/views/dashboard/Membership.vue'
+import QestionPacketIsAvailable from '@/views/dashboard/QestionPacketIsAvailable.vue'
 import QuestionPacketIsDone from '@/views/dashboard/QuestionPacketIsDone.vue'
 import QuestionPacketOnProgress from '@/views/dashboard/QuestionPacketOnProgress.vue'
 
@@ -78,7 +78,7 @@ onMounted(async () => {
       cols="12"
       sm="3"
     >
-      <AnalyticsTotalEarning />
+      <QestionPacketIsAvailable />
     </VCol>
 
     <VCol
