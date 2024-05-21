@@ -35,6 +35,10 @@ const openDetail = (id) => {
   localStorage.setItem('paket', id)
   router.push("/detail")
 }
+
+const openMembership = () => {
+  router.push("/upgrade/membership")
+}
 </script>
 
 <template>
@@ -77,7 +81,7 @@ const openDetail = (id) => {
                 <a
                   v-if="item.is_accessed === false"
                   style="color: #0080ff;"
-                  href="javascript:void(0)"
+                  @click="openMembership()"
                 >Silahkan upgrade membership untuk melanjutkan</a>
               </div>
             </VRow>
