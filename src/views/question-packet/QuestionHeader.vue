@@ -34,6 +34,10 @@ onMounted(async () => {
   }
 });
 
+onUnmounted(() => {
+  window.removeEventListener('resize', updateScreenWidth);
+});
+
 const openReview = async () => {
   try {
     router.push("/review")
@@ -50,6 +54,7 @@ const openReview = async () => {
       <VCol
         cols="12"
         md="3"
+        v-show="screenWidth >= 768"
       >
         <VCardItem class="outlined-card-item">
           <p style="color: black;" class="font-weight-semibold mb-1">
