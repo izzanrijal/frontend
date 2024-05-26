@@ -39,6 +39,10 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateScreenWidth);
 });
 
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth;
+};
+
 const openReview = async () => {
   try {
     router.push("/review")
