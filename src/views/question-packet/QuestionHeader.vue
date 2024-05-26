@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 var token = localStorage.getItem('token');
+const screenWidth = ref(window.innerWidth);
 
 onMounted(async () => {
   if (token) {
