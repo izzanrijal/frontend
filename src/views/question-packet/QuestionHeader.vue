@@ -7,6 +7,9 @@ var token = localStorage.getItem('token');
 const screenWidth = ref(window.innerWidth);
 
 onMounted(async () => {
+  window.addEventListener('resize', updateScreenWidth);
+  updateScreenWidth();
+  
   if (token) {
     console.log("question packet detail run: ")
     try {
