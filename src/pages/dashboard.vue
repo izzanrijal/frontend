@@ -1,6 +1,6 @@
 <script setup>
-import AnalyticsDepositWithdraw from '@/views/dashboard/AnalyticsDepositWithdraw.vue'
 import CountDownExamDate from '@/views/dashboard/CountDownExamDate.vue'
+import GetTopicToLearn from '@/views/dashboard/GetTopicToLearn.vue'
 import Membership from '@/views/dashboard/Membership.vue'
 import QestionPacketIsAvailable from '@/views/dashboard/QestionPacketIsAvailable.vue'
 import QuestionPacketIsDone from '@/views/dashboard/QuestionPacketIsDone.vue'
@@ -92,7 +92,7 @@ onMounted(async () => {
       cols="12"
       md="6"
     >
-      <AnalyticsDepositWithdraw />
+      <GetTopicToLearn />
     </VCol>
   </VRow>
 </template>
