@@ -14,7 +14,7 @@ onMounted(async () => {
   if (token) {
     try {
       console.log("Membership id: ", id)
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/master/membership/detail?id='+id, {
+      const response = await axios.get('/api/student/master/membership/detail?id='+id, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -25,8 +25,8 @@ onMounted(async () => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
-        localStorage.removeItem('token');
-        localStorage.removeItem('profile');
+        localStorageNaNpxoveItem('token');
+        localStorageNaNpxoveItem('profile');
         router.push('/login');
       }
     }
@@ -52,7 +52,7 @@ const pay = async (id) => {
     console.log("token: ", token)
     console.log("id: ", id)
     // Make a request to the logout endpoint on your backend
-    const response = await axios.post('https://gateway.berkompeten.com/api/student/create-bill-payment', {
+    const response = await axios.post('/api/student/create-bill-payment', {
         id: id,
       }, {
       headers: {
@@ -61,10 +61,11 @@ const pay = async (id) => {
     });
 
     const linkUrl = response.data.data.link_url
-    console.log("resp reset password: ", response)
+    console.log("resp payment: ", response)
+    console.log("link: ", linkUrl)
     window.location.href = 'https://' + linkUrl
   } catch (error) {
-    console.error('reset password error:', error);
+    console.error('payment process error:', error);
   }
 };
 </script>
@@ -89,7 +90,7 @@ const pay = async (id) => {
                 icon="ri-apps-line"
               />
             </VAvatar>
-            <div class="me-n3" style="padding: 7px;">
+            <div class="me-n3" style="padding: .4375rem;">
               <p style="color: #0080ff;" class="font-weight-semibold mb-1">
                 Periode Aktivasi: {{ membership.activation_period }} Bulan
               </p>
@@ -104,7 +105,7 @@ const pay = async (id) => {
               </p>
             </div>
             
-            <div class="me-n3" style="padding: 5px; padding-block-start: 10px;">
+            <div class="me-n3" style="padding: .3125rem; padding-block-start: .625rem;">
               <VBtn
                     block
                     type="submit"
@@ -127,27 +128,27 @@ const pay = async (id) => {
 
 /* Add custom styling for scroll and reduce gap */
 .vcardtext-container {
-  margin-block-end: -10px; /* Adjust this margin to reduce the gap between rows */
+  margin-block-end: -0.625rem; /* Adjust this margin to reduce the gap between rows */
   overflow-y: auto;
 }
 
 .vcardtext-container{
-  padding: 10px; /* Remove bottom margin for the last row */
+  padding: .625rem; /* Remove bottom margin for the last row */
 }
 
 .row-item-parent{
-  margin-inline: 4px 1px;
+  margin-inline: .25rem .0625rem;
 
   /* Remove bottom margin for the last row */
 }
 
 .row-item{
-  margin-inline: 14px 1px;
+  margin-inline: .875rem .0625rem;
 
   /* Remove bottom margin for the last row */
 }
 
 .v-item {
-  margin: 2px; /* Remove bottom margin for the last row */
+  margin: .125rem; /* Remove bottom margin for the last row */
 }
 </style>
