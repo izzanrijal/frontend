@@ -25,8 +25,8 @@ onMounted(async () => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
-        localStorageNaNpxoveItem('token');
-        localStorageNaNpxoveItem('profile');
+        localStorage.removeItem('token');
+        localStorage.removeItem('profile');
         router.push('/login');
       }
     }
@@ -90,7 +90,7 @@ const pay = async (id) => {
                 icon="ri-apps-line"
               />
             </VAvatar>
-            <div class="me-n3" style="padding: .4375rem;">
+            <div class="me-n3" style="padding: 7px;">
               <p style="color: #0080ff;" class="font-weight-semibold mb-1">
                 Periode Aktivasi: {{ membership.activation_period }} Bulan
               </p>
@@ -105,7 +105,7 @@ const pay = async (id) => {
               </p>
             </div>
             
-            <div class="me-n3" style="padding: .3125rem; padding-block-start: .625rem;">
+            <div class="me-n3" style="padding: 5px; padding-block-start: 10px;">
               <VBtn
                     block
                     type="submit"
@@ -128,27 +128,27 @@ const pay = async (id) => {
 
 /* Add custom styling for scroll and reduce gap */
 .vcardtext-container {
-  margin-block-end: -0.625rem; /* Adjust this margin to reduce the gap between rows */
+  margin-block-end: -10px; /* Adjust this margin to reduce the gap between rows */
   overflow-y: auto;
 }
 
 .vcardtext-container{
-  padding: .625rem; /* Remove bottom margin for the last row */
+  padding: 10px; /* Remove bottom margin for the last row */
 }
 
 .row-item-parent{
-  margin-inline: .25rem .0625rem;
+  margin-inline: 4px 1px;
 
   /* Remove bottom margin for the last row */
 }
 
 .row-item{
-  margin-inline: .875rem .0625rem;
+  margin-inline: 14px 1px;
 
   /* Remove bottom margin for the last row */
 }
 
 .v-item {
-  margin: .125rem; /* Remove bottom margin for the last row */
+  margin: 2px; /* Remove bottom margin for the last row */
 }
 </style>
