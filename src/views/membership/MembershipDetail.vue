@@ -61,10 +61,11 @@ const pay = async (id) => {
     });
 
     const linkUrl = response.data.data.link_url
-    console.log("resp reset password: ", response)
+    console.log("resp payment: ", response)
+    console.log("link: ", linkUrl)
     window.location.href = 'https://' + linkUrl
   } catch (error) {
-    console.error('reset password error:', error);
+    console.error('payment process error:', error);
   }
 };
 </script>
