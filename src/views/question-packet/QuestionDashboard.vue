@@ -45,7 +45,7 @@ const openMembership = () => {
   <VCard class="vcardtext-container">
     <VRow>
       <VCol
-          cols="6"
+          cols="12"
           md="6"
           v-for="item in questions"
         >
