@@ -87,7 +87,7 @@ const truncateDescription = (description) => {
             </VRow>
 
             <template #append>
-              <VBtn v-if="item.is_current === false"
+              <VBtn v-if="item.is_current === false && item.is_can_upgrade === true"
                     block
                     type="submit"
                     :to="{ path: '/membership/detail', query: { id: item.id } }"
