@@ -106,7 +106,8 @@ const pay = async (id) => {
             </div>
             
             <div class="me-n3" style="padding: 5px; padding-block-start: 10px;">
-              <VBtn
+              <VBtn 
+                    v-if="membership.is_current === false && membership.is_can_upgrade === true"
                     block
                     type="submit"
                     @click="pay(membership.id)"
