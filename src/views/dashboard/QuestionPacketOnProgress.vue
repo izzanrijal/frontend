@@ -46,11 +46,11 @@ const openDetail = (id) => {
   <VCard>
     <VCardItem>
       <VCardTitle><span style="color: #0080ff;">Lanjutkan Misi Belajarmu</span></VCardTitle>
-      <p class="text-body-1 mb-0">
+      <p v-if="questionPackets.length > 0" class="text-body-1 mb-0">
         <span class="d-inline-block font-weight-medium text-high-emphasis">Selesaikan Paket Soal Ini</span>
       </p>
-      <div class="me-n3" style="padding: 20px;">
-        <VRow align="center">
+      <div v-if="questionPackets.length > 0" class="me-n3" style="padding: 20px;">
+        <VRow align="center" v-for="item in questionPackets">
           <VAvatar
             color="#0080ff"
             rounded
@@ -62,7 +62,7 @@ const openDetail = (id) => {
               icon="ri-apps-line"
             />
           </VAvatar>
-          <VRow align="center" v-for="item in questionPackets">
+          <VRow align="center">
             <VCol
               cols="12"
               md="6"
@@ -80,7 +80,7 @@ const openDetail = (id) => {
               cols="12"
               md="4"
             >
-            <VBtn v-if="item.is_accessed === true && item.is_can_be_done === true && item.answer > 0 && item.start_date !== null && item.finish_date === null"
+            <VBtn v-if="item.is_accessed === true && item.is_done === false && item.answer > 0 && item.start_date !== null && item.finish_date === null"
                   block
                   type="submit"
                   @click="openDetail(item.id)"

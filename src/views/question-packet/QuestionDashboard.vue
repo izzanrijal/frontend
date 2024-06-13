@@ -66,10 +66,10 @@ const openMembership = () => {
               <div class="me-n3" style="padding: 20px;">
                 
                 <VCardTitle><span style="color: black;">{{ item.title }}</span></VCardTitle>
-                <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_can_be_done === true && item.answer === 0">
+                <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_done === false && item.answer === 0">
                   Belum dikerjakan
                 </p>
-                <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_can_be_done === true && item.answer > 0 && item.start_date !== null && item.finish_date === null">
+                <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_done === false && item.answer > 0 && item.start_date !== null && item.finish_date === null">
                   Mulai dikerjakan: {{ item.start_date }}
                 </p>
                 <!-- <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date === '-' && item.is_active === true">
@@ -87,7 +87,7 @@ const openMembership = () => {
             </VRow>
 
             <template #append>
-              <VBtn v-if="item.is_accessed === true && item.is_can_be_done === true && item.answer === 0"
+              <VBtn v-if="item.is_accessed === true && item.is_done === false && item.answer === 0"
                     block
                     type="submit"
                     @click="openDetail(item.id)"
@@ -95,7 +95,7 @@ const openMembership = () => {
                   >
                   Kerjakan Sekarang
               </VBtn>
-              <VBtn v-if="item.is_accessed === true && item.is_can_be_done === true && item.answer > 0 && item.start_date !== null && item.finish_date === null"
+              <VBtn v-if="item.is_accessed === true && item.is_done === false && item.answer > 0 && item.start_date !== null && item.finish_date === null"
                     block
                     type="submit"
                     @click="openDetail(item.id)"
