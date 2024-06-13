@@ -39,6 +39,12 @@ const openDetail = (id) => {
 const openMembership = () => {
   router.push("/upgrade/membership")
 }
+
+const isSmallScreen = computed(() => window.innerWidth < 768);
+
+const getFilteredTopics = (topics) => {
+  return isSmallScreen.value ? topics.slice(0, 3) : topics;
+}
 </script>
 
 <template>
@@ -117,7 +123,7 @@ const openMembership = () => {
                 class="d-flex flex-wrap v-item"
                 :color="item.is_accessed ? '#0080ff' : '#cccccc'"
                 size="small"
-                v-for="child in item.topics"
+                v-for="child in getFilteredTopics(item.topics)"
               >
                 {{ child }}
               </VChip>
