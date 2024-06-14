@@ -168,6 +168,9 @@ const getFilteredTopics = (topics) => {
   margin-inline: 4px 1px;
 
   /* Remove bottom margin for the last row */
+  @include media-breakpoint-down(sm) {
+    margin-inline-end: 0 !important;
+  }
 }
 
 .row-item{
@@ -238,7 +241,7 @@ const getFilteredTopics = (topics) => {
   text-decoration: underline;
 
   @include media-breakpoint-down(sm) {
-    font-size: 0.60rem;
+    font-size: 0.70rem;
   }
 }
 
@@ -254,6 +257,10 @@ const getFilteredTopics = (topics) => {
 @media (max-width: 767px) {
   .vcardtext-container {
     padding: 4px;
+  }
+
+  .row-item-parent {
+    margin-inline-end: 0 !important; /* Override default margin */
   }
 
   .avatar-icon {
@@ -283,7 +290,7 @@ const getFilteredTopics = (topics) => {
   }
 
   .upgrade-link {
-    font-size: 0.60rem;
+    font-size: 0.70rem;
   }
 
   .action-button {
