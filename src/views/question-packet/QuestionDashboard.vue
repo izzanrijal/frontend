@@ -102,7 +102,7 @@ const getFilteredTopics = (topics) => {
               </div>
             </VRow>
 
-            <template #append>
+            <template #append class="append-container" :class="{ 'small-screen': isSmallScreen }">
               <VBtn v-if="item.is_accessed === true && item.is_done === false && item.answer === 0"
                     block
                     type="submit"
@@ -186,6 +186,10 @@ const getFilteredTopics = (topics) => {
   }
 }
 
+.append-container.small-screen {
+  padding-inline-start: 8px;
+}
+
 .avatar-icon {
   @include media-breakpoint-down(sm) {
     block-size: 16px;
@@ -206,6 +210,10 @@ const getFilteredTopics = (topics) => {
   @include media-breakpoint-down(sm) {
     padding: 2px;
   }
+}
+
+.append-container {
+  padding-inline-start: 8px;
 }
 
 .title-text {
