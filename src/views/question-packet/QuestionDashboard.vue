@@ -241,7 +241,7 @@ const getFilteredTopics = (topics) => {
   text-decoration: underline;
 
   @include media-breakpoint-down(sm) {
-    font-size: 0.70rem;
+    font-size: 0.65rem;
   }
 }
 
@@ -290,7 +290,7 @@ const getFilteredTopics = (topics) => {
   }
 
   .upgrade-link {
-    font-size: 0.70rem;
+    font-size: 0.65rem;
   }
 
   .action-button {
