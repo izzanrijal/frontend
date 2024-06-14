@@ -82,6 +82,7 @@ const getFilteredTopics = (topics) => {
                 <VIcon
                   size="24"
                   icon="ri-apps-line"
+                  class="icon"
                 />
               </VAvatar>
               <div class="me-n3 title-container" style="padding: 20px;">
@@ -181,7 +182,15 @@ const getFilteredTopics = (topics) => {
 
 .avatar-icon {
   @include media-breakpoint-down(sm) {
-    size: 30px;
+    block-size: 30px;
+    inline-size: 30px;
+  }
+}
+
+.icon {
+  @include media-breakpoint-down(sm) {
+    block-size: 20px;
+    inline-size: 20px;
   }
 }
 
@@ -205,7 +214,7 @@ const getFilteredTopics = (topics) => {
   color: #0080ff;
 
   @include media-breakpoint-down(sm) {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -215,7 +224,7 @@ const getFilteredTopics = (topics) => {
   text-decoration: underline;
 
   @include media-breakpoint-down(sm) {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -232,7 +241,13 @@ const getFilteredTopics = (topics) => {
   }
 
   .avatar-icon {
-    size: 30px;
+    block-size: 30px;
+    inline-size: 30px;
+  }
+
+  .icon {
+    block-size: 20px;
+    inline-size: 20px;
   }
 
   .title-container {
@@ -244,11 +259,11 @@ const getFilteredTopics = (topics) => {
   }
 
   .status-text {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
   }
 
   .upgrade-link {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
   }
 
   .action-button {
