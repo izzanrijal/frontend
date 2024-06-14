@@ -67,6 +67,8 @@ const getFilteredTopics = (topics) => {
           cols="12"
           md="6"
           v-for="item in questions"
+          :key="item.id"
+          class="question-card"
         >
         <VCard class="mb-4">
           <VCardItem>
@@ -75,31 +77,25 @@ const getFilteredTopics = (topics) => {
                     :color="item.is_accessed ? '#0080ff' : '#cccccc'"
                     rounded
                     size="40"
-                    class="elevation-2"
+                    class="elevation-2 avatar-icon"
                   >
                 <VIcon
                   size="24"
                   icon="ri-apps-line"
                 />
               </VAvatar>
-              <div class="me-n3" style="padding: 20px;">
+              <div class="me-n3 title-container" style="padding: 20px;">
                 
                 <VCardTitle><span style="color: black;">{{ item.title }}</span></VCardTitle>
-                <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_done === false && item.answer === 0">
+                <p class="status-text font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_done === false && item.answer === 0">
                   Belum dikerjakan
                 </p>
-                <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_done === false && item.answer > 0 && item.start_date !== null && item.finish_date === null">
+                <p class="status-text font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_done === false && item.answer > 0 && item.start_date !== null && item.finish_date === null">
                   Mulai dikerjakan: {{ item.start_date }}
                 </p>
-                <!-- <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date === '-' && item.is_active === true">
-                  Mulai dikerjakan: {{ item.start_date }}
-                </p>
-                <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date !== '-' && item.is_active === true">
-                  Diselesaikan: {{ item.finish_date }}
-                </p> -->
                 <a
                   v-if="item.is_accessed === false"
-                  style="color: #0080ff; cursor: pointer; text-decoration: underline;"
+                  class="upgrade-link"
                   @click="openMembership"
                 >Silahkan upgrade membership untuk melanjutkan</a>
               </div>
@@ -111,6 +107,7 @@ const getFilteredTopics = (topics) => {
                     type="submit"
                     @click="openDetail(item.id)"
                     :color="item.is_accessed ? '#0080ff' : '#cccccc'"
+                    class="action-button"
                   >
                   Kerjakan Sekarang
               </VBtn>
@@ -119,15 +116,10 @@ const getFilteredTopics = (topics) => {
                     type="submit"
                     @click="openDetail(item.id)"
                     :color="item.is_accessed ? '#0080ff' : '#cccccc'"
+                    class="action-button"
                   >
                   Lanjutkan
               </VBtn>
-              <!-- <h6 class="text-h6" v-else="item.finish_date !== '-'">
-                <a
-                  :style="{ color: item.is_accessed ? '#0080ff' : '#cccccc' }"
-                  href="javascript:void(0)"
-                >Detail & Pembahasan</a>
-              </h6> -->
             </template>
           </VCardItem>
           <VRow align="center" class="d-flex flex-wrap row-item">
@@ -137,6 +129,7 @@ const getFilteredTopics = (topics) => {
                 :color="item.is_accessed ? '#0080ff' : '#cccccc'"
                 size="small"
                 v-for="child in getFilteredTopics(item.topics)"
+                :key="child"
               >
                 {{ child }}
               </VChip>
@@ -148,6 +141,13 @@ const getFilteredTopics = (topics) => {
   </VCard>
 </template>
 <style lang="scss" scoped>
+@mixin media-breakpoint-down($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: 767px) {
+      @content;
+    }
+  }
+}
 
 .custom-title-style {
   margin-block-end: 0 !important;
@@ -177,5 +177,82 @@ const getFilteredTopics = (topics) => {
 
 .v-item {
   margin: 2px; /* Remove bottom margin for the last row */
+}
+
+.avatar-icon {
+  @include media-breakpoint-down(sm) {
+    size: 30px;
+  }
+}
+
+.title-container {
+  padding: 20px;
+
+  @include media-breakpoint-down(sm) {
+    padding: 10px;
+  }
+}
+
+.title-text {
+  font-size: 1.25rem;
+
+  @include media-breakpoint-down(sm) {
+    font-size: 1rem;
+  }
+}
+
+.status-text {
+  color: #0080ff;
+
+  @include media-breakpoint-down(sm) {
+    font-size: 0.875rem;
+  }
+}
+
+.upgrade-link {
+  color: #0080ff;
+  cursor: pointer;
+  text-decoration: underline;
+
+  @include media-breakpoint-down(sm) {
+    font-size: 0.875rem;
+  }
+}
+
+.action-button {
+  @include media-breakpoint-down(sm) {
+    font-size: 0.875rem;
+  }
+}
+
+/* Media query for small screens */
+@media (max-width: 767px) {
+  .vcardtext-container {
+    padding: 5px;
+  }
+
+  .avatar-icon {
+    size: 30px;
+  }
+
+  .title-container {
+    padding: 10px;
+  }
+
+  .title-text {
+    font-size: 1rem;
+  }
+
+  .status-text {
+    font-size: 0.875rem;
+  }
+
+  .upgrade-link {
+    font-size: 0.875rem;
+  }
+
+  .action-button {
+    font-size: 0.875rem;
+  }
 }
 </style>
