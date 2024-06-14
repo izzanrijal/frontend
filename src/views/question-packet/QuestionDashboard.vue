@@ -91,7 +91,7 @@ const getFilteredTopics = (topics) => {
                 <p class="status-text font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_done === false && item.answer === 0">
                   Belum dikerjakan
                 </p>
-                <p class="status-text font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_done === false && item.answer > 0 && item.start_date !== null && item.finish_date === null">
+                <p class="status-text-start font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_done === false && item.answer > 0 && item.start_date !== null && item.finish_date === null">
                   Mulai dikerjakan: {{ item.start_date }}
                 </p>
                 <a
@@ -235,13 +235,21 @@ const getFilteredTopics = (topics) => {
   }
 }
 
+.status-text-start {
+  color: #0080ff;
+
+  @include media-breakpoint-down(sm) {
+    font-size: 0.60rem;
+  }
+}
+
 .upgrade-link {
   color: #0080ff;
   cursor: pointer;
   text-decoration: underline;
 
   @include media-breakpoint-down(sm) {
-    font-size: 0.65rem;
+    font-size: 0.60rem;
   }
 }
 
@@ -289,8 +297,12 @@ const getFilteredTopics = (topics) => {
     font-size: 0.70rem;
   }
 
+  .status-text-start {
+    font-size: 0.60rem;
+  }
+
   .upgrade-link {
-    font-size: 0.65rem;
+    font-size: 0.60rem;
   }
 
   .action-button {
