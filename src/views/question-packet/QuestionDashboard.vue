@@ -270,6 +270,10 @@ const getFilteredTopics = (topics) => {
     padding: 2px;
   }
 
+  .append-container {
+    padding-inline-start: 8px !important; /* Add !important to override scoped styles */
+  }
+
   .title-text {
     font-size: 0.55rem;
   }
