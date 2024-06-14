@@ -1,10 +1,11 @@
 <script setup>
 import axios from 'axios';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
  // Replace with the actual key you use for the token
 const questions = ref([]);
 const router = useRouter();
+const screenWidth = ref(window.innerWidth);
 var token = localStorage.getItem('token');
 
 onMounted(async () => {
@@ -29,7 +30,19 @@ onMounted(async () => {
     // Redirect to login page if token is not present
     router.push('/login');
   }
+
+  // Add resize event listener
+  window.addEventListener('resize', updateScreenWidth);
 });
+
+onUnmounted(() => {
+  // Clean up the resize event listener
+  window.removeEventListener('resize', updateScreenWidth);
+});
+
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth;
+};
 
 const openDetail = (id) => {
   localStorage.setItem('paket', id)
@@ -40,7 +53,7 @@ const openMembership = () => {
   router.push("/upgrade/membership")
 }
 
-const isSmallScreen = computed(() => window.innerWidth < 768);
+const isSmallScreen = computed(() => screenWidth.value < 768);
 
 const getFilteredTopics = (topics) => {
   return isSmallScreen.value ? topics.slice(0, 3) : topics;
