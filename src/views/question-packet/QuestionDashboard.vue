@@ -169,7 +169,7 @@ const getFilteredTopics = (topics) => {
 
   /* Remove bottom margin for the last row */
   @include media-breakpoint-down(sm) {
-    margin-inline-end: 0 !important;
+    margin-inline: 0 0 !important;
   }
 }
 
@@ -231,7 +231,7 @@ const getFilteredTopics = (topics) => {
   color: #0080ff;
 
   @include media-breakpoint-down(sm) {
-    font-size: 0.55rem;
+    font-size: 0.70rem;
   }
 }
 
@@ -260,7 +260,7 @@ const getFilteredTopics = (topics) => {
   }
 
   .row-item-parent {
-    margin-inline-end: 0 !important; /* Override default margin */
+    margin-inline: 0 0 !important; /* Override default margin */
   }
 
   .avatar-icon {
@@ -286,7 +286,7 @@ const getFilteredTopics = (topics) => {
   }
 
   .status-text {
-    font-size: 0.55rem;
+    font-size: 0.70rem;
   }
 
   .upgrade-link {
