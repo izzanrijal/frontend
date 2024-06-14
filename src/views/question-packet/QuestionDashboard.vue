@@ -85,7 +85,7 @@ const getFilteredTopics = (topics) => {
                   class="icon"
                 />
               </VAvatar>
-              <div class="me-n3 title-container" style="padding: 20px;">
+              <div class="title-container" style="padding: 20px;">
                 
                 <VCardTitle><span style="color: black;">{{ item.title }}</span></VCardTitle>
                 <p class="status-text font-weight-semibold mb-1" v-if="item.is_accessed === true && item.is_done === false && item.answer === 0">
@@ -178,27 +178,33 @@ const getFilteredTopics = (topics) => {
 
 .v-item {
   margin: 2px; /* Remove bottom margin for the last row */
+
+  @include media-breakpoint-down(sm) {
+    font-size: 0.55rem;
+    padding-block: 1px;
+    padding-inline: 3px;
+  }
 }
 
 .avatar-icon {
   @include media-breakpoint-down(sm) {
-    block-size: 18px;
-    inline-size: 18px;
+    block-size: 16px;
+    inline-size: 16px;
   }
 }
 
 .icon {
   @include media-breakpoint-down(sm) {
-    block-size: 14px;
-    inline-size: 14px;
+    block-size: 12px;
+    inline-size: 12px;
   }
 }
 
 .title-container {
-  padding: 15px;
+  padding: 12px;
 
   @include media-breakpoint-down(sm) {
-    padding: 3px;
+    padding: 2px;
   }
 }
 
@@ -206,7 +212,7 @@ const getFilteredTopics = (topics) => {
   font-size: 1rem;
 
   @include media-breakpoint-down(sm) {
-    font-size: 0.75rem;
+    font-size: 0.55rem;
   }
 }
 
@@ -214,7 +220,7 @@ const getFilteredTopics = (topics) => {
   color: #0080ff;
 
   @include media-breakpoint-down(sm) {
-    font-size: 0.75rem;
+    font-size: 0.55rem;
   }
 }
 
@@ -224,60 +230,60 @@ const getFilteredTopics = (topics) => {
   text-decoration: underline;
 
   @include media-breakpoint-down(sm) {
-    font-size: 0.75rem;
+    font-size: 0.55rem;
   }
 }
 
 .action-button {
   @include media-breakpoint-down(sm) {
-    font-size: 0.75rem;
-    padding-block: 8px;
-    padding-inline: 10px;
+    font-size: 0.55rem;
+    padding-block: 6px;
+    padding-inline: 8px;
   }
 }
 
 /* Media query for small screens */
 @media (max-width: 767px) {
   .vcardtext-container {
-    padding: 5px;
+    padding: 4px;
   }
 
   .avatar-icon {
-    block-size: 18px;
-    inline-size: 18px;
+    block-size: 16px;
+    inline-size: 16px;
   }
 
   .icon {
-    block-size: 14px;
-    inline-size: 14px;
+    block-size: 12px;
+    inline-size: 12px;
   }
 
   .title-container {
-    padding: 3px;
+    padding: 2px;
   }
 
   .title-text {
-    font-size: 0.75rem;
+    font-size: 0.55rem;
   }
 
   .status-text {
-    font-size: 0.75rem;
+    font-size: 0.55rem;
   }
 
   .upgrade-link {
-    font-size: 0.75rem;
+    font-size: 0.55rem;
   }
 
   .action-button {
-    font-size: 0.75rem;
-    padding-block: 8px;
-    padding-inline: 10px;
+    font-size: 0.55rem;
+    padding-block: 6px;
+    padding-inline: 8px;
   }
 
   .v-item {
-    font-size: 0.75rem;
-    padding-block: 2px;
-    padding-inline: 4px;
+    font-size: 0.55rem;
+    padding-block: 1px;
+    padding-inline: 3px;
   }
 }
 </style>
