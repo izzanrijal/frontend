@@ -182,15 +182,15 @@ const getFilteredTopics = (topics) => {
 
 .avatar-icon {
   @include media-breakpoint-down(sm) {
-    block-size: 30px;
-    inline-size: 30px;
+    block-size: 20px;
+    inline-size: 20px;
   }
 }
 
 .icon {
   @include media-breakpoint-down(sm) {
-    block-size: 20px;
-    inline-size: 20px;
+    block-size: 16px;
+    inline-size: 16px;
   }
 }
 
@@ -198,7 +198,7 @@ const getFilteredTopics = (topics) => {
   padding: 20px;
 
   @include media-breakpoint-down(sm) {
-    padding: 10px;
+    padding: 5px;
   }
 }
 
@@ -206,7 +206,7 @@ const getFilteredTopics = (topics) => {
   font-size: 1.25rem;
 
   @include media-breakpoint-down(sm) {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 }
 
@@ -230,7 +230,9 @@ const getFilteredTopics = (topics) => {
 
 .action-button {
   @include media-breakpoint-down(sm) {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
+    padding-block: 6px;
+    padding-inline: 12px;
   }
 }
 
@@ -241,21 +243,21 @@ const getFilteredTopics = (topics) => {
   }
 
   .avatar-icon {
-    block-size: 30px;
-    inline-size: 30px;
-  }
-
-  .icon {
     block-size: 20px;
     inline-size: 20px;
   }
 
+  .icon {
+    block-size: 16px;
+    inline-size: 16px;
+  }
+
   .title-container {
-    padding: 10px;
+    padding: 5px;
   }
 
   .title-text {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 
   .status-text {
@@ -267,7 +269,15 @@ const getFilteredTopics = (topics) => {
   }
 
   .action-button {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
+    padding-block: 6px;
+    padding-inline: 12px;
+  }
+
+  .v-item {
+    font-size: 0.75rem;
+    padding-block: 2px;
+    padding-inline: 4px;
   }
 }
 </style>
