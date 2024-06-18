@@ -219,7 +219,6 @@ const truncateDescription = (description) => {
   }
 }
 
-
 .upgrade-link {
   color: #0080ff;
   cursor: pointer;
