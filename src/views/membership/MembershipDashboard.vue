@@ -1,11 +1,11 @@
 <script setup>
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
  // Replace with the actual key you use for the token
 const membership = ref(null);
 const router = useRouter();
-const route = useRoute();
+const screenWidth = ref(window.innerWidth);
 var token = localStorage.getItem('token');
 
 onMounted(async () => {
@@ -31,7 +31,17 @@ onMounted(async () => {
     // Redirect to login page if token is not present
     router.push('/login');
   }
+
+  window.addEventListener('resize', updateScreenWidth);
 });
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateScreenWidth);
+});
+
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth;
+};
 
 const formatToIDR = (price) => {
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(price);
@@ -50,9 +60,11 @@ const truncateDescription = (description) => {
     <VCardTitle><span style="color: #0080ff;">Upgrade Membership</span></VCardTitle>
     <VRow>
       <VCol
-          cols="6"
+          cols="12"
           md="6"
           v-for="item in membership"
+          :key="item.id"
+          class="question-card"
         >
         <VCard class="mb-4">
           <VCardItem>
@@ -60,27 +72,28 @@ const truncateDescription = (description) => {
               <VAvatar
                     :color="item.is_active ? '#0080ff' : '#cccccc'"
                     rounded
-                    size="38"
-                    class="elevation-2"
+                    size="40"
+                    class="elevation-2 avatar-icon"
                   >
                 <VIcon
                   size="24"
                   icon="ri-apps-line"
+                  class="icon"
                 />
               </VAvatar>
-              <div class="me-n3" style="padding: 7px;">
+              <div class="title-container" style="padding: 20px;">
                 
                 <VCardTitle><span style="color: black;">{{ item.name }}</span></VCardTitle>
-                <p style="color: #0080ff;" class="font-weight-semibold mb-1">
+                <p class="status-text font-weight-semibold mb-1">
                   Periode Aktivasi: {{ item.activation_period }} Bulan
                 </p>
-                <p style="color: #0080ff;" class="font-weight-semibold mb-1">
+                <p class="status-text-start font-weight-semibold mb-1">
                   Deskripsi paket: {{ truncateDescription(item.description) }}
                 </p>
-                <p v-if="item.price !== 0" style="color: black;" class="font-weight-semibold mb-1">
+                <p v-if="item.price !== 0" class="status-text-price font-weight-semibold mb-1">
                   <b>Harga: {{ formatToIDR(item.price) }}</b>
                 </p>
-                <p v-if="item.price === 0" style="color: black;" class="font-weight-semibold mb-1">
+                <p v-if="item.price === 0" class="status-text-free font-weight-semibold mb-1">
                   <b>Free</b>
                 </p>
               </div>
@@ -92,10 +105,11 @@ const truncateDescription = (description) => {
                     type="submit"
                     :to="{ path: '/membership/detail', query: { id: item.id } }"
                     :color="item.is_active ? '#0080ff' : '#cccccc'"
+                    class="action-button"
                   >
                   View
               </VBtn>
-              <p v-if="item.is_current === true" style="color: black;" class="font-weight-semibold mb-1">
+              <p v-if="item.is_current === true" class="status-text-current font-weight-semibold mb-1">
                   <b>Current Membership</b>
               </p>
             </template>
@@ -106,6 +120,13 @@ const truncateDescription = (description) => {
   </VCard>
 </template>
 <style lang="scss" scoped>
+@mixin media-breakpoint-down($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: 767px) {
+      @content;
+    }
+  }
+}
 
 .custom-title-style {
   margin-block-end: 0 !important;
@@ -113,27 +134,90 @@ const truncateDescription = (description) => {
 
 /* Add custom styling for scroll and reduce gap */
 .vcardtext-container {
+  padding: 10px; /* Remove bottom margin for the last row */
   margin-block-end: -10px; /* Adjust this margin to reduce the gap between rows */
   overflow-y: auto;
-}
 
-.vcardtext-container{
-  padding: 10px; /* Remove bottom margin for the last row */
+  @include media-breakpoint-down(sm) {
+    padding: 4px;
+  }
 }
 
 .row-item-parent{
   margin-inline: 4px 1px;
 
-  /* Remove bottom margin for the last row */
+  @include media-breakpoint-down(sm) {
+    margin-inline: 0 0 !important;
+  }
 }
 
-.row-item{
-  margin-inline: 14px 1px;
-
-  /* Remove bottom margin for the last row */
+.avatar-icon {
+  @include media-breakpoint-down(sm) {
+    block-size: 16px;
+    inline-size: 16px;
+  }
 }
 
-.v-item {
-  margin: 2px; /* Remove bottom margin for the last row */
+.icon {
+  @include media-breakpoint-down(sm) {
+    block-size: 12px;
+    inline-size: 12px;
+  }
+}
+
+.title-container {
+  padding: 20px;
+
+  @include media-breakpoint-down(sm) {
+    padding: 2px;
+  }
+}
+
+.title-text {
+  font-size: 1rem;
+
+  @include media-breakpoint-down(sm) {
+    font-size: 0.55rem;
+  }
+}
+
+.status-text {
+  color: #0080ff;
+
+  @include media-breakpoint-down(sm) {
+    font-size: 0.70rem;
+  }
+}
+
+.status-text-start {
+  color: #0080ff;
+
+  @include media-breakpoint-down(sm) {
+    font-size: 0.60rem;
+  }
+}
+
+.status-text-price, .status-text-free, .status-text-current {
+  @include media-breakpoint-down(sm) {
+    font-size: 0.70rem;
+  }
+}
+
+.upgrade-link {
+  color: #0080ff;
+  cursor: pointer;
+  text-decoration: underline;
+
+  @include media-breakpoint-down(sm) {
+    font-size: 0.55rem;
+  }
+}
+
+.action-button {
+  @include media-breakpoint-down(sm) {
+    font-size: 0.60rem;
+    padding-block: 6px;
+    padding-inline: 8px;
+  }
 }
 </style>
