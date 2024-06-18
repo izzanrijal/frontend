@@ -53,6 +53,12 @@ const truncateDescription = (description) => {
   }
   return description;
 };
+
+const isSmallScreen = computed(() => screenWidth.value < 768);
+
+const currentMembershipText = computed(() => {
+  return isSmallScreen.value ? 'Current\nMembership' : 'Current Membership';
+});
 </script>
 
 <template>
@@ -109,8 +115,8 @@ const truncateDescription = (description) => {
                   >
                   View
               </VBtn>
-              <p v-if="item.is_current === true" class="status-text-current font-weight-semibold mb-1 line-break">
-                <b>Current Membership</b>
+              <p v-if="item.is_current === true" class="status-text-current font-weight-semibold mb-1">
+                <b v-html="currentMembershipText"></b>
               </p>
             </template>
           </VCardItem>
@@ -205,14 +211,8 @@ const truncateDescription = (description) => {
 
 .status-text-current {
   @include media-breakpoint-down(sm) {
-    display: inline-block;
     font-size: 0.65rem;
-  }
-
-  &.line-break {
-    @include media-breakpoint-down(sm) {
-      white-space: pre-line; /* Allows breaking within the line */
-    }
+    white-space: pre-line; /* Allows breaking within the line */
   }
 }
 
