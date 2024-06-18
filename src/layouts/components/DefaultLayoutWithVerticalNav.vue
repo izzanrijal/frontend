@@ -92,7 +92,7 @@ onMounted(async () => {
           <h5 class="welcome-text text-h5 font-weight-semibold mb-1">
             Hi, {{ name }} Selamat Datang
           </h5>
-          <p class="font-weight-semibold mb-1">
+          <p class="date-text font-weight-semibold mb-1">
             {{ formattedDate }}
           </p>
         </div>
@@ -162,5 +162,17 @@ onMounted(async () => {
 
 .welcome-text {
   color: #0080ff; /* Set the desired color */
+
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    font-size: 0.75rem; /* Adjust font size as needed */
+  }
+}
+
+.date-text {
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    font-size: 0.75rem; /* Adjust font size as needed */
+  }
 }
 </style>
