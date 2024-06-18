@@ -215,9 +215,9 @@ const truncateDescription = (description) => {
 
 .action-button {
   @include media-breakpoint-down(sm) {
-    font-size: 0.60rem;
-    padding-block: 6px;
-    padding-inline: 8px;
+    font-size: 0.65rem;
+    padding-block: 8px;
+    padding-inline: 10px;
   }
 }
 </style>
