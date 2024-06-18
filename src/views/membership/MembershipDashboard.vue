@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
  // Replace with the actual key you use for the token
 const membership = ref(null);
@@ -53,8 +53,6 @@ const truncateDescription = (description) => {
   }
   return description;
 };
-
-const isSmallScreen = computed(() => screenWidth.value < 768);
 </script>
 
 <template>
