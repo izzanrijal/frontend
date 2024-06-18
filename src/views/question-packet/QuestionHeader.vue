@@ -64,11 +64,11 @@ const openReview = async () => {
         md="3"
         v-show="screenWidth >= 768"
       >
-        <VCardItem class="outlined-card-item">
+        <!-- <VCardItem class="outlined-card-item">
           <p style="color: black;" class="font-weight-semibold mb-1">
             \ Topic \ <span style="color: #0080ff;">Test</span>
           </p>
-        </VCardItem>
+        </VCardItem> -->
       </VCol>
 
       <VCol
