@@ -110,7 +110,9 @@ const truncateDescription = (description) => {
                   View
               </VBtn>
               <p v-if="item.is_current === true" class="status-text-current font-weight-semibold mb-1">
-                  <b>Current Membership</b>
+                <b>
+                  Current <span class="break">Membership</span>
+                </b>
               </p>
             </template>
           </VCardItem>
@@ -205,7 +207,15 @@ const truncateDescription = (description) => {
 
 .status-text-current {
   @include media-breakpoint-down(sm) {
-    font-size: 0.55rem;
+    font-size: 0.65rem;
+    
+    .break {
+      display: block;
+    }
+  }
+
+  .break {
+    display: inline;
   }
 }
 
