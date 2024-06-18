@@ -197,9 +197,15 @@ const truncateDescription = (description) => {
   }
 }
 
-.status-text-price, .status-text-free, .status-text-current {
+.status-text-price, .status-text-free {
   @include media-breakpoint-down(sm) {
     font-size: 0.70rem;
+  }
+}
+
+.status-text-current {
+  @include media-breakpoint-down(sm) {
+    font-size: 0.55rem;
   }
 }
 
