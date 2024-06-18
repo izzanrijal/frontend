@@ -165,7 +165,7 @@ onMounted(async () => {
 
   /* Media query for smaller screens */
   @media (max-width: 768px) {
-    font-size: 0.75rem; /* Adjust font size as needed */
+    display: none; /* Adjust font size as needed */
   }
 }
 
