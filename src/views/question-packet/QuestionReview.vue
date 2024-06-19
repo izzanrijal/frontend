@@ -96,6 +96,22 @@ const finishTest = async () => {
   }
 
 };
+
+const openQuestion = async (questionNumber) => {
+  try {
+    localStorage.setItem('number', questionNumber)
+
+    router.push("/soal")
+  } catch (error) {
+    // Handle login error (display error message, redirect, etc.)
+    console.error('answer failed:', error);
+    if (error.response && error.response.data) {
+      errorMessage.value = error.response.data.errors;
+    } else {
+      errorMessage.value = 'An unexpected error occurred during login.';
+    }
+  }
+}
 </script>
 
 <template>
@@ -143,7 +159,7 @@ const finishTest = async () => {
     </VCardItem>
 
     <div style="max-block-size: 300px; overflow-y: auto;">
-      <VCardItem v-for="(question, index) in skippedQuestions" :key="question.id" class="outlined-card-item">
+      <VCardItem v-for="(question, index) in skippedQuestions" :key="question.id" class="outlined-card-item" @click="openQuestion(question.question_number)">
         <div class="me-n3" style="padding: 10px;">
             <VRow align="center">
                 <p style="color: black; padding-block-start: 15px;" class="font-weight-semibold mb-1">
