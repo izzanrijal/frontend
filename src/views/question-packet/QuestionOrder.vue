@@ -12,11 +12,12 @@ const routeQuestionPacketID = ref(null)
 const soal = ref(null)
 var token = localStorage.getItem('token');
 const errorMessage = ref(null)
-const currentNumber = localStorage.getItem('number')
+const currentNumber = ref(null)
 
 const buttonsPerRow = 5;
 onMounted(async () => {
   currentNumber.value = localStorage.getItem('number')
+  console.log("CURRENT NUMBER: ", currentNumber)
   await getOrderNumber()
 });
 
