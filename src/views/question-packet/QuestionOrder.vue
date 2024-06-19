@@ -17,7 +17,7 @@ const currentNumber = ref(null)
 const buttonsPerRow = 5;
 onMounted(async () => {
   currentNumber.value = localStorage.getItem('number')
-  console.log("CURRENT NUMBER: ", currentNumber)
+  console.log("CURRENT NUMBER: ", currentNumber.value)
   await getOrderNumber()
 });
 
