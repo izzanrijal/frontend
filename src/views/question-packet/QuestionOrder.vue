@@ -172,9 +172,11 @@ const nextPage = async () => {
               <VBtn
                 :color="soal === item.number ? 'primary' : (item.is_fill ? '#0080ff' : '')"
                 :variant="item.is_fill ? 'tonal' : 'outlined'"
-                class="mb-1"
+                class="mb-1 custom-btn"
+                :class="{ active: currentNumber.value === item.number }" 
                 style=" block-size: 40px;inline-size: 40px;"
                 @click="jumpPage(item.number)"
+                ref="button"
               >
                 <span class="d-sm-block">{{ item.number }}</span>
               </VBtn>
@@ -228,5 +230,14 @@ const nextPage = async () => {
 
 .v-item {
   margin: 2px; /* Remove bottom margin for the last row */
+}
+
+.custom-btn:hover, .custom-btn:focus {
+  background-color: #d9edf7 !important; /* Add your desired hover/focus background color */
+}
+
+.custom-btn.active {
+  background-color: #a8c8eb !important; /* Adjust the background color for the active button */
+  color: white !important;
 }
 </style>
