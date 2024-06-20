@@ -173,7 +173,7 @@ const nextPage = async () => {
               :key="item.number" 
               class="d-flex flex-wrap v-item">
               <VBtn
-                :color="currentNumber.value == item.number ? 'primary' : (item.is_fill ? '#0080ff' : '')"
+                :color="currentNumber.value === item.number ? 'primary' : (item.is_fill ? '#0080ff' : '')"
                 :variant="item.is_fill ? 'tonal' : 'outlined'"
                 class="mb-1"
                 style=" block-size: 40px;inline-size: 40px;"
