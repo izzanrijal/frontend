@@ -12,7 +12,6 @@ const routeQuestionPacketID = ref(null)
 const soal = ref(null)
 var token = localStorage.getItem('token');
 const errorMessage = ref(null)
-const currentNumber = ref(localStorage.getItem('number') || null); // Initialize with stored number or null
 
 const buttonsPerRow = 5;
 onMounted(async () => {
@@ -50,8 +49,6 @@ const getOrderNumber = async () => {
         return result;
       });
       console.log("GROUP BUT: ", groupedButtons);
-      currentNumber.value = localStorage.getItem('number')
-      console.log("CURRENT NUMBER: ", currentNumber.value)
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
@@ -173,7 +170,7 @@ const nextPage = async () => {
               :key="item.number" 
               class="d-flex flex-wrap v-item">
               <VBtn
-                :color="'2' === item.number ? 'primary' : (item.is_fill ? '#0080ff' : '')"
+                :color="soal === item.number ? 'primary' : (item.is_fill ? '#0080ff' : '')"
                 :variant="item.is_fill ? 'tonal' : 'outlined'"
                 class="mb-1"
                 style=" block-size: 40px;inline-size: 40px;"
