@@ -187,25 +187,25 @@ const handleHover = (index, isHover) => {
 
 <style lang="scss" scoped>
 .outlined-card-item {
-  border: 1px solid transparent;
+  border: 1px solid #ccc;
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
 }
 
 .outlined-card-item:hover {
-  border-color: #ddd;
-  background-color: #f0f0f0;
+  border-color: #42baf7;
+  background-color: #d9edf7;
 }
 
 .outlined-card-item:focus {
-  border-color: #ddd;
-  background-color: #f0f0f0;
+  border-color: #42baf7;
+  background-color: #d9edf7;
   outline: none;
 }
 
 .outlined-card-item.hovered {
-  border-color: #ddd;
-  background-color: #f0f0f0;
+  border-color: #42baf7;
+  background-color: #d9edf7;
 }
 
 .outlined-card-item.active {
