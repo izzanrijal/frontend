@@ -173,7 +173,7 @@ const nextPage = async () => {
                 :color="soal === item.number ? 'primary' : (item.is_fill ? '#0080ff' : '')"
                 :variant="item.is_fill ? 'tonal' : 'outlined'"
                 class="mb-1 custom-btn"
-                :class="{ active: currentNumber.value === item.number }" 
+                :class="{ active: soal === item.number }" 
                 style=" block-size: 40px;inline-size: 40px;"
                 @click="jumpPage(item.number)"
                 ref="button"
