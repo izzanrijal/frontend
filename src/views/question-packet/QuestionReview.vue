@@ -2,15 +2,15 @@
 import reviewLogo from '@images/review.png';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
  // Replace with the actual key you use for the token
 const questionPacket = ref({});
 const skippedQuestions = ref([]);
-const router = useRouter();
-const route = useRoute()
-const options = ref([])
+const router = useRouter()
 var token = localStorage.getItem('token');
+
+const cardItems = ref([])
 
 onMounted(async () => {
   await getQuestionPacketReview()
@@ -28,12 +28,7 @@ const getQuestionPacketReview = async () => {
       });
       questionPacket.value = response.data.data;
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        // Redirect to login page if the response status is 401
-        localStorage.removeItem('token');
-        localStorage.removeItem('profile');
-        router.push('/login');
-      }
+      handleUnauthorizedError(error)
     }
   } else {
     // Redirect to login page if token is not present
@@ -52,15 +47,18 @@ const getSkipQuestions = async () => {
       });
       skippedQuestions.value = response.data.data;
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        // Redirect to login page if the response status is 401
-        localStorage.removeItem('token');
-        localStorage.removeItem('profile');
-        router.push('/login');
-      }
+      handleUnauthorizedError(error)
     }
   } else {
     // Redirect to login page if token is not present
+    router.push('/login');
+  }
+};
+
+const handleUnauthorizedError = (error) => {
+  if (error.response && error.response.status === 401) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('profile');
     router.push('/login');
   }
 };
@@ -86,12 +84,9 @@ const finishTest = async () => {
     
     router.push('/result')
   } catch (error) {
-    // Handle login error (display error message, redirect, etc.)
-    console.error('answer failed:', error);
+    handleUnauthorizedError(error)
     if (error.response && error.response.data) {
       errorMessage.value = error.response.data.errors;
-    } else {
-      errorMessage.value = 'An unexpected error occurred during login.';
     }
   }
 
@@ -109,6 +104,16 @@ const openQuestion = async (questionNumber) => {
       errorMessage.value = error.response.data.errors;
     } else {
       errorMessage.value = 'An unexpected error occurred during login.';
+    }
+  }
+}
+
+const handleHover = (index, isHover) => {
+  if (cardItems.value[index]) {
+    if (isHover) {
+      cardItems.value[index].classList.add('hovered');
+    } else {
+      cardItems.value[index].classList.remove('hovered');
     }
   }
 }
@@ -159,7 +164,15 @@ const openQuestion = async (questionNumber) => {
     </VCardItem>
 
     <div style="max-block-size: 300px; overflow-y: auto;">
-      <VCardItem v-for="(question, index) in skippedQuestions" :key="question.id" class="outlined-card-item" @click="openQuestion(question.question_number)">
+      <VCardItem
+        v-for="(question, index) in skippedQuestions"
+        :key="question.id"
+        class="outlined-card-item"
+        @click="openQuestion(question.question_number)"
+        @mouseenter="handleHover(index, true)"
+        @mouseleave="handleHover(index, false)"
+        ref="cardItems"
+      >
         <div class="me-n3" style="padding: 10px;">
             <VRow align="center">
                 <p style="color: black; padding-block-start: 15px;" class="font-weight-semibold mb-1">
@@ -174,8 +187,29 @@ const openQuestion = async (questionNumber) => {
 
 <style lang="scss" scoped>
 .outlined-card-item {
-  border: 1px solid #ccc; /* Customize the color and size as needed */
-  border-radius: 5px; /* Optional: Add border radius for rounded corners */
-  margin: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.outlined-card-item:hover {
+  border-color: #ddd;
+  background-color: #f0f0f0;
+}
+
+.outlined-card-item:focus {
+  border-color: #ddd;
+  background-color: #f0f0f0;
+  outline: none;
+}
+
+.outlined-card-item.hovered {
+  border-color: #ddd;
+  background-color: #f0f0f0;
+}
+
+.outlined-card-item.active {
+  background-color: #0080ff; /* Example active color */
+  color: white;
 }
 </style>
