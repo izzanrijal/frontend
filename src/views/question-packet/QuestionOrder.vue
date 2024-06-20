@@ -1,7 +1,7 @@
 <script setup>
 import { emitter } from '@/main';
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { nextTick, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
  // Replace with the actual key you use for the token
@@ -16,6 +16,8 @@ const errorMessage = ref(null)
 const buttonsPerRow = 5;
 onMounted(async () => {
   await getOrderNumber()
+  await nextTick()
+  scrollToCurrentNumber()
 });
 
 // Define the number of buttons per row
@@ -67,12 +69,16 @@ const getOrderNumber = async () => {
 const previousPage = async () => {
   localStorage.setItem('number', previousNumber)
   await getOrderNumber()
+  await nextTick()
+  scrollToCurrentNumber()
   emitter.emit('refreshQuestion', {'number': previousNumber})
 };
 
 const jumpPage = async (number) => {
   localStorage.setItem('number', number)
   await getOrderNumber()
+  await nextTick()
+  scrollToCurrentNumber()
   emitter.emit('refreshQuestion', {'number': number})
 };
 
@@ -131,6 +137,8 @@ const nextPage = async () => {
     localStorage.setItem('number', nextNumber)
 
     await getOrderNumber()
+    await nextTick()
+    scrollToCurrentNumber()
     emitter.emit('refreshQuestion', {'number': nextNumber})
   } catch (error) {
     // Handle login error (display error message, redirect, etc.)
@@ -141,7 +149,14 @@ const nextPage = async () => {
       errorMessage.value = 'An unexpected error occurred during login.';
     }
   }
+};
 
+const scrollToCurrentNumber = () => {
+  const container = document.querySelector('.vcardtext-container');
+  const button = document.querySelector(`.v-btn.custom-btn.active`);
+  if (container && button) {
+    container.scrollTop = button.offsetTop - container.offsetTop - container.clientHeight / 2 + button.clientHeight / 2;
+  }
 };
 </script>
 
@@ -176,7 +191,7 @@ const nextPage = async () => {
                 :class="{ active: soal === item.number }" 
                 style=" block-size: 40px;inline-size: 40px;"
                 @click="jumpPage(item.number)"
-                ref="button"
+                :ref="'button-' + item.number"
               >
                 <span class="d-sm-block">{{ item.number }}</span>
               </VBtn>
@@ -237,7 +252,8 @@ const nextPage = async () => {
 }
 
 .custom-btn.active {
-  background-color: #a8c8eb !important; /* Adjust the background color for the active button */
-  color: white !important;
+  border: 2px solid #0080ff !important;
+  background-color: white !important; /* Adjust the background color for the active button */
+  color: #0080ff !important;
 }
 </style>
