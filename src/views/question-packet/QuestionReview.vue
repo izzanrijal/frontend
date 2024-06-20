@@ -85,6 +85,9 @@ const finishTest = async () => {
     router.push('/result')
   } catch (error) {
     handleUnauthorizedError(error)
+    if (error.response && error.response.data) {
+      errorMessage.value = error.response.data.errors;
+    }
   }
 
 };
