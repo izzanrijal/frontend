@@ -58,7 +58,7 @@ const getTopicToLearn = async () => {
         <VCardText>
           <VList class="card-list">
             <VListItem
-              v-for="(topic, index) in topicLists"
+              v-for="(topic, index) in topicLists.slice(0, 5)"
               :key="index"
             >
               
