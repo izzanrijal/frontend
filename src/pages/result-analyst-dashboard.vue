@@ -1,6 +1,7 @@
 <script setup>
 
-import noDataImage from '@images/report_gen.svg?raw';
+import AnalyzeAdvisDashboard from '@/views/analyze-advis/AnalyzeAdvisDashboard.vue';
+import ChartDashboard from '@/views/analyze-advis/ChartDashboard.vue';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -12,7 +13,7 @@ const router = useRouter();
 onMounted(async () => {
   if (token) {
     try {
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/profile', {
+      const response = await axios.get('https://gateway.berkompeten.comapi/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -22,18 +23,33 @@ onMounted(async () => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
-        router.push('/login');
+        router.push('https://gateway.berkompeten.comlogin');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('/login');
+    router.push('https://gateway.berkompeten.comlogin');
   }
 });
 </script>
 
 <template>
-  <VRow class="match-height">
+  <VRow v-if="token" class="match-height">
+    <VCol
+      cols="12"
+      sm="6"
+    >
+      <AnalyzeAdvisDashboard :userProfile="userProfile" />
+    </VCol>
+
+    <VCol
+      cols="12"
+      sm="6"
+    >
+      <ChartDashboard />
+    </VCol>
+  </VRow>
+  <!-- <VRow class="match-height">
     <VCol
       cols="12"
       md="12"
@@ -46,5 +62,5 @@ onMounted(async () => {
         </template>
       </VCardItem>
     </VCol>
-  </VRow>
+  </VRow> -->
 </template>

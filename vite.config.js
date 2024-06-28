@@ -61,13 +61,13 @@ export default defineConfig({
       './src/**/*.vue',
     ],
   },
-  // server: {
-  //   proxy: {
-  //     "/api": {
-  //       changeOrigin: true,
-  //       target: "http://gateway.berkompeten.com",
-  //       historyApiFallback: true,
-  //     }
-  //   }
-  // },
+  server: {
+    proxy: {
+      "/api": {
+        changeOrigin: true,
+        target: "https://gateway.berkompeten.com",
+        historyApiFallback: true,
+      }
+    }
+  },
 })
