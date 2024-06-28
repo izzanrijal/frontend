@@ -35,7 +35,7 @@ const getOrderNumber = async () => {
     try {
       routeQuestionPacketID.value = localStorage.getItem('paket')
       soal.value = localStorage.getItem('number')
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/questions/orders?id='+routeQuestionPacketID.value, {
+      const response = await axios.get('https://gateway.berkompeten.comapi/student/questions/orders?id='+routeQuestionPacketID.value, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -56,12 +56,12 @@ const getOrderNumber = async () => {
         // Redirect to login page if the response status is 401
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
-        router.push('/login');
+        router.push('https://gateway.berkompeten.comlogin');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('/login');
+    router.push('https://gateway.berkompeten.comlogin');
   }
 };
 
@@ -110,7 +110,7 @@ const nextPage = async () => {
     console.log("answer: ",answer)
     console.log("answer val: ",answerValue)
 
-    const response = await axios.post('https://gateway.berkompeten.com/api/student/user/answer/add', {
+    const response = await axios.post('https://gateway.berkompeten.comapi/student/user/answer/add', {
       question_packet_id: question_packet_id,
       question_id: question_id,
       answer: answer,

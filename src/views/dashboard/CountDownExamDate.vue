@@ -13,7 +13,7 @@ onMounted(async () => {
 const getCountDown = async () => {
   if (token) {
     try {
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/dashboard/count-down-exam-date', {
+      const response = await axios.get('https://gateway.berkompeten.comapi/student/dashboard/count-down-exam-date', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -25,12 +25,12 @@ const getCountDown = async () => {
         // Redirect to login page if the response status is 401
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
-        router.push('/login');
+        router.push('https://gateway.berkompeten.comlogin');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('/login');
+    router.push('https://gateway.berkompeten.comlogin');
   }
 };
 </script>
@@ -39,7 +39,7 @@ const getCountDown = async () => {
   <VCard title="">
     <template #subtitle>
       <VAvatar
-        color="#0080ff"
+        color="#0080FF"
         rounded
         size="40"
         class="elevation-2"
@@ -53,7 +53,7 @@ const getCountDown = async () => {
         <span class="d-inline-block font-weight-medium text-high-emphasis">Hitung Mundur Ujian (UKMPPD)</span>
       </p>
       <h4 class="text-h4 text-primary">
-        <span style="color: #0080ff;">{{ countdown }}</span> <span class="text-high-emphasis">Hari Lagi</span>
+        <span style="color: #005BC5;">{{ countdown }}</span> <span class="text-high-emphasis">Hari Lagi</span>
       </h4>
     </template>
   </VCard>
