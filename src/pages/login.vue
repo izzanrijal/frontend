@@ -33,7 +33,7 @@ onMounted(async () => {
   console.log("token login: ", token)
 
   if (token) {
-    router.push('https://gateway.berkompeten.comdashboard');
+    router.push('/dashboard');
   }
 });
 
@@ -59,7 +59,7 @@ const login = async (tokenRecaptcha) => {
           return
         }
 
-        const response = await axios.post('https://gateway.berkompeten.comapi/student/login', {
+        const response = await axios.post('https://gateway.berkompeten.com/api/student/login', {
           email: form.email,
           password: form.password,
           'g-recaptcha-response': tokenRecaptcha, // Include reCAPTCHA token in the request
@@ -76,7 +76,7 @@ const login = async (tokenRecaptcha) => {
         localStorage.setItem('token', token);
 
         // Redirect to the desired route upon successful login
-        router.push('https://gateway.berkompeten.comdashboard');
+        router.push('/dashboard');
       } catch (error) {
         // Handle login error (display error message, redirect, etc.)
         console.error('Login failed:', error);
@@ -90,7 +90,7 @@ const login = async (tokenRecaptcha) => {
           // Check if the user does not exist and store email in local storage
           if (error.response.data.is_exist === false) {
             localStorage.setItem('email', form.email);
-            router.push('https://gateway.berkompeten.comregister');
+            router.push('/register');
           }
           return
         } else {
@@ -108,7 +108,7 @@ const login = async (tokenRecaptcha) => {
       // Check if the user does not exist and store email in local storage
       if (error.response.data.is_exist === false) {
         localStorage.setItem('email', form.email);
-        router.push('https://gateway.berkompeten.comregister');
+        router.push('/register');
       }
       return
     } else {

@@ -17,7 +17,7 @@ const token = localStorage.getItem('token')
 
 onMounted(async () => {
   try {
-      const response = await axios.get('https://gateway.berkompeten.comapi/student/change-password/status', {
+      const response = await axios.get('https://gateway.berkompeten.com/api/student/change-password/status', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -31,7 +31,7 @@ onMounted(async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
         // Redirect to login page if the response status is 401
-        router.push('https://gateway.berkompeten.comlogin');
+        router.push('/login');
       }
     }
 });
@@ -40,7 +40,7 @@ const resetPassword = async () => {
   try {
     console.log("token reset password: ", token)
     // Make a request to the logout endpoint on your backend
-    const response = await axios.get('https://gateway.berkompeten.comapi/student/reset-password', {
+    const response = await axios.get('https://gateway.berkompeten.com/api/student/reset-password', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -61,7 +61,7 @@ const changePassword = async () => {
       return
     }
     
-    const response = await axios.post('https://gateway.berkompeten.comapi/student/change-password',  {
+    const response = await axios.post('https://gateway.berkompeten.com/api/student/change-password',  {
       password: newPassword.value,
       password_confirmation: confirmPassword.value,
     }, {
@@ -71,7 +71,7 @@ const changePassword = async () => {
     });
     console.log("change password otp: ", response)
     successMessage.value = response.data.message;
-    router.push('https://gateway.berkompeten.comprofile/security')
+    router.push('/profile/security')
   } catch (error) {
     if (error.response && error.response.data) {
       errorMessage.value = error.response.data.errors;

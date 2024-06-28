@@ -40,13 +40,13 @@ onMounted(async () => {
     localStorage.setItem('token', token);
     console.log("token from route: ", token)
     
-    router.push('https://gateway.berkompeten.comdashboard');
+    router.push('/dashboard');
   }
 
   // Retrieve the email from local storage
   if (token) {
     try {
-      const response = await axios.get('https://gateway.berkompeten.comapi/student/profile', {
+      const response = await axios.get('https://gateway.berkompeten.com/api/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -61,12 +61,12 @@ onMounted(async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
         // Redirect to login page if the response status is 401
-        router.push('https://gateway.berkompeten.comlogin');
+        router.push('/login');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('https://gateway.berkompeten.comlogin');
+    router.push('/login');
   }
 
   if(routeToken){

@@ -22,7 +22,7 @@ const getQuestionPacketScore = async () => {
   if (token) {
     try {
       const routeQuestionPacketID = localStorage.getItem('paket')
-      const response = await axios.get('https://gateway.berkompeten.comapi/student/user/test/result?id='+routeQuestionPacketID, {
+      const response = await axios.get('https://gateway.berkompeten.com/api/student/user/test/result?id='+routeQuestionPacketID, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -33,12 +33,12 @@ const getQuestionPacketScore = async () => {
         // Redirect to login page if the response status is 401
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
-        router.push('https://gateway.berkompeten.comlogin');
+        router.push('/login');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('https://gateway.berkompeten.comlogin');
+    router.push('/login');
   }
 };
 
@@ -46,7 +46,7 @@ const getSkipQuestions = async () => {
   if (token) {
     try {
       const routeQuestionPacketID = localStorage.getItem('paket')
-      const response = await axios.get('https://gateway.berkompeten.comapi/student/user/skip/questions?id='+routeQuestionPacketID, {
+      const response = await axios.get('https://gateway.berkompeten.com/api/student/user/skip/questions?id='+routeQuestionPacketID, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -57,12 +57,12 @@ const getSkipQuestions = async () => {
         // Redirect to login page if the response status is 401
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
-        router.push('https://gateway.berkompeten.comlogin');
+        router.push('/login');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('https://gateway.berkompeten.comlogin');
+    router.push('/login');
   }
 };
 
@@ -85,7 +85,7 @@ const openDiscussion = async () => {
   }
 
   try {
-    router.push('https://gateway.berkompeten.comdashboard')
+    router.push('/dashboard')
   } catch (error) {
     // Handle login error (display error message, redirect, etc.)
     console.error('answer failed:', error);
