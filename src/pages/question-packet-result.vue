@@ -12,7 +12,7 @@ const router = useRouter();
 onMounted(async () => {
   if (token) {
     try {
-      const response = await axios.get('https://gateway.berkompeten.comapi/student/profile', {
+      const response = await axios.get('https://gateway.berkompeten.com/api/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -22,12 +22,12 @@ onMounted(async () => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
-        router.push('https://gateway.berkompeten.comlogin');
+        router.push('/login');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('https://gateway.berkompeten.comlogin');
+    router.push('/login');
   }
 });
 </script>

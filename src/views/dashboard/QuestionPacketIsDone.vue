@@ -16,7 +16,7 @@ onMounted(async () => {
 const getQuestionPacketIsDone = async () => {
   if (token) {
     try {
-      const response = await axios.get('https://gateway.berkompeten.comapi/student/dashboard/question-packet-is-done', {
+      const response = await axios.get('https://gateway.berkompeten.com/api/student/dashboard/question-packet-is-done', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -28,12 +28,12 @@ const getQuestionPacketIsDone = async () => {
         // Redirect to login page if the response status is 401
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
-        router.push('https://gateway.berkompeten.comlogin');
+        router.push('/login');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('https://gateway.berkompeten.comlogin');
+    router.push('/login');
   }
 };
 </script>
