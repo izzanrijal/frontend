@@ -76,7 +76,7 @@ const saveFormData = async () => {
   }
 
   try {
-    const response = await axios.post('https://gateway.berkompeten.comapi/student/register/step/1', {
+    const response = await axios.post('https://gateway.berkompeten.com/api/student/register/step/1', {
       email: form.email,
       password: form.password
     })
@@ -109,7 +109,7 @@ onMounted(() => {
     form.email = queryEmail
     localStorage.setItem('email', form.email)
     localStorage.setItem('name', queryName)
-    router.push('https://gateway.berkompeten.comregister');
+    router.push('/register');
   }
 
   console.log("email: ", storedEmail);
