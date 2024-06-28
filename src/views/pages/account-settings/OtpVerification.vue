@@ -12,7 +12,7 @@ const token = localStorage.getItem('token')
 
 onMounted(async () => {
   try {
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/change-password/status', {
+      const response = await axios.get('https://gateway.berkompeten.comapi/student/change-password/status', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -25,14 +25,14 @@ onMounted(async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
         // Redirect to login page if the response status is 401
-        router.push('/login');
+        router.push('https://gateway.berkompeten.comlogin');
       }
     }
 });
 
 const otpVerification = async () => {
   try {
-    const response = await axios.post('https://gateway.berkompeten.com/api/student/otp-verification',  {
+    const response = await axios.post('https://gateway.berkompeten.comapi/student/otp-verification',  {
       otp: otp,
     }, {
       headers: {
@@ -41,7 +41,7 @@ const otpVerification = async () => {
     });
     console.log("resp otp: ", response)
     successMessage.value = response.data.message;
-    router.push('/profile/security')
+    router.push('https://gateway.berkompeten.comprofile/security')
   } catch (error) {
     console.error('reset otp:', error);
     errorMessage.value = error.response.data.message;

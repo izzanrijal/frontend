@@ -6,7 +6,7 @@ const { props } = defineProps(['userProfile']);
   <VCard class="position-relative">
     <VCardText>
       <div class="mb-2">
-        <VBtn size="small" class="custom-rounded-button" color="#0080ff">
+        <VBtn size="small" class="custom-rounded-button" color="#0080FF">
           <i class="ri-verified-badge-line"></i> {{ userProfile && userProfile.profile && userProfile.profile.membership && userProfile.profile.membership.name }}
         </VBtn>
         <div class="text-body-1">
@@ -14,7 +14,7 @@ const { props } = defineProps(['userProfile']);
         </div>
       </div>
       <h4 class="text-h4 text-primary">
-        <span style="color: #0080ff;">{{ userProfile && userProfile.profile && userProfile.profile.membership && userProfile.profile.membership.activation_left }}</span> <span class="text-high-emphasis">Hari</span>
+        <span style="color: #005BC5;">{{ userProfile && userProfile.profile && userProfile.profile.membership && userProfile.profile.membership.activation_left }}</span> <span class="text-high-emphasis">Hari</span>
       </h4>
     </VCardText>
   </VCard>
@@ -39,7 +39,7 @@ const { props } = defineProps(['userProfile']);
 .ri-verified-badge-line {
   border-radius: 3px; /* Add border-radius for rounded corners */
   background-color: silver; /* Set the desired background color */
-  color: #0080ff; /* Set the desired text color */
+  color: #0080FF; /* Set the desired text color */
   padding-block: 3px;
   padding-inline: 6px; /* Adjust padding as needed */
 }

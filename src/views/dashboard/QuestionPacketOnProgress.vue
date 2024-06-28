@@ -15,7 +15,7 @@ onMounted(async () => {
 const getQuestionPacketOnProgress = async () => {
   if (token) {
     try {
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/dashboard/question-packet-on-progress', {
+      const response = await axios.get('https://gateway.berkompeten.comapi/student/dashboard/question-packet-on-progress', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -27,12 +27,12 @@ const getQuestionPacketOnProgress = async () => {
         // Redirect to login page if the response status is 401
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
-        router.push('/login');
+        router.push('https://gateway.berkompeten.comlogin');
       }
     }
   } else {
     // Redirect to login page if token is not present
-    router.push('/login');
+    router.push('https://gateway.berkompeten.comlogin');
   }
 };
 
@@ -45,14 +45,14 @@ const openDetail = (id) => {
 <template>
   <VCard>
     <VCardItem>
-      <VCardTitle><span style="color: #0080ff;">Lanjutkan Misi Belajarmu</span></VCardTitle>
+      <VCardTitle><span style="color: #005BC5;">Lanjutkan Misi Belajarmu</span></VCardTitle>
       <p v-if="questionPackets.length > 0" class="text-body-1 mb-0">
         <span class="d-inline-block font-weight-medium text-high-emphasis">Selesaikan Paket Soal Ini</span>
       </p>
       <div v-if="questionPackets.length > 0" class="me-n3" style="padding: 20px;">
         <VRow align="center" v-for="item in questionPackets">
           <VAvatar
-            color="#0080ff"
+            color="#0080FF"
             rounded
             size="40"
             class="elevation-2"
@@ -84,7 +84,7 @@ const openDetail = (id) => {
                   block
                   type="submit"
                   @click="openDetail(item.id)"
-                  :color="item.is_accessed ? '#0080ff' : '#cccccc'"
+                  :color="item.is_accessed ? '#0080FF' : '#cccccc'"
                 >
                 Lanjutkan
             </VBtn>

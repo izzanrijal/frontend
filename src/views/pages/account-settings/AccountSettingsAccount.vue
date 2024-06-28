@@ -27,7 +27,7 @@ const token = localStorage.getItem('token')
 
 onMounted(async () => {
   try {
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/profile', {
+      const response = await axios.get('https://gateway.berkompeten.comapi/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -60,7 +60,7 @@ onMounted(async () => {
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
         // Redirect to login page if the response status is 401
-        router.push('/login');
+        router.push('https://gateway.berkompeten.comlogin');
       }
     }
 });
@@ -147,7 +147,7 @@ const currencies = [
 const fetchUniversityDetail = async (id) => {
   try {
     console.log("param universitas: ", id)
-    const response = await axios.get('https://gateway.berkompeten.com/api/student/master/university/detail?id='+id, {
+    const response = await axios.get('https://gateway.berkompeten.comapi/student/master/university/detail?id='+id, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -165,7 +165,7 @@ const fetchUniversityDetail = async (id) => {
 const fetchEducationalStatusDetail = async (id) => {
   try {
     console.log("param edu: ", id)
-    const response = await axios.get('https://gateway.berkompeten.com/api/student/master/educational-status/detail?id='+id, {
+    const response = await axios.get('https://gateway.berkompeten.comapi/student/master/educational-status/detail?id='+id, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
