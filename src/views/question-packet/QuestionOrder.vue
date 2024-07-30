@@ -89,8 +89,7 @@ const nextPage = async () => {
   question_id = localStorage.getItem("question_id")
 
   if (answer === null ){
-    errorMessage.value = "Tolong pilih jawaban terlebih dahulu"
-    return
+    jumpPage(nextNumber)
   }
 
   if (answerValue === null){
