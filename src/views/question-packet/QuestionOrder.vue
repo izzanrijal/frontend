@@ -27,6 +27,7 @@ var previousNumber = ref(null)
 var nextNumber = ref(null)
 var question_packet_id = ref(null)
 var question_id = ref(null)
+var questionLength = ref(0)
 
 // Compute the grouped buttons based on the specified logic
 
@@ -41,6 +42,7 @@ const getOrderNumber = async () => {
         },
       });
       const questions = response.data.question_numbers;
+      questionLength = questions.length
       console.log("question length: ", questions.length)
       groupedButtons.value = computed(() => {
         const result = [];
@@ -87,9 +89,11 @@ const nextPage = async () => {
   answerValue = localStorage.getItem("answerValue")
   question_packet_id = localStorage.getItem('paket')
   question_id = localStorage.getItem("question_id")
-
-  if (answer === null ){
-    jumpPage(nextNumber)
+    
+  if (answer === null && soal.value != questionLength + 1){
+    console.log("next without answer: ", soal.value + 1)
+    jumpPage(soal.value + 1)
+    return
   }
 
   if (answerValue === null){
