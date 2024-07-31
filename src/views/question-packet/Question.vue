@@ -64,9 +64,9 @@ const selectedOption = ref(null);
 const selectedOptionYakin = ref(null);
 
 const keyakinan = [
-  { label: 'Sangat Yakin', value: 'yakin', color: 'success' },
-  { label: 'Masih Ragu', value: 'ragu', color: 'warning' },
-  { label: 'Saya tidak tahu untuk jawaban soal ini', value: 'tidak tahu', color: 'danger' },
+  { label: 'Sangat Yakin', value: 'yakin', color: 'green' },
+  { label: 'Masih Ragu', value: 'ragu', color: 'orange' },
+  { label: 'Saya tidak tahu untuk jawaban soal ini', value: 'tidak tahu', color: 'red' },
 ];
 
 const saveToLocalStorage = () => {
@@ -95,15 +95,18 @@ const saveYakinToLocalStorage = () => {
         <VRow align="center">
           <VCol cols="12" md="12">
             <!-- Use v-model to bind the selected option -->
-            <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage">
-              <!-- Loop through the options and create radio buttons -->
+            <VRadioGroup v-model="selectedOptionYakin" class="mb-2" @change="saveYakinToLocalStorage">
               <VRadio
-                v-for="(option, index) in options"
+                v-for="(option, index) in keyakinan"
                 :key="index"
-                :label="option.label"
                 :value="option.value"
-                :color="option.color"
-              />
+                class="custom-radio"
+              >
+                <template #label>
+                  <span :style="{ color: option.color, fontSize: '20px', marginRight: '10px' }">&#9679;</span>
+                  {{ option.label }}
+                </template>
+              </VRadio>
             </VRadioGroup>
           </VCol>
         </VRow>
@@ -149,5 +152,18 @@ const saveYakinToLocalStorage = () => {
   border: 1px solid #ccc; /* Customize the color and size as needed */
   border-radius: 5px; /* Optional: Add border radius for rounded corners */
   margin: 10px;
+}
+
+.custom-radio {
+  display: flex;
+  align-items: center;
+}
+
+.custom-radio span {
+  display: inline-block;
+  border-radius: 50%;
+  block-size: 24px;
+  inline-size: 24px;
+  margin-inline-end: 10px;
 }
 </style>
