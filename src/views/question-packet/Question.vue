@@ -124,7 +124,7 @@ const saveYakinToLocalStorage = () => {
                 class="custom-radio"
               >
                 <template #label>
-                  <span :style="{ color: option.color, fontSize: '20px', marginRight: '10px' }">&#9679;</span>
+                  <span :class="['custom-circle', option.color]"></span>
                   {{ option.label }}
                 </template>
               </VRadio>
@@ -160,11 +160,23 @@ const saveYakinToLocalStorage = () => {
   align-items: center;
 }
 
-.custom-radio span {
+.custom-circle {
   display: inline-block;
   border-radius: 50%;
-  block-size: 24px;
-  inline-size: 24px;
+  block-size: 16px;
+  inline-size: 16px;
   margin-inline-end: 10px;
+}
+
+.custom-circle.green {
+  background-color: green;
+}
+
+.custom-circle.orange {
+  background-color: orange;
+}
+
+.custom-circle.red {
+  background-color: red;
 }
 </style>
