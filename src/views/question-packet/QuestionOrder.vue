@@ -91,8 +91,8 @@ const nextPage = async () => {
   question_id = localStorage.getItem("question_id")
     
   if (answer === null && soal.value != questionLength + 1){
-    console.log("next without answer: ", soal.value + 1)
-    jumpPage(soal.value + 1)
+    console.log("next without answer: ", +soal.value + 1)
+    jumpPage(+soal.value + 1)
     return
   }
 
