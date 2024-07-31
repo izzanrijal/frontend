@@ -95,18 +95,15 @@ const saveYakinToLocalStorage = () => {
         <VRow align="center">
           <VCol cols="12" md="12">
             <!-- Use v-model to bind the selected option -->
-            <VRadioGroup v-model="selectedOptionYakin" class="mb-2" @change="saveYakinToLocalStorage">
+            <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage">
+              <!-- Loop through the options and create radio buttons -->
               <VRadio
-                v-for="(option, index) in keyakinan"
+                v-for="(option, index) in options"
                 :key="index"
+                :label="option.label"
                 :value="option.value"
-                class="custom-radio"
-              >
-                <template #label>
-                  <span :style="{ color: option.color, fontSize: '20px', marginRight: '10px' }">&#9679;</span>
-                  {{ option.label }}
-                </template>
-              </VRadio>
+                :color="option.color"
+              />
             </VRadioGroup>
           </VCol>
         </VRow>
@@ -120,13 +117,17 @@ const saveYakinToLocalStorage = () => {
           <VCol cols="12" md="12">
             <!-- Use v-model to bind the selected option -->
             <VRadioGroup v-model="selectedOptionYakin" class="mb-2" @change="saveYakinToLocalStorage">
-              <!-- Loop through the options and create radio buttons -->
               <VRadio
                 v-for="(option, index) in keyakinan"
                 :key="index"
-                :label="option.label"
                 :value="option.value"
-              />
+                class="custom-radio"
+              >
+                <template #label>
+                  <span :style="{ color: option.color, fontSize: '20px', marginRight: '10px' }">&#9679;</span>
+                  {{ option.label }}
+                </template>
+              </VRadio>
             </VRadioGroup>
           </VCol>
         </VRow>
