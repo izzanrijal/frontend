@@ -69,6 +69,11 @@ const getOrderNumber = async () => {
 
 
 const previousPage = async () => {
+  if (answer === null && soal.value != 1){
+    console.log("next without answer: ", +soal.value - 1)
+    jumpPage(+soal.value - 1)
+    return
+  }
   localStorage.setItem('number', previousNumber)
   await getOrderNumber()
   await nextTick()
