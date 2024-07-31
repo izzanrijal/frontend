@@ -144,7 +144,7 @@ const nextPage = async () => {
     localStorage.setItem('previousNumber', previousNumber)
     localStorage.setItem('number', nextNumber)
 
-    if (soal.value != questionLength + 1) {
+    if (soal.value == questionLength + 1) {
       router.push("/review")
     }
 
