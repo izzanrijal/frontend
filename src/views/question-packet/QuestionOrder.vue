@@ -70,7 +70,7 @@ const getOrderNumber = async () => {
 
 const previousPage = async () => {
   if (answer === null && soal.value != 1){
-    console.log("next without answer: ", +soal.value - 1)
+    console.log("previous without answer: ", +soal.value - 1)
     jumpPage(+soal.value - 1)
     return
   }
@@ -143,6 +143,10 @@ const nextPage = async () => {
 
     localStorage.setItem('previousNumber', previousNumber)
     localStorage.setItem('number', nextNumber)
+
+    if (soal.value != questionLength + 1) {
+      router.push("/review")
+    }
 
     await getOrderNumber()
     await nextTick()
@@ -217,7 +221,7 @@ const scrollToCurrentNumber = () => {
       </div>
       <VRow class="d-flex flex-wrap">
         <VCol cols="6" class="mb-1">
-          <VBtn @click="previousPage" color="#0080ff" variant="outlined">Kembali</VBtn>
+          <VBtn @click="previousPage" color="#0080ff" variant="outlined" :disabled="soal == 1">Kembali</VBtn>
         </VCol>
         
         <VCol cols="6" class="mb-1">
