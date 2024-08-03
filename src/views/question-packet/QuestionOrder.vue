@@ -135,23 +135,11 @@ const nextPage = async () => {
     localStorage.removeItem('answer');
     localStorage.removeItem('answerValue');
     
-    previousNumber = response.data.data.before_number
-    nextNumber = response.data.data.next_number
-
-    console.log("prev number: ", previousNumber)
-    console.log("next number: ", nextNumber)
-
-    localStorage.setItem('previousNumber', previousNumber)
-    localStorage.setItem('number', nextNumber)
-
     if (soal.value == questionLength + 1) {
       router.push("/review")
     }
-
-    await getOrderNumber()
-    await nextTick()
-    scrollToCurrentNumber()
-    emitter.emit('refreshQuestion', {'number': nextNumber})
+    
+    nextPage()
   } catch (error) {
     // Handle login error (display error message, redirect, etc.)
     console.error('answer failed:', error);
