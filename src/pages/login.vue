@@ -116,6 +116,10 @@ const login = async (tokenRecaptcha) => {
       return
     }
   }
+
+  const navigateToForgotPassword = () => {
+    router.push('/forgot-password')
+  }
 }
 </script>
 
@@ -176,7 +180,7 @@ const login = async (tokenRecaptcha) => {
 
                 <a
                   class="ms-2 mb-1"
-                  href="javascript:void(0)"
+                  @click="navigateToForgotPassword"
                 >
                   Forgot Password?
                 </a>
