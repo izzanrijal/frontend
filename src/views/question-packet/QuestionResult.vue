@@ -138,14 +138,16 @@ const openDiscussion = async () => {
     <VCard class="mb-4">
       <VCardItem>
         <VCardTitle><span style="color: #0080ff;">Analisis & Advice</span></VCardTitle>
-        <VRow align="center" class="d-flex flex-wrap row-item-parent">
-          <VAvatar color="#0080ff" rounded size="40" class="elevation-2">
-            <VIcon size="24" icon="ri-apps-line"/>
-          </VAvatar>
-          <div class="me-n3" style="padding: 20px;">
-            <VCardTitle><span style="color: black;">List topik/diagnosis yang sebaiknya Anda tingkatkan pada latihan ini</span></VCardTitle>
-          </div>
-        </VRow>
+        <div class="me-n3" style="padding: 20px;">
+          <VRow align="center" class="d-flex flex-wrap row-item-parent">
+            <VAvatar color="#0080ff" rounded size="40" class="elevation-2">
+              <VIcon size="24" icon="ri-apps-line"/>
+            </VAvatar>
+            <div class="me-n3" style="padding: 20px;">
+              <VCardTitle><span style="color: black;">List topik/diagnosis yang sebaiknya Anda tingkatkan pada latihan ini</span></VCardTitle>
+            </div>
+          </VRow>
+        </div>
       </VCardItem>
       <VRow align="center" class="d-flex flex-wrap row-item">
         <div class="d-flex align-center flex-wrap mb-3">
