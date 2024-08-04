@@ -46,6 +46,15 @@ const getQuestion = async () => {
 
       options.value = [optionA, optionB, optionC, optionD, optionE]
       console.log('option: ', options)
+
+      if (question.value.student_answer) {
+        selectedOption.value = question.value.student_answer;
+      }
+
+      if (question.value.student_answer_value) {
+        selectedOptionYakin.value = question.value.student_answer_value;
+      }
+      
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
