@@ -116,10 +116,10 @@ const login = async (tokenRecaptcha) => {
       return
     }
   }
+}
 
-  const navigateToForgotPassword = () => {
-    router.push('/forgot-password')
-  }
+const navigateToForgotPassword = () => {
+  router.push('/forgot-password')
 }
 </script>
 
