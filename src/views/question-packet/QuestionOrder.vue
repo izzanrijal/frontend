@@ -185,7 +185,7 @@ const scrollToCurrentNumber = () => {
               :key="item.number" 
               class="d-flex flex-wrap v-item">
               <VBtn
-                :color="soal === item.number ? 'primary' : (item.is_fill ? '#0080ff' : '')"
+                :color="soal === item.number ? 'primary' : (item.is_fill ? item.color : '')"
                 :variant="item.is_fill ? 'tonal' : 'outlined'"
                 class="mb-1 custom-btn"
                 :class="{ active: soal === item.number }" 
