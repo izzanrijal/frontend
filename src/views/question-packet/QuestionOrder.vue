@@ -87,6 +87,8 @@ const previousPage = async () => {
     return
   }
   localStorage.setItem('number', previousNumber)
+  localStorage.removeItem('answer');
+  localStorage.removeItem('answerValue');
   await getOrderNumber()
   await nextTick()
   scrollToCurrentNumber()
@@ -95,6 +97,8 @@ const previousPage = async () => {
 
 const jumpPage = async (number) => {
   localStorage.setItem('number', number)
+  localStorage.removeItem('answer');
+  localStorage.removeItem('answerValue');
   await getOrderNumber()
   await nextTick()
   scrollToCurrentNumber()
