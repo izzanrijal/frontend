@@ -81,18 +81,11 @@ const getOrderNumber = async () => {
 
 
 const previousPage = async () => {
-  if (answer === null && soal.value != 1){
+  if (soal.value != 1){
     console.log("previous without answer: ", +soal.value - 1)
     jumpPage(+soal.value - 1)
     return
   }
-  localStorage.setItem('number', previousNumber)
-  localStorage.removeItem('answer');
-  localStorage.removeItem('answerValue');
-  await getOrderNumber()
-  await nextTick()
-  scrollToCurrentNumber()
-  emitter.emit('refreshQuestion', {'number': previousNumber})
 };
 
 const jumpPage = async (number) => {
