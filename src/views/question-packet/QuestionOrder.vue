@@ -28,6 +28,7 @@ var nextNumber = ref(null)
 var question_packet_id = ref(null)
 var question_id = ref(null)
 var questionLength = ref(0)
+var totalAnswered = ref(0)
 
 // Compute the grouped buttons based on the specified logic
 
@@ -42,6 +43,15 @@ const getOrderNumber = async () => {
         },
       });
       const questions = response.data.question_numbers;
+
+      questions.forEach(question => {
+        if (question.is_fill) {
+          totalAnswered++;
+        }
+      });
+
+      console.log("Total Answered: ", totalAnswered);
+
       questionLength = questions.length
       console.log("question length: ", questions.length)
       groupedButtons.value = computed(() => {
@@ -95,7 +105,7 @@ const nextPage = async () => {
   question_packet_id = localStorage.getItem('paket')
   question_id = localStorage.getItem("question_id")
     
-  if (answer === null && soal.value != questionLength + 1){
+  if (answer === null && soal.value != questionLength){
     console.log("next without answer: ", +soal.value + 1)
     jumpPage(+soal.value + 1)
     return
@@ -171,7 +181,7 @@ const scrollToCurrentNumber = () => {
 
           <template #append>
             <p class="font-weight-semibold mb-1">
-              <span style="color: #0080ff;">{{ soal }}</span> / 200
+              <span style="color: #0080ff;">{{ totalAnswered }}</span> / 200
             </p>
           </template>
         </VCardItem>
