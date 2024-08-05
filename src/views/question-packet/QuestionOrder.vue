@@ -44,13 +44,15 @@ const getOrderNumber = async () => {
       });
       const questions = response.data.question_numbers;
 
+      totalAnswered.value = 0;
+
       questions.forEach(question => {
         if (question.is_fill) {
-          totalAnswered++;
+          totalAnswered.value++;
         }
       });
 
-      console.log("Total Answered: ", totalAnswered);
+      console.log("Total Answered: ", totalAnswered.value);
 
       questionLength = questions.length
       console.log("question length: ", questions.length)
@@ -145,7 +147,7 @@ const nextPage = async () => {
     localStorage.removeItem('answer');
     localStorage.removeItem('answerValue');
     
-    if (soal.value == questionLength + 1) {
+    if (soal.value == questionLength) {
       router.push("/review")
     }
     
