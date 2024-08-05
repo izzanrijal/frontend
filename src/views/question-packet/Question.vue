@@ -49,10 +49,12 @@ const getQuestion = async () => {
 
       if (question.value.student_answer) {
         selectedOption.value = question.value.student_answer;
+        localStorage.setItem('answer', selectedOption.value);
       }
 
       if (question.value.student_answer_value) {
         selectedOptionYakin.value = question.value.student_answer_value;
+        localStorage.setItem('answerValue', selectedOptionYakin.value);
       }
       
     } catch (error) {
