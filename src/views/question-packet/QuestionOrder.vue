@@ -180,7 +180,7 @@ const scrollToCurrentNumber = () => {
 
           <template #append>
             <p class="font-weight-semibold mb-1">
-              <span style="color: #0080ff;">{{ totalAnswered }}</span> / 200
+              <span style="color: #0080ff;">{{ totalAnswered }}</span> / {{ questionLength }}
             </p>
           </template>
         </VCardItem>
