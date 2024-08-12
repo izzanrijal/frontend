@@ -30,6 +30,12 @@ const errorMessage = ref(null)
 
 const today = new Date().toISOString().split('T')[0];
 
+// Helper function to format date from YYYY-mm-dd to dd-MM-YYYY
+const formatDate = (dateString) => {
+  const date = new Date(dateString)
+  return new Intl.DateTimeFormat('en-GB').format(date)
+}
+
 const authThemeMask = computed(() => {
   return vuetifyTheme.global.name.value === 'light' ? authV1MaskLight : authV1MaskDark
 })
@@ -136,7 +142,7 @@ const fetchExamDateOptions = async () => {
     // Assuming the API response has an array of educational statuses
     examDateOptions.value = response.data.data.map(examDate => ({
       id: examDate.id,
-      name: examDate.name,
+      name: formatDate(examDate.name),
     }))
   } catch (error) {
     console.error('Error fetching exam date options:', error)
