@@ -5,11 +5,16 @@ import QuestionOrder from '@/views/question-packet/QuestionOrder.vue';
 
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const token = localStorage.getItem('token'); // Replace with the actual key you use for the token
 const userProfile = ref(null);
 const router = useRouter();
+const route = useRoute();
+
+const mode = computed(() => {
+  return route.path === '/soal-review' ? 'review' : 'question';
+});
 
 onMounted(async () => {
   if (token) {
@@ -40,7 +45,7 @@ onMounted(async () => {
       cols="12"
       md="12"
     >
-      <QuestionHeader />
+      <QuestionHeader :mode="mode"/>
     </VCol>
   </VRow>
 
@@ -49,14 +54,14 @@ onMounted(async () => {
       cols="12"
       md="9"
     >
-      <Question />
+      <Question :mode="mode" />
     </VCol>
 
     <VCol
       cols="12"
       md="3"
     >
-      <QuestionOrder />
+      <QuestionOrder :mode="mode"/>
     </VCol>
   </VRow>
 </template>

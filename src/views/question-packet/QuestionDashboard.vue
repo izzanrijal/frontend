@@ -121,6 +121,13 @@ const getFilteredTopics = (topics) => {
                   >
                   Lanjutkan
               </VBtn>
+              <a v-if="item.is_done === true"
+                href="#"
+                style="color: #0080ff; font-weight: bold; text-decoration: underline;"
+                @click="openDetail(item.id)"
+              >
+                Detail & Pembahasan
+              </a>
             </template>
           </VCardItem>
           <VRow align="center" class="d-flex flex-wrap row-item">

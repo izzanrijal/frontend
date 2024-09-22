@@ -4,48 +4,55 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
- // Replace with the actual key you use for the token
 const question = ref({});
+const correctAnswer = ref(null);
+const userAnswer = ref(null);
+const mode = ref('question'); // Mode can be 'question' or 'review'
 const router = useRouter();
-const route = useRoute()
-const options = ref([])
+const route = useRoute();
+const options = ref([]);
 var token = localStorage.getItem('token');
-const dialog = ref(false); // Added for dialog control
+const dialog = ref(false); // For dialog control
 
 onMounted(async () => {
   emitter.on('refreshQuestion', (evt) => {
-    console.log("run emit trigger: ", evt.number)
-    selectedOption.value = null
-    selectedOptionYakin.value = null
-    getQuestion()
-  })
+    console.log("run emit trigger: ", evt.number);
+    selectedOption.value = null;
+    selectedOptionYakin.value = null;
+    getQuestion();
+  });
 
-  await getQuestion()
+  await getQuestion();
 });
 
 const getQuestion = async () => {
   if (token) {
     try {
-      const routeQuestionPacketID = localStorage.getItem('paket')
-      const number = localStorage.getItem('number')
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/question?id='+routeQuestionPacketID+'&number='+number, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const routeQuestionPacketID = localStorage.getItem('paket');
+      const number = localStorage.getItem('number');
+
+      // First request to get question data
+      const response = await axios.get(
+        'https://gateway.berkompeten.com/api/student/question?id=' +
+          routeQuestionPacketID +
+          '&number=' +
+          number,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       question.value = response.data.data;
-      localStorage.setItem('question_id', response.data.data.id)
+      localStorage.setItem('question_id', response.data.data.id);
 
-      console.log('question: ', question)
+      const optionA = { label: response.data.data.option_a, value: 'A' };
+      const optionB = { label: response.data.data.option_b, value: 'B' };
+      const optionC = { label: response.data.data.option_c, value: 'C' };
+      const optionD = { label: response.data.data.option_d, value: 'D' };
+      const optionE = { label: response.data.data.option_e, value: 'E' };
 
-      const optionA = { label: response.data.data.option_a, value: 'A', color: "#0080ff" };
-      const optionB = { label: response.data.data.option_b, value: 'B', color: "#0080ff" };
-      const optionC = { label: response.data.data.option_c, value: 'C', color: "#0080ff" };
-      const optionD = { label: response.data.data.option_d, value: 'D', color: "#0080ff" };
-      const optionE = { label: response.data.data.option_e, value: 'E', color: "#0080ff" };
-
-      options.value = [optionA, optionB, optionC, optionD, optionE]
-      console.log('option: ', options)
+      options.value = [optionA, optionB, optionC, optionD, optionE];
 
       if (question.value.student_answer) {
         selectedOption.value = question.value.student_answer;
@@ -56,7 +63,28 @@ const getQuestion = async () => {
         selectedOptionYakin.value = question.value.student_answer_value;
         localStorage.setItem('answerValue', selectedOptionYakin.value);
       }
-      
+
+      // If mode is 'review', make additional request to review-answer endpoint
+      if (mode.value === 'review') {
+        const reviewResponse = await axios.post(
+          'https://gateway.berkompeten.com/api/student/user/review-answer',
+          {
+            question_packet_id: routeQuestionPacketID,
+            number: number
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          }
+        );
+
+        correctAnswer.value = reviewResponse.data.data.correct_answer;
+        userAnswer.value = reviewResponse.data.data.user_answer;
+
+        // Set selectedOption to userAnswer from the review
+        selectedOption.value = userAnswer.value;
+      }
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
@@ -81,13 +109,21 @@ const keyakinan = [
 ];
 
 const saveToLocalStorage = () => {
-  console.log("selected option: ", selectedOption.value)
+  console.log("selected option: ", selectedOption.value);
   localStorage.setItem('answer', selectedOption.value);
 };
 
 const saveYakinToLocalStorage = () => {
-  console.log("selected option yakin: ", selectedOptionYakin.value)
+  console.log("selected option yakin: ", selectedOptionYakin.value);
   localStorage.setItem('answerValue', selectedOptionYakin.value);
+};
+
+const isCorrectAnswer = (value) => {
+  return value === correctAnswer.value;
+};
+
+const isWrongAnswer = (value) => {
+  return value === userAnswer.value && value !== correctAnswer.value;
 };
 </script>
 
@@ -106,14 +142,17 @@ const saveYakinToLocalStorage = () => {
         <VRow align="center">
           <VCol cols="12" md="12">
             <!-- Use v-model to bind the selected option -->
-            <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage">
+            <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage" :disabled="mode === 'review'">
               <!-- Loop through the options and create radio buttons -->
               <VRadio
                 v-for="(option, index) in options"
                 :key="index"
                 :label="option.label"
                 :value="option.value"
-                :color="option.color"
+                :class="{
+                  'correct-answer': isCorrectAnswer(option.value),
+                  'wrong-answer': isWrongAnswer(option.value),
+                }"
               />
             </VRadioGroup>
           </VCol>
@@ -121,7 +160,7 @@ const saveYakinToLocalStorage = () => {
       </div>
     </VCardItem>
 
-    <VCardItem class="outlined-card-item">
+    <VCardItem class="outlined-card-item" v-if="mode === 'question'">
       <VCardTitle><span style="color: #0080ff;">Seberapa yakin jawaban anda?</span></VCardTitle>
       <div class="me-n3" style="padding: 20px;">
         <VRow align="center">
@@ -189,5 +228,13 @@ const saveYakinToLocalStorage = () => {
 
 .custom-circle.red {
   background-color: red;
+}
+
+.correct-answer {
+  border: 2px solid green;
+}
+
+.wrong-answer {
+  border: 2px solid red;
 }
 </style>
