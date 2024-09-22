@@ -29,6 +29,10 @@ export const routes = [
         component: () => import('@/pages/question-packet.vue'),
       },
       {
+        path: 'soal-review',
+        component: () => import('@/pages/question-packet.vue'),
+      },
+      {
         path: 'profile/:tab',
         component: () => import('@/pages/account-settings.vue'),
       },
