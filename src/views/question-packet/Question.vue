@@ -152,6 +152,10 @@ const isWrongAnswer = (value) => {
                 :label="option.label"
                 :value="option.value"
                 :color="isCorrectAnswer(option.value) ? 'green' : (isWrongAnswer(option.value) ? 'red' : 'default')"
+                :class="{
+                  'correct-answer': isCorrectAnswer(option.value),
+                  'wrong-answer': isWrongAnswer(option.value),
+                }"
                 :disabled="mode === 'review'"
               />
             </VRadioGroup>
@@ -160,7 +164,7 @@ const isWrongAnswer = (value) => {
       </div>
     </VCardItem>
 
-    <VCardItem class="outlined-card-item" v-if="mode === 'question'">
+    <VCardItem class="outlined-card-item">
       <VCardTitle><span style="color: #0080ff;">Seberapa yakin jawaban anda?</span></VCardTitle>
       <div class="me-n3" style="padding: 20px;">
         <VRow align="center">
@@ -172,6 +176,7 @@ const isWrongAnswer = (value) => {
                 :key="index"
                 :value="option.value"
                 class="custom-radio"
+                :disabled="mode === 'review'"
               >
                 <template #label>
                   <span :class="['custom-circle', option.color]"></span>
@@ -231,18 +236,17 @@ const isWrongAnswer = (value) => {
 }
 
 .correct-answer {
-  border: 2px solid green;
+  border: 2px solid green; /* Border for correct answer */
+  background-color: rgba(0, 255, 0, 10%); /* Light green background */
 }
 
 .wrong-answer {
-  border: 2px solid red;
+  border: 2px solid red; /* Border for wrong answer */
+  background-color: rgba(255, 0, 0, 10%); /* Light red background */
 }
 
-.v-input--selection-controls__input.correct-answer {
-  background-color: green; /* Background color for correct answers */
-}
-
-.v-input--selection-controls__input.wrong-answer {
-  background-color: red; /* Background color for wrong answers */
+/* Optional: Style the radio button when disabled */
+.v-input--selection-controls__input:disabled {
+  opacity: 0.5; /* Make it visually distinct when disabled */
 }
 </style>
