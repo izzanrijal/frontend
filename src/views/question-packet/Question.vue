@@ -7,12 +7,12 @@ import { useRoute, useRouter } from 'vue-router';
 const question = ref({});
 const correctAnswer = ref(null);
 const userAnswer = ref(null);
-const mode = ref('question'); // Mode can be 'question' or 'review'
 const router = useRouter();
 const route = useRoute();
 const options = ref([]);
 var token = localStorage.getItem('token');
 const dialog = ref(false); // For dialog control
+const { props } = defineProps(['mode']);
 
 onMounted(async () => {
   emitter.on('refreshQuestion', (evt) => {
@@ -65,7 +65,9 @@ const getQuestion = async () => {
       }
 
       // If mode is 'review', make additional request to review-answer endpoint
-      if (mode.value === 'review') {
+      console.log("mode: ", mode)
+      if (mode === 'review') {
+        console.log("run mode review")
         const reviewResponse = await axios.post(
           'https://gateway.berkompeten.com/api/student/user/review-answer',
           {
