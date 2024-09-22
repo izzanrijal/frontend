@@ -151,10 +151,8 @@ const isWrongAnswer = (value) => {
                 :key="index"
                 :label="option.label"
                 :value="option.value"
-                :class="{
-                  'correct-answer': isCorrectAnswer(option.value),
-                  'wrong-answer': isWrongAnswer(option.value),
-                }"
+                :color="isCorrectAnswer(option.value) ? 'green' : (isWrongAnswer(option.value) ? 'red' : 'default')"
+                :disabled="mode === 'review'"
               />
             </VRadioGroup>
           </VCol>
@@ -238,5 +236,13 @@ const isWrongAnswer = (value) => {
 
 .wrong-answer {
   border: 2px solid red;
+}
+
+.v-input--selection-controls__input.correct-answer {
+  background-color: green; /* Background color for correct answers */
+}
+
+.v-input--selection-controls__input.wrong-answer {
+  background-color: red; /* Background color for wrong answers */
 }
 </style>
