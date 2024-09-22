@@ -55,7 +55,41 @@ const openQuestion = async (id, number) => {
     localStorage.removeItem('answer');
     localStorage.removeItem('answerValue');
 
-    router.push("/soal")
+    if (questionsPacket.is_done) {
+      router.push("/soal-review")
+    }else{
+      router.push("/soal")
+    }
+  } catch (error) {
+    // Handle login error (display error message, redirect, etc.)
+    console.error('answer failed:', error);
+    if (error.response && error.response.data) {
+      errorMessage.value = error.response.data.errors;
+    } else {
+      errorMessage.value = 'An unexpected error occurred during login.';
+    }
+  }
+}
+
+const openDetail = async (id, number) => {
+  try {
+
+    const response = await axios.post('https://gateway.berkompeten.com/api/student/user/do-the-test', {
+      question_packet_id: id,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+ 
+    console.log("response detail review: ", response)
+    
+    localStorage.setItem('paket', id)
+    localStorage.setItem('number', number)
+    localStorage.removeItem('answer');
+    localStorage.removeItem('answerValue');
+
+    router.push("/soal-review")
   } catch (error) {
     // Handle login error (display error message, redirect, etc.)
     console.error('answer failed:', error);
@@ -184,6 +218,14 @@ const openQuestion = async (id, number) => {
             color="#0080ff"
           >
           Lanjutkan Test
+      </VBtn>
+      <VBtn v-if="questionsPacket.is_done === true"
+            block
+            type="submit"
+            @click="openDetail(questionsPacket.id, 1)"
+            color="#0080ff"
+          >
+          Detail & Pembahasan
       </VBtn>
     </VRow>
   </VCard>
