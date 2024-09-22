@@ -122,9 +122,9 @@ const getFilteredTopics = (topics) => {
                   Lanjutkan
               </VBtn>
               <a v-if="item.is_done === true"
-                href="#"
+                href="javascript:void(0);"
                 style="color: #0080ff; font-weight: bold; text-decoration: underline;"
-                @click="openDetail(item.id)"
+                @click.prevent="openDetail(item.id)"
               >
                 Detail & Pembahasan
               </a>
