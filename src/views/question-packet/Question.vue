@@ -143,8 +143,19 @@ const isWrongAnswer = (value) => {
       <div class="me-n3" style="padding: 20px;">
         <VRow align="center">
           <VCol cols="12" md="12">
+            <VCardItem class="outlined-card-item" v-if="mode === 'review'" v-for="(option, index) in options">
+              <VCardSubtitle 
+                class="wrap-text" 
+                :color="isCorrectAnswer(option.value) ? 'green' : (isWrongAnswer(option.value) ? 'red' : 'default')"
+                :class="{
+                  'correct-answer': isCorrectAnswer(option.value),
+                  'wrong-answer': isWrongAnswer(option.value),
+                }">
+                {{ option.value }}. {{ option.label }}
+              </VCardSubtitle>
+            </VCardItem>
             <!-- Use v-model to bind the selected option -->
-            <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage" :disabled="mode === 'review'">
+            <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage" :disabled="mode === 'review'" v-if="mode === 'question'">
               <!-- Loop through the options and create radio buttons -->
               <VRadio
                 v-for="(option, index) in options"
@@ -206,7 +217,7 @@ const isWrongAnswer = (value) => {
 <style lang="scss" scoped>
 .outlined-card-item {
   border: 1px solid #ccc; /* Customize the color and size as needed */
-  border-radius: 5px; /* Optional: Add border radius for rounded corners */
+  border-radius: 15px; /* Optional: Add border radius for rounded corners */
   margin: 10px;
 }
 
@@ -236,12 +247,14 @@ const isWrongAnswer = (value) => {
 }
 
 .correct-answer {
-  border: 2px solid green; /* Border for correct answer */
+  border: 1px solid green; /* Border for correct answer */
+  border-radius: 15px;
   background-color: rgba(0, 255, 0, 10%); /* Light green background */
 }
 
 .wrong-answer {
-  border: 2px solid red; /* Border for wrong answer */
+  border: 1px solid red; /* Border for wrong answer */
+  border-radius: 15px;
   background-color: rgba(255, 0, 0, 10%); /* Light red background */
 }
 
