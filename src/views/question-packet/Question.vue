@@ -4,7 +4,7 @@ import axios from 'axios';
 import { marked } from 'marked';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { VCardTitle, VIcon } from 'vuetify/lib/components/index.mjs';
+import { VCardTitle } from 'vuetify/lib/components/index.mjs';
 
 const question = ref({});
 const correctAnswer = ref(null);
@@ -172,26 +172,26 @@ const isWrongAnswerIcon = (value) => {
               }" 
               v-if="mode === 'review'" 
               v-for="(option, index) in options"
-              :key="option.value"
             >
-              <VCardSubtitle class="wrap-text d-flex align-center">
+              <VCardSubtitle class="wrap-text">
                 {{ option.value }}. {{ option.label }}
+                
+                <!-- Icons based on correctness -->
+                <!-- <VIcon
+                  v-if="isCorrectAnswerIcon(option.value)" 
+                  color="green" 
+                  class="ml-2 correct-answer-check-line"
+                  icon="ri-check-line"
+                >
+                </VIcon>
+                <VIcon 
+                  v-if="isWrongAnswerIcon(option.value)" 
+                  color="red" 
+                  class="ml-2 wrong-answer-close-line"
+                  icon="ri-close-line"
+                >
+                </VIcon> -->
               </VCardSubtitle>
-              <!-- Icons based on correctness -->
-              <VIcon
-                v-if="isCorrectAnswerIcon(option.value)" 
-                color="green" 
-                class="ml-2 correct-answer-check-line"
-                icon="ri-check-line"
-              >
-              </VIcon>
-              <VIcon 
-                v-if="isWrongAnswerIcon(option.value)" 
-                color="red" 
-                class="ml-2 wrong-answer-close-line"
-                icon="ri-close-line"
-              >
-              </VIcon>
             </VCardItem>
             <!-- Use v-model to bind the selected option -->
             <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage" :disabled="mode === 'review'" v-if="mode === 'question'">
@@ -299,13 +299,11 @@ const isWrongAnswerIcon = (value) => {
 }
 
 .correct-answer {
-  padding: 10px;
   border: 1px solid green; /* Border for correct answer */
   border-radius: 15px;
 }
 
 .wrong-answer {
-  padding: 10px;
   border: 1px solid red; /* Border for wrong answer */
   border-radius: 15px;
 }
