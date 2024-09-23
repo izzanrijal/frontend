@@ -23,7 +23,7 @@ onMounted(async () => {
 
       console.log("question packet detail resp: ", response.data.data)
       questionsPacket.value = response.data.data;
-      console.log("question packet detail: ", questionsPacket)
+      console.log("question packet detail question header: ", questionsPacket.value)
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
