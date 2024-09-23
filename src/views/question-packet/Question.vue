@@ -147,18 +147,19 @@ const isWrongAnswer = (value) => {
       <div class="me-n3" style="padding: 20px;">
         <VRow align="center">
           <VCol cols="12" md="12">
-            <VCardItem 
-              :class="{
-                'correct-answer': isCorrectAnswer(option.value),
-                'wrong-answer': isWrongAnswer(option.value),
-              }" 
-              v-if="mode === 'review'" 
-              v-for="(option, index) in options"
-            >
-              <VCardSubtitle class="wrap-text">
-                {{ option.value }}. {{ option.label }}
-              </VCardSubtitle>
-            </VCardItem>
+            <div v-if="mode === 'review'" v-for="(option, index) in options">
+              <VCardItem 
+                :class="{
+                  'correct-answer': isCorrectAnswer(option.value),
+                  'wrong-answer': isWrongAnswer(option.value),
+                }" 
+              >
+                <VCardSubtitle class="wrap-text">
+                  {{ option.value }}. {{ option.label }}
+                </VCardSubtitle>
+              </VCardItem>
+            </div>
+            
             <!-- Use v-model to bind the selected option -->
             <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage" :disabled="mode === 'review'" v-if="mode === 'question'">
               <!-- Loop through the options and create radio buttons -->
