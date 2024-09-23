@@ -101,6 +101,7 @@ const openReview = async () => {
                     type="submit"
                     @click="openReview"
                     color="#0080ff"
+                    v-if="questionsPacket.is_done !== true"
                   >
                   Selesaikan Test
               </VBtn>
