@@ -12,7 +12,9 @@ const route = useRoute();
 const options = ref([]);
 var token = localStorage.getItem('token');
 const dialog = ref(false); // For dialog control
-const { props } = defineProps(['mode']);
+const props = defineProps({
+  mode: String, // Accepting mode as a prop from parent
+});
 
 onMounted(async () => {
   emitter.on('refreshQuestion', (evt) => {
@@ -65,8 +67,8 @@ const getQuestion = async () => {
       }
 
       // If mode is 'review', make additional request to review-answer endpoint
-      console.log("mode: ", mode)
-      if (mode === 'review') {
+      console.log("mode: ", props.mode)
+      if (props.mode === 'review') {
         console.log("run mode review")
         const reviewResponse = await axios.post(
           'https://gateway.berkompeten.com/api/student/user/review-answer',
@@ -147,19 +149,18 @@ const isWrongAnswer = (value) => {
       <div class="me-n3" style="padding: 20px;">
         <VRow align="center">
           <VCol cols="12" md="12">
-            <div v-if="mode === 'review'" v-for="(option, index) in options">
-              <VCardItem 
-                :class="{
-                  'correct-answer': isCorrectAnswer(option.value),
-                  'wrong-answer': isWrongAnswer(option.value),
-                }" 
-              >
-                <VCardSubtitle class="wrap-text">
-                  {{ option.value }}. {{ option.label }}
-                </VCardSubtitle>
-              </VCardItem>
-            </div>
-            
+            <VCardItem 
+              :class="{
+                'correct-answer': isCorrectAnswer(option.value),
+                'wrong-answer': isWrongAnswer(option.value),
+              }" 
+              v-if="mode === 'review'" 
+              v-for="(option, index) in options"
+            >
+              <VCardSubtitle class="wrap-text">
+                {{ option.value }}. {{ option.label }}
+              </VCardSubtitle>
+            </VCardItem>
             <!-- Use v-model to bind the selected option -->
             <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage" :disabled="mode === 'review'" v-if="mode === 'question'">
               <!-- Loop through the options and create radio buttons -->
