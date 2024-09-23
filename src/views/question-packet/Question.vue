@@ -4,7 +4,7 @@ import axios from 'axios';
 import { marked } from 'marked';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { VCardTitle } from 'vuetify/lib/components/index.mjs';
+import { VCardTitle, VIcon } from 'vuetify/lib/components/index.mjs';
 
 const question = ref({});
 const correctAnswer = ref(null);
@@ -141,6 +141,14 @@ const isWrongAnswer = (value) => {
   console.log("user answer: ", userAnswer.value)
   return value === userAnswer.value && value !== correctAnswer.value;
 };
+
+const isCorrectAnswerIcon = (value) => {
+  return value === correctAnswer.value;
+};
+
+const isWrongAnswerIcon = (value) => {
+  return value === userAnswer.value && value !== correctAnswer.value;
+};
 </script>
 
 <template>
@@ -170,20 +178,20 @@ const isWrongAnswer = (value) => {
                 {{ option.value }}. {{ option.label }}
                 
                 <!-- Icons based on correctness -->
-                <v-icon 
-                  v-if="isCorrectAnswer(option.value, option.label)" 
+                <VIcon
+                  v-if="isCorrectAnswerIcon(option.value)" 
                   color="green" 
-                  class="ml-2"
+                  class="ml-2 correct-answer-check-line"
+                  icon="ri-check-line"
                 >
-                  mdi-check-circle
-                </v-icon>
-                <v-icon 
-                  v-if="isWrongAnswer(option.value)" 
+                </VIcon>
+                <VIcon 
+                  v-if="isWrongAnswerIcon(option.value)" 
                   color="red" 
-                  class="ml-2"
+                  class="ml-2 wrong-answer-close-line"
+                  icon="ri-close-line"
                 >
-                  mdi-close-circle
-                </v-icon>
+                </VIcon>
               </VCardSubtitle>
             </VCardItem>
             <!-- Use v-model to bind the selected option -->
@@ -301,6 +309,18 @@ const isWrongAnswer = (value) => {
   padding: 10px;
   border: 1px solid red; /* Border for wrong answer */
   border-radius: 15px;
+}
+
+.correct-answer-check-line {
+  border: 1px solid green; /* Border for correct answer */
+  border-radius: 15px;
+  background-color: rgba(0, 255, 0, 10%);
+}
+
+.wrong-answer-close-line {
+  border: 1px solid red; /* Border for wrong answer */
+  border-radius: 15px;
+  background-color: rgba(255, 0, 0, 10%);
 }
 
 .wrap-text {
