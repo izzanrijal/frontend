@@ -179,23 +179,34 @@ const isWrongAnswerIcon = (value) => {
               v-if="mode === 'review'" 
               v-for="(option, index) in options"
             >
-              <VCardSubtitle class="wrap-text answer-content">
-                {{ option.value }}. {{ option.label }}
-              </VCardSubtitle>
-
-              <!-- Icons on the right -->
-              <VIcon
-                v-if="isCorrectAnswerIcon(option.value)" 
-                class="answer-icon correct-answer-check-line"
-                icon="ri-check-line"
-              >
-              </VIcon>
-              <VIcon 
-                v-if="isWrongAnswerIcon(option.value)" 
-                class="answer-icon wrong-answer-close-line"
-                icon="ri-close-line"
-              >
-              </VIcon>
+              <VRow align="center" class="d-flex flex-wrap row-item-parent">
+                <VCol cols="12" md="12">
+                  <VRow>
+                    <VCol cols="12" md="6">
+                      <VCardSubtitle class="wrap-text answer-content">
+                        {{ option.value }}. {{ option.label }}
+                      </VCardSubtitle>
+                    </VCol>
+                    <VCol cols="12" md="6">
+                      <VRow>
+                        <VIcon
+                          v-if="isCorrectAnswerIcon(option.value)" 
+                          class="answer-icon correct-answer-check-line"
+                          icon="ri-check-line"
+                        >
+                        </VIcon>
+                        <VIcon 
+                          v-if="isWrongAnswerIcon(option.value)" 
+                          class="answer-icon wrong-answer-close-line"
+                          icon="ri-close-line"
+                        >
+                        </VIcon>
+                      </VRow>
+                    </VCol>
+                  </VRow>
+                </VCol>
+              </VRow>
+                
             </VCardItem>
             <!-- Use v-model to bind the selected option -->
             <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage" :disabled="mode === 'review'" v-if="mode === 'question'">
@@ -266,10 +277,27 @@ const isWrongAnswerIcon = (value) => {
 </template>
 
 <style lang="scss" scoped>
+@mixin media-breakpoint-down($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: 767px) {
+      @content;
+    }
+  }
+}
+
 .outlined-card-item {
   border: 1px solid #ccc; /* Customize the color and size as needed */
   border-radius: 15px; /* Optional: Add border radius for rounded corners */
   margin: 10px;
+}
+
+.row-item-parent{
+  margin-inline: 4px 1px;
+
+  /* Remove bottom margin for the last row */
+  @include media-breakpoint-down(sm) {
+    margin-inline: 0 0 !important;
+  }
 }
 
 .custom-radio {
@@ -347,7 +375,7 @@ const isWrongAnswerIcon = (value) => {
 }
 
 /* Media query for smaller screens (like phones) */
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   .answer-item {
     flex-direction: row; /* Keeps layout horizontal */
     padding: 8px;
