@@ -171,6 +171,7 @@ const isWrongAnswerIcon = (value) => {
         <VRow align="center">
           <VCol cols="12" md="12">
             <VCardItem 
+              class="answer-item"
               :class="{
                 'correct-answer': isCorrectAnswer(option.value, option.label),
                 'wrong-answer': isWrongAnswer(option.value),
@@ -178,25 +179,23 @@ const isWrongAnswerIcon = (value) => {
               v-if="mode === 'review'" 
               v-for="(option, index) in options"
             >
-              <VCardSubtitle class="wrap-text">
+              <VCardSubtitle class="wrap-text answer-content">
                 {{ option.value }}. {{ option.label }}
               </VCardSubtitle>
 
               <!-- Icons on the right -->
-              <div>
-                <VIcon
-                  v-if="isCorrectAnswerIcon(option.value)" 
-                  class="correct-answer-check-line icon-white"
-                >
-                  ri-check-line
-                </VIcon>
-                <VIcon 
-                  v-if="isWrongAnswerIcon(option.value)" 
-                  class="wrong-answer-close-line icon-white"
-                >
-                  ri-close-line
-                </VIcon>
-              </div>
+              <VIcon
+                v-if="isCorrectAnswerIcon(option.value)" 
+                class="answer-icon correct-answer-check-line"
+                icon="ri-check-line"
+              >
+              </VIcon>
+              <VIcon 
+                v-if="isWrongAnswerIcon(option.value)" 
+                class="answer-icon wrong-answer-close-line"
+                icon="ri-close-line"
+              >
+              </VIcon>
             </VCardItem>
             <!-- Use v-model to bind the selected option -->
             <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage" :disabled="mode === 'review'" v-if="mode === 'question'">
@@ -308,34 +307,35 @@ const isWrongAnswerIcon = (value) => {
   border-radius: 15px;
 }
 
-.correct-answer-check-line {
+.answer-item {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center; /* Align vertically */
+  justify-content: space-between; /* Distribute the label and icon */
+  padding: 10px; /* Optional padding */
+}
+
+.answer-content {
+  flex-grow: 1; /* Ensures the content takes up most of the space */
+  margin-inline-end: 10px; /* Adds space between the text and the icon */
+}
+
+.answer-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px; /* Spacing inside the square */
-  border: 1px solid green; /* Border for correct answer */
-  border-radius: 15px; /* Rounded square */
-  background-color: green; /* Green background */
-  block-size: 30px; /* Fixed height */
-  color: white; /* Icon color */
-  inline-size: 30px; /* Fixed width to make it square */
+  border-radius: 50%;
+  block-size: 30px;
+  color: white;
+  inline-size: 30px;
+}
+
+.correct-answer-check-line {
+  background-color: green; /* Green background for correct answer */
 }
 
 .wrong-answer-close-line {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px; /* Spacing inside the square */
-  border: 1px solid red; /* Border for wrong answer */
-  border-radius: 15px; /* Rounded square */
-  background-color: red; /* Red background */
-  block-size: 30px; /* Fixed height */
-  color: white; /* Icon color */
-  inline-size: 30px; /* Fixed width to make it square */
-}
-
-.icon-white {
-  color: white !important; /* Force white icon */
+  background-color: red; /* Red background for wrong answer */
 }
 
 .wrap-text {
@@ -344,6 +344,24 @@ const isWrongAnswerIcon = (value) => {
   white-space: normal;
   word-break: break-all; /* Ensures long words are broken to fit within the container */
   word-wrap: break-word; /* Allows the text to wrap to the next line */
+}
+
+/* Media query for smaller screens (like phones) */
+@media (max-width: 600px) {
+  .answer-item {
+    flex-direction: row; /* Keeps layout horizontal */
+    padding: 8px;
+  }
+
+  .answer-content {
+    font-size: 14px; /* Smaller font size for mobile */
+    margin-inline-end: 8px;
+  }
+
+  .answer-icon {
+    block-size: 25px;
+    inline-size: 25px; /* Smaller icon size for mobile */
+  }
 }
 
 .ml-2 {
