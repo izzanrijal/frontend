@@ -1,11 +1,15 @@
 <script setup>
 import { emitter } from '@/main';
 import axios from 'axios';
+import { marked } from 'marked';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { VCardTitle } from 'vuetify/lib/components/index.mjs';
 
 const question = ref({});
 const correctAnswer = ref(null);
+const correctAnswerLabel = ref(null);
+const discussion = ref(null);
 const userAnswer = ref(null);
 const router = useRouter();
 const route = useRoute();
@@ -85,6 +89,7 @@ const getQuestion = async () => {
 
         correctAnswer.value = reviewResponse.data.data.correct_answer;
         userAnswer.value = reviewResponse.data.data.user_answer;
+        discussion.value = marked(reviewResponse.data.data.discussion);
 
         // Set selectedOption to userAnswer from the review
         selectedOption.value = userAnswer.value;
@@ -122,9 +127,11 @@ const saveYakinToLocalStorage = () => {
   localStorage.setItem('answerValue', selectedOptionYakin.value);
 };
 
-const isCorrectAnswer = (value) => {
+const isCorrectAnswer = (value, label) => {
   console.log("val: ", value)
   console.log("correct answer: ", correctAnswer.value)
+  console.log("correct answer label: ", correctAnswerLabel.value)
+  correctAnswerLabel.value = label
   return value === correctAnswer.value;
 };
 
@@ -183,7 +190,18 @@ const isWrongAnswer = (value) => {
     </VCardItem>
 
     <VCardItem class="outlined-card-item">
-      <VCardTitle><span style="color: #0080ff;">Seberapa yakin jawaban anda?</span></VCardTitle>
+      <div v-if="mode === 'review'">
+        <VCardTitle>
+          <span style="color: #005BC5;">Jawaban Benar : {{ correctAnswer }}</span>
+        </VCardTitle>
+        <VCardSubtitle class="wrap-text">
+          {{ correctAnswerLabel }}
+        </VCardSubtitle>
+        <VCardSubtitle class="wrap-text" v-html="discussion">
+        </VCardSubtitle>
+      </div>
+
+      <VCardTitle><span style="color: #0080ff;" v-if="mode === 'question'">Seberapa yakin jawaban anda?</span></VCardTitle>
       <div class="me-n3" style="padding: 20px;">
         <VRow align="center">
           <VCol cols="12" md="12">
