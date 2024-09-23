@@ -121,10 +121,14 @@ const saveYakinToLocalStorage = () => {
 };
 
 const isCorrectAnswer = (value) => {
+  console.log("val: ", value)
+  console.log("correct answer: ", correctAnswer.value)
   return value === correctAnswer.value;
 };
 
 const isWrongAnswer = (value) => {
+  console.log("val: ", value)
+  console.log("user answer: ", userAnswer.value)
   return value === userAnswer.value && value !== correctAnswer.value;
 };
 </script>
@@ -143,14 +147,15 @@ const isWrongAnswer = (value) => {
       <div class="me-n3" style="padding: 20px;">
         <VRow align="center">
           <VCol cols="12" md="12">
-            <VCardItem class="outlined-card-item" v-if="mode === 'review'" v-for="(option, index) in options">
-              <VCardSubtitle 
-                class="wrap-text" 
-                :color="isCorrectAnswer(option.value) ? 'green' : (isWrongAnswer(option.value) ? 'red' : 'default')"
-                :class="{
-                  'correct-answer': isCorrectAnswer(option.value),
-                  'wrong-answer': isWrongAnswer(option.value),
-                }">
+            <VCardItem 
+              :class="{
+                'correct-answer': isCorrectAnswer(option.value),
+                'wrong-answer': isWrongAnswer(option.value),
+              }" 
+              v-if="mode === 'review'" 
+              v-for="(option, index) in options"
+            >
+              <VCardSubtitle class="wrap-text">
                 {{ option.value }}. {{ option.label }}
               </VCardSubtitle>
             </VCardItem>
@@ -256,6 +261,13 @@ const isWrongAnswer = (value) => {
   border: 1px solid red; /* Border for wrong answer */
   border-radius: 15px;
   background-color: rgba(255, 0, 0, 10%); /* Light red background */
+}
+
+.wrap-text {
+  margin-block: 10px; /* Adds top margin */
+  white-space: normal;
+  word-break: break-all; /* Ensures long words are broken to fit within the container */
+  word-wrap: break-word; /* Allows the text to wrap to the next line */
 }
 
 /* Optional: Style the radio button when disabled */
