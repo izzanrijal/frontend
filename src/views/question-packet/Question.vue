@@ -171,7 +171,6 @@ const isWrongAnswerIcon = (value) => {
         <VRow align="center">
           <VCol cols="12" md="12">
             <VCardItem 
-              class="answer-item"
               :class="{
                 'correct-answer': isCorrectAnswer(option.value, option.label),
                 'wrong-answer': isWrongAnswer(option.value),
@@ -181,29 +180,25 @@ const isWrongAnswerIcon = (value) => {
             >
               <VRow align="center" class="d-flex flex-wrap row-item-parent">
                 <VCol cols="12" md="12">
-                  <VRow>
-                    <VCol cols="12" md="6">
-                      <VCardSubtitle class="wrap-text answer-content">
-                        {{ option.value }}. {{ option.label }}
-                      </VCardSubtitle>
-                    </VCol>
-                    <VCol cols="12" md="6">
-                      <VRow>
-                        <VIcon
-                          v-if="isCorrectAnswerIcon(option.value)" 
-                          class="answer-icon correct-answer-check-line"
-                          icon="ri-check-line"
-                        >
-                        </VIcon>
-                        <VIcon 
-                          v-if="isWrongAnswerIcon(option.value)" 
-                          class="answer-icon wrong-answer-close-line"
-                          icon="ri-close-line"
-                        >
-                        </VIcon>
-                      </VRow>
-                    </VCol>
-                  </VRow>
+                  <VCol cols="12" md="6">
+                    <VCardSubtitle class="wrap-text answer-content">
+                      {{ option.value }}. {{ option.label }}
+                    </VCardSubtitle>
+                  </VCol>
+                  <VCol cols="12" md="6">
+                    <VIcon
+                      v-if="isCorrectAnswerIcon(option.value)" 
+                      class="answer-icon correct-answer-check-line"
+                      icon="ri-check-line"
+                    >
+                    </VIcon>
+                    <VIcon 
+                      v-if="isWrongAnswerIcon(option.value)" 
+                      class="answer-icon wrong-answer-close-line"
+                      icon="ri-close-line"
+                    >
+                    </VIcon>
+                  </VCol>
                 </VCol>
               </VRow>
                 
@@ -335,14 +330,6 @@ const isWrongAnswerIcon = (value) => {
   border-radius: 15px;
 }
 
-.answer-item {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center; /* Align vertically */
-  justify-content: space-between; /* Distribute the label and icon */
-  padding: 10px; /* Optional padding */
-}
-
 .answer-content {
   flex-grow: 1; /* Ensures the content takes up most of the space */
   margin-inline-end: 10px; /* Adds space between the text and the icon */
@@ -359,11 +346,25 @@ const isWrongAnswerIcon = (value) => {
 }
 
 .correct-answer-check-line {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  border-radius: 50%;
   background-color: green; /* Green background for correct answer */
+  block-size: 30px;
+  color: white;
+  inline-size: 30px;
 }
 
 .wrong-answer-close-line {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  border-radius: 50%;
   background-color: red; /* Red background for wrong answer */
+  block-size: 30px;
+  color: white;
+  inline-size: 30px;
 }
 
 .wrap-text {
