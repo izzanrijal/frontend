@@ -128,12 +128,17 @@ const saveYakinToLocalStorage = () => {
 };
 
 const isCorrectAnswer = (value, label) => {
+  var isCorrectAnswer = false
   console.log("val: ", value)
   console.log("label: ", label)
   console.log("correct answer: ", correctAnswer.value)
-  correctAnswerLabel.value = label
-  console.log("correct answer label: ", correctAnswerLabel.value)
-  return value === correctAnswer.value;
+  console.log("is correct answer: ", isCorrectAnswer)
+  if (value === correctAnswer.value) {
+    isCorrectAnswer = true;
+    correctAnswerLabel.value = label
+    console.log("correct answer label: ", correctAnswerLabel.value)
+  }
+  return isCorrectAnswer;
 };
 
 const isWrongAnswer = (value) => {
@@ -201,11 +206,6 @@ const isWrongAnswerIcon = (value) => {
                 :key="index"
                 :label="option.label"
                 :value="option.value"
-                :color="isCorrectAnswer(option.value, option.label) ? 'green' : (isWrongAnswer(option.value) ? 'red' : 'default')"
-                :class="{
-                  'correct-answer': isCorrectAnswer(option.value, option.label),
-                  'wrong-answer': isWrongAnswer(option.value),
-                }"
                 :disabled="mode === 'review'"
               />
             </VRadioGroup>
