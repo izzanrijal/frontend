@@ -176,23 +176,22 @@ const isWrongAnswerIcon = (value) => {
             >
               <VCardSubtitle class="wrap-text d-flex align-center">
                 {{ option.value }}. {{ option.label }}
-                
-                <!-- Icons based on correctness -->
-                <VIcon
-                  v-if="isCorrectAnswerIcon(option.value)" 
-                  color="green" 
-                  class="ml-2 correct-answer-check-line"
-                  icon="ri-check-line"
-                >
-                </VIcon>
-                <VIcon 
-                  v-if="isWrongAnswerIcon(option.value)" 
-                  color="red" 
-                  class="ml-2 wrong-answer-close-line"
-                  icon="ri-close-line"
-                >
-                </VIcon>
               </VCardSubtitle>
+              <!-- Icons based on correctness -->
+              <VIcon
+                v-if="isCorrectAnswerIcon(option.value)" 
+                color="green" 
+                class="ml-2 correct-answer-check-line"
+                icon="ri-check-line"
+              >
+              </VIcon>
+              <VIcon 
+                v-if="isWrongAnswerIcon(option.value)" 
+                color="red" 
+                class="ml-2 wrong-answer-close-line"
+                icon="ri-close-line"
+              >
+              </VIcon>
             </VCardItem>
             <!-- Use v-model to bind the selected option -->
             <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage" :disabled="mode === 'review'" v-if="mode === 'question'">
