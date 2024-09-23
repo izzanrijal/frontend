@@ -173,7 +173,7 @@ const isWrongAnswerIcon = (value) => {
               v-if="mode === 'review'" 
               v-for="(option, index) in options"
             >
-              <VCardSubtitle class="wrap-text d-flex align-center">
+              <VCardSubtitle class="wrap-text">
                 {{ option.value }}. {{ option.label }}
                 
                 <!-- Icons based on correctness -->
@@ -299,13 +299,11 @@ const isWrongAnswerIcon = (value) => {
 }
 
 .correct-answer {
-  padding: 10px;
   border: 1px solid green; /* Border for correct answer */
   border-radius: 15px;
 }
 
 .wrong-answer {
-  padding: 10px;
   border: 1px solid red; /* Border for wrong answer */
   border-radius: 15px;
 }
