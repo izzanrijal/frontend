@@ -178,30 +178,30 @@ const isWrongAnswerIcon = (value) => {
               v-if="mode === 'review'" 
               v-for="(option, index) in options"
             >
-              <VRow align="center" class="d-flex flex-wrap row-item-parent">
-                <VCol cols="12" md="12">
-                  <VCol cols="12" md="6">
-                    <VCardSubtitle class="wrap-text answer-content">
-                      {{ option.value }}. {{ option.label }}
-                    </VCardSubtitle>
-                  </VCol>
-                  <VCol cols="12" md="6">
-                    <VIcon
-                      v-if="isCorrectAnswerIcon(option.value)" 
-                      class="answer-icon correct-answer-check-line"
-                      icon="ri-check-line"
-                    >
-                    </VIcon>
-                    <VIcon 
-                      v-if="isWrongAnswerIcon(option.value)" 
-                      class="answer-icon wrong-answer-close-line"
-                      icon="ri-close-line"
-                    >
-                    </VIcon>
-                  </VCol>
+              <VRow no-gutters align="center"> <!-- Align items in the same row -->
+                <!-- Subtitle in the first column -->
+                <VCol cols="10">
+                  <VCardSubtitle class="wrap-text">
+                    {{ option.value }}. {{ option.label }}
+                  </VCardSubtitle>
+                </VCol>
+
+                <!-- Icons in the second column, aligned to the right -->
+                <VCol cols="2" class="d-flex justify-content-end">
+                  <VIcon
+                    v-if="isCorrectAnswerIcon(option.value)" 
+                    class="answer-icon correct-answer-check-line"
+                    icon="ri-check-line"
+                  >
+                  </VIcon>
+                  <VIcon 
+                    v-if="isWrongAnswerIcon(option.value)" 
+                    class="answer-icon wrong-answer-close-line"
+                    icon="ri-close-line"
+                  >
+                  </VIcon>
                 </VCol>
               </VRow>
-                
             </VCardItem>
             <!-- Use v-model to bind the selected option -->
             <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage" :disabled="mode === 'review'" v-if="mode === 'question'">
@@ -335,6 +335,13 @@ const isWrongAnswerIcon = (value) => {
   margin-inline-end: 10px; /* Adds space between the text and the icon */
 }
 
+.answer-item {
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 10px;
+  border-radius: 15px;
+}
+
 .answer-icon {
   display: flex;
   align-items: center;
@@ -346,25 +353,27 @@ const isWrongAnswerIcon = (value) => {
 }
 
 .correct-answer-check-line {
-  display: flex;
-  align-items: center;
-  justify-content: right;
-  border-radius: 50%;
   background-color: green; /* Green background for correct answer */
-  block-size: 30px;
-  color: white;
-  inline-size: 30px;
 }
 
 .wrong-answer-close-line {
-  display: flex;
-  align-items: center;
-  justify-content: right;
-  border-radius: 50%;
   background-color: red; /* Red background for wrong answer */
-  block-size: 30px;
-  color: white;
-  inline-size: 30px;
+}
+
+/* Responsive handling */
+@media (max-width: 767px) {
+  .answer-item {
+    padding: 8px;
+  }
+
+  .answer-icon {
+    block-size: 25px;
+    inline-size: 25px;
+  }
+
+  .wrap-text {
+    font-size: 14px;
+  }
 }
 
 .wrap-text {
@@ -373,24 +382,6 @@ const isWrongAnswerIcon = (value) => {
   white-space: normal;
   word-break: break-all; /* Ensures long words are broken to fit within the container */
   word-wrap: break-word; /* Allows the text to wrap to the next line */
-}
-
-/* Media query for smaller screens (like phones) */
-@media (max-width: 767px) {
-  .answer-item {
-    flex-direction: row; /* Keeps layout horizontal */
-    padding: 8px;
-  }
-
-  .answer-content {
-    font-size: 14px; /* Smaller font size for mobile */
-    margin-inline-end: 8px;
-  }
-
-  .answer-icon {
-    block-size: 25px;
-    inline-size: 25px; /* Smaller icon size for mobile */
-  }
 }
 
 .ml-2 {
