@@ -95,13 +95,13 @@ const openReview = async () => {
             <VCol
               cols="12"
               md="5"
+              v-if="questionsPacket.is_done !== true"
             >
               <VBtn
                     block
                     type="submit"
                     @click="openReview"
                     color="#0080ff"
-                    v-if="questionsPacket.is_done !== true"
                   >
                   Selesaikan Test
               </VBtn>
