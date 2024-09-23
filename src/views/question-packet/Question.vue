@@ -178,7 +178,7 @@ const isWrongAnswer = (value) => {
                 :value="option.value"
                 :color="isCorrectAnswer(option.value) ? 'green' : (isWrongAnswer(option.value) ? 'red' : 'default')"
                 :class="{
-                  'correct-answer': isCorrectAnswer(option.value),
+                  'correct-answer': isCorrectAnswer(option.value, option.label),
                   'wrong-answer': isWrongAnswer(option.value),
                 }"
                 :disabled="mode === 'review'"
@@ -201,27 +201,29 @@ const isWrongAnswer = (value) => {
         </VCardSubtitle>
       </div>
 
-      <VCardTitle><span style="color: #0080ff;" v-if="mode === 'question'">Seberapa yakin jawaban anda?</span></VCardTitle>
-      <div class="me-n3" style="padding: 20px;">
-        <VRow align="center">
-          <VCol cols="12" md="12">
-            <!-- Use v-model to bind the selected option -->
-            <VRadioGroup v-model="selectedOptionYakin" class="mb-2" @change="saveYakinToLocalStorage">
-              <VRadio
-                v-for="(option, index) in keyakinan"
-                :key="index"
-                :value="option.value"
-                class="custom-radio"
-                :disabled="mode === 'review'"
-              >
-                <template #label>
-                  <span :class="['custom-circle', option.color]"></span>
-                  {{ option.label }}
-                </template>
-              </VRadio>
-            </VRadioGroup>
-          </VCol>
-        </VRow>
+      <div v-if="mode === 'question'">
+        <VCardTitle><span style="color: #0080ff;">Seberapa yakin jawaban anda?</span></VCardTitle>
+        <div class="me-n3" style="padding: 20px;">
+          <VRow align="center">
+            <VCol cols="12" md="12">
+              <!-- Use v-model to bind the selected option -->
+              <VRadioGroup v-model="selectedOptionYakin" class="mb-2" @change="saveYakinToLocalStorage">
+                <VRadio
+                  v-for="(option, index) in keyakinan"
+                  :key="index"
+                  :value="option.value"
+                  class="custom-radio"
+                  :disabled="mode === 'review'"
+                >
+                  <template #label>
+                    <span :class="['custom-circle', option.color]"></span>
+                    {{ option.label }}
+                  </template>
+                </VRadio>
+              </VRadioGroup>
+            </VCol>
+          </VRow>
+        </div>
       </div>
     </VCardItem>
 
