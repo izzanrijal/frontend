@@ -5,16 +5,17 @@ const router = useRouter();
 
 var token = localStorage.getItem('token');
 const screenWidth = ref(window.innerWidth);
+const questionsPacket = ref({});
 
 onMounted(async () => {
   window.addEventListener('resize', updateScreenWidth);
   updateScreenWidth();
   
   if (token) {
-    console.log("question packet detail run: ")
+    console.log("question packet detail run question header")
     try {
       const routeQuestionPacketID = localStorage.getItem('paket');
-      console.log("question packet detail id: ", routeQuestionPacketID)
+      console.log("question packet detail id question header: ", routeQuestionPacketID)
       const response = await axios.get('https://gateway.berkompeten.com/api/student/question-packet/detail?id='+routeQuestionPacketID, {
         headers: {
           Authorization: `Bearer ${token}`,

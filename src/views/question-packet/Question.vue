@@ -180,23 +180,23 @@ const isWrongAnswerIcon = (value) => {
             >
               <VCardSubtitle class="wrap-text">
                 {{ option.value }}. {{ option.label }}
-                
-                <!-- Icons based on correctness -->
+              </VCardSubtitle>
+
+              <!-- Icons on the right -->
+              <div>
                 <VIcon
                   v-if="isCorrectAnswerIcon(option.value)" 
-                  color="green" 
-                  class="ml-2 correct-answer-check-line"
-                  icon="ri-check-line"
+                  class="correct-answer-check-line icon-white"
                 >
+                  ri-check-line
                 </VIcon>
                 <VIcon 
                   v-if="isWrongAnswerIcon(option.value)" 
-                  color="red" 
-                  class="ml-2 wrong-answer-close-line"
-                  icon="ri-close-line"
+                  class="wrong-answer-close-line icon-white"
                 >
+                  ri-close-line
                 </VIcon>
-              </VCardSubtitle>
+              </div>
             </VCardItem>
             <!-- Use v-model to bind the selected option -->
             <VRadioGroup v-model="selectedOption" class="mb-2" @change="saveToLocalStorage" :disabled="mode === 'review'" v-if="mode === 'question'">
@@ -309,15 +309,33 @@ const isWrongAnswerIcon = (value) => {
 }
 
 .correct-answer-check-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px; /* Spacing inside the square */
   border: 1px solid green; /* Border for correct answer */
-  border-radius: 15px;
-  background-color: rgba(0, 255, 0, 10%);
+  border-radius: 15px; /* Rounded square */
+  background-color: green; /* Green background */
+  block-size: 30px; /* Fixed height */
+  color: white; /* Icon color */
+  inline-size: 30px; /* Fixed width to make it square */
 }
 
 .wrong-answer-close-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px; /* Spacing inside the square */
   border: 1px solid red; /* Border for wrong answer */
-  border-radius: 15px;
-  background-color: rgba(255, 0, 0, 10%);
+  border-radius: 15px; /* Rounded square */
+  background-color: red; /* Red background */
+  block-size: 30px; /* Fixed height */
+  color: white; /* Icon color */
+  inline-size: 30px; /* Fixed width to make it square */
+}
+
+.icon-white {
+  color: white !important; /* Force white icon */
 }
 
 .wrap-text {
