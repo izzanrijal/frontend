@@ -177,7 +177,7 @@ const isWrongAnswerIcon = (value) => {
                 {{ option.value }}. {{ option.label }}
                 
                 <!-- Icons based on correctness -->
-                <!-- <VIcon
+                <VIcon
                   v-if="isCorrectAnswerIcon(option.value)" 
                   color="green" 
                   class="ml-2 correct-answer-check-line"
@@ -190,7 +190,7 @@ const isWrongAnswerIcon = (value) => {
                   class="ml-2 wrong-answer-close-line"
                   icon="ri-close-line"
                 >
-                </VIcon> -->
+                </VIcon>
               </VCardSubtitle>
             </VCardItem>
             <!-- Use v-model to bind the selected option -->
