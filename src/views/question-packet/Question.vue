@@ -129,9 +129,10 @@ const saveYakinToLocalStorage = () => {
 
 const isCorrectAnswer = (value, label) => {
   console.log("val: ", value)
+  console.log("label: ", label)
   console.log("correct answer: ", correctAnswer.value)
-  console.log("correct answer label: ", correctAnswerLabel.value)
   correctAnswerLabel.value = label
+  console.log("correct answer label: ", correctAnswerLabel.value)
   return value === correctAnswer.value;
 };
 
@@ -158,14 +159,31 @@ const isWrongAnswer = (value) => {
           <VCol cols="12" md="12">
             <VCardItem 
               :class="{
-                'correct-answer': isCorrectAnswer(option.value),
+                'correct-answer': isCorrectAnswer(option.value, option.label),
                 'wrong-answer': isWrongAnswer(option.value),
               }" 
               v-if="mode === 'review'" 
               v-for="(option, index) in options"
+              :key="index"
             >
-              <VCardSubtitle class="wrap-text">
+              <VCardSubtitle class="wrap-text d-flex align-center">
                 {{ option.value }}. {{ option.label }}
+                
+                <!-- Icons based on correctness -->
+                <v-icon 
+                  v-if="isCorrectAnswer(option.value, option.label)" 
+                  color="green" 
+                  class="ml-2"
+                >
+                  mdi-check-circle
+                </v-icon>
+                <v-icon 
+                  v-if="isWrongAnswer(option.value)" 
+                  color="red" 
+                  class="ml-2"
+                >
+                  mdi-close-circle
+                </v-icon>
               </VCardSubtitle>
             </VCardItem>
             <!-- Use v-model to bind the selected option -->
@@ -176,7 +194,7 @@ const isWrongAnswer = (value) => {
                 :key="index"
                 :label="option.label"
                 :value="option.value"
-                :color="isCorrectAnswer(option.value) ? 'green' : (isWrongAnswer(option.value) ? 'red' : 'default')"
+                :color="isCorrectAnswer(option.value, option.label) ? 'green' : (isWrongAnswer(option.value) ? 'red' : 'default')"
                 :class="{
                   'correct-answer': isCorrectAnswer(option.value, option.label),
                   'wrong-answer': isWrongAnswer(option.value),
@@ -274,22 +292,27 @@ const isWrongAnswer = (value) => {
 }
 
 .correct-answer {
+  padding: 10px;
   border: 1px solid green; /* Border for correct answer */
   border-radius: 15px;
-  background-color: rgba(0, 255, 0, 10%); /* Light green background */
 }
 
 .wrong-answer {
+  padding: 10px;
   border: 1px solid red; /* Border for wrong answer */
   border-radius: 15px;
-  background-color: rgba(255, 0, 0, 10%); /* Light red background */
 }
 
 .wrap-text {
+  color: #000;
   margin-block: 10px; /* Adds top margin */
   white-space: normal;
   word-break: break-all; /* Ensures long words are broken to fit within the container */
   word-wrap: break-word; /* Allows the text to wrap to the next line */
+}
+
+.ml-2 {
+  margin-inline-start: 8px;
 }
 
 /* Optional: Style the radio button when disabled */
