@@ -164,7 +164,6 @@ const isWrongAnswer = (value) => {
               }" 
               v-if="mode === 'review'" 
               v-for="(option, index) in options"
-              :key="index"
             >
               <VCardSubtitle class="wrap-text d-flex align-center">
                 {{ option.value }}. {{ option.label }}
