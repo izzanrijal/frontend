@@ -1,19 +1,42 @@
 <script setup>
-import { ref } from 'vue';
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 // Sample data for lists and results
-const diagnosisList = ref([
-  { title: 'Infeksi Abdomen', group: 'dari Grup Topik Gastroenteropahotologi' },
-  { title: 'Gawat Napas (Respiratory Distress)', group: 'dari Grup Topik Respirasi' },
-  { title: 'Fisiologi Kehamilan, dan lainnya', group: 'dari Grup Topik Reproduksi' },
-  { title: 'Rhinitis Kronik', group: 'dari Grup Topik THT-KL' },
-]);
+const diagnosisAdvice = ref({});
+const topicAdvice = ref({});
+const data = ref({});
+const router = useRouter();
+var token = localStorage.getItem('token');
 
-const results = ref([
-  { label: 'Infeksi Abdomen', value: 'dari Group Topik Gastroe', color: '#005BC5', passed: true },
-  { label: 'Gawat Napas (Respiratory Distress)', value: 'dari Group Topik Respirasi', color: '#005BC5', passed: true },
-  { label: 'Fisiologi Kehamilan, dan Lainnya', value: 'dari Group Topik Reproduksi', color: '#005BC5', passed: true },
-]);
+onMounted(async () => {
+  if (token) {
+    try {
+      const response = await axios.get('https://gateway.berkompeten.com/api/student/analys/result', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      data.value = response.data.data;
+      diagnosisAdvice.value = response.data.data.advise_learn_by_diagnose;
+      topicAdvice.value = response.data.data.advise_learn_by_topic;
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        // Redirect to login page if the response status is 401
+        localStorage.removeItem('token');
+        localStorage.removeItem('profile');
+        router.push('/login');
+      }
+    }
+  } else {
+    // Redirect to login page if token is not present
+    router.push('/login');
+  }
+});
+
+// Slicing logic - limit the number of items shown
 
 </script>
 
@@ -26,7 +49,7 @@ const results = ref([
       >
         <VCard>
           <VCardTitle>
-            <span style="color: #005BC5;">Analisis Paket Tryout 1 sd. Paket Tryout 3</span>
+            <span style="color: #005BC5;">{{ data.title }}</span>
           </VCardTitle>
           <VCardItem class="outlined-card-item">
             <VCardSubtitle class="wrap-text">
@@ -44,14 +67,16 @@ const results = ref([
               <VCardItem 
               :class="[
                 'item-margin item', 
-                index === 0 ? 'item-first' : (index !== diagnosisList.length - 1 ? 'item' : '')
+                index === 0 ? 'item-first' : (index !== diagnosisAdvice.length - 1 ? 'item' : '')
               ]" 
-                v-for="(item, index) in diagnosisList" 
+                v-for="(value, key, index) in diagnosisAdvice" 
                 :key="index"
               >
                 <v-list-item-content>
-                  <v-list-item-title>{{ item.title }}</v-list-item-title>
-                  <v-list-item-subtitle>{{ item.group }}</v-list-item-subtitle>
+                  <v-list-item-title>{{ key }}</v-list-item-title>
+                  <v-list-item-subtitle v-for="(groupItem, groupIndex) in value" :key="groupIndex">
+                   dari Group Topik {{ groupItem.group }}
+                  </v-list-item-subtitle>
                 </v-list-item-content>
               </VCardItem>
             </VCard>
@@ -67,14 +92,16 @@ const results = ref([
               <VCardItem 
               :class="[
                 'item-margin item', 
-                index === 0 ? 'item-first' : (index !== diagnosisList.length - 1 ? 'item' : '')
+                index === 0 ? 'item-first' : (index !== topicAdvice.length - 1 ? 'item' : '')
               ]" 
-                v-for="(item, index) in diagnosisList" 
+                v-for="(value, key, index) in topicAdvice" 
                 :key="index"
               >
                 <v-list-item-content>
-                  <v-list-item-title>{{ item.title }}</v-list-item-title>
-                  <v-list-item-subtitle>{{ item.group }}</v-list-item-subtitle>
+                  <v-list-item-title>{{ key }}</v-list-item-title>
+                  <v-list-item-subtitle v-for="(groupItem, groupIndex) in value" :key="groupIndex">
+                   dari Sistem Topik {{ groupItem.group }}
+                  </v-list-item-subtitle>
                 </v-list-item-content>
               </VCardItem>
             </VCard>
