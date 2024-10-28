@@ -101,7 +101,7 @@ const openDiscussion = async () => {
 
 <template>
   <div style="max-block-size: 300px; overflow-y: auto;">
-    <VCard class="mb-4">
+    <VCard class="outlined-card-item mb-4">
       <VCardItem class="text-left">
         <div class="me-n3" style="padding: 20px;">
           <VRow align="center" class="d-flex flex-wrap row-item-parent">
@@ -131,11 +131,9 @@ const openDiscussion = async () => {
       </VCardItem>
     </VCard>
   </div>
-  
-  
 
   <div style="max-block-size: 300px; overflow-y: auto;">
-    <VCard class="mb-4">
+    <VCard class="outlined-card-item mb-4">
       <VCardItem>
         <VCardTitle><span style="color: #0080ff;">Analisis & Advice</span></VCardTitle>
         <div class="me-n3" style="padding: 20px;">
@@ -156,25 +154,27 @@ const openDiscussion = async () => {
       </VRow>
     </VCard>
   </div>
-  <VCard>
-    <div style="max-block-size: 300px; overflow-y: auto;">
-      <VCardItem v-for="(question, index) in skippedQuestions" :key="question.id" class="outlined-card-item">
-        <div class="me-n3" style="padding: 10px;">
-            <VRow align="center">
-                <p style="color: black; padding-block-start: 15px;" class="font-weight-semibold mb-1">
-                    {{ question.question_number }} {{ question.question }}
-                </p>
-            </VRow>
-        </div>
-      </VCardItem>  
-    </div>
-  </VCard>
+
+  <div>
+    <VCard class="outlined-card-item mb-4">
+      <VCardItem style="max-block-size: 300px; overflow-y: auto;">
+        <VCardItem v-for="(question, index) in skippedQuestions" :key="question.id" class="outlined-card-item">
+          <div class="me-n3" style="padding: 10px;">
+              <VRow align="center">
+                  <p style="color: black; padding-block-start: 15px;" class="font-weight-semibold mb-1">
+                      {{ question.question_number }} {{ question.question }}
+                  </p>
+              </VRow>
+          </div>
+        </VCardItem>  
+      </VCardItem>
+    </VCard>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .outlined-card-item {
-  border: 1px solid #ccc; /* Customize the color and size as needed */
-  border-radius: 5px; /* Optional: Add border radius for rounded corners */
+  border-radius: 15px; /* Optional: Add border radius for rounded corners */
   margin: 10px;
 }
 

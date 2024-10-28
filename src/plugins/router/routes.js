@@ -53,7 +53,7 @@ export const routes = [
         component: () => import('@/pages/lab-values.vue'),
       },
       {
-        path: 'analisa-advis',
+        path: 'analisa-advis/:menu',
         component: () => import('@/pages/result-analyst-dashboard.vue'),
       },
     ],

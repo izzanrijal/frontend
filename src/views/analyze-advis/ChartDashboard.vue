@@ -1,53 +1,115 @@
 <script setup>
+import axios from 'axios';
 import { Chart, registerables } from 'chart.js';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
 Chart.register(...registerables);
 
 const canvas = ref(null);
+const results = ref([]);
+const chart = ref(null);
+var token = localStorage.getItem('token');
+const route = useRoute();
+const menuIndex = ref(route.params.menu);
+
+const fetchChartData = async () => {
+  try {
+    const response = await axios.get('https://gateway.berkompeten.com/api/student/analys/chart/result', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      params: {
+        menu: menuIndex.value,
+      }
+    });
+
+    if (response.data.error) {
+      console.error(response.data.message);
+      return;
+    }
+
+    const data = response.data.data;
+    const labels = data.userScores.map(item => item.tryout);
+    const userScores = data.userScores.map(item => parseFloat(item.score));
+    const passingThreshold = data.passingThreshold.map(item => item.score);
+    const averageScores = data.averageScores.map(item => item.score);
+
+    // Check for chart instance existence before attempting to update or create
+    if (chart.value && chart.value.destroy) {
+      chart.value.destroy(); // Destroy existing instance if it exists
+    }
+    
+    // Proceed with chart creation only if canvas context is available
+    if (canvas.value) {
+      const ctx = canvas.value.getContext('2d');
+      chart.value = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Hasil Tryout Anda',
+              data: userScores,
+              borderColor: 'blue',
+              borderWidth: 1,
+            },
+            {
+              label: 'Nilai Batas Kelulusan',
+              data: passingThreshold,
+              borderColor: 'green',
+              borderWidth: 1,
+            },
+            {
+              label: 'Nilai Rata-rata Semua Peserta',
+              data: averageScores,
+              borderColor: 'orange',
+              borderWidth: 3,
+            },
+          ],
+        },
+        options: {
+          plugins: { // Make sure there are no undefined plugins or unnecessary configurations
+            legend: {
+              display: true,
+              position: 'top',
+            },
+          },
+        },
+      });
+    }
+
+    // Update results section
+    results.value = data.userScores.map(score => ({
+      label: score.tryout,
+      value: `${score.score}% (${parseFloat(score.score) >= 63.5 ? 'Memenuhi Nilai Batas Kelulusan' : 'Belum Memenuhi Nilai Batas Kelulusan'})`,
+      color: parseFloat(score.score) >= 63.5 ? '#005BC5' : '#FFA39E',
+      passed: parseFloat(score.score) >= 63.5
+    }));
+  } catch (error) {
+    console.error("Error fetching chart data:", error);
+  }
+};
 
 onMounted(() => {
-  const ctx = canvas.value.getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Tryout 1', 'Tryout 2', 'Tryout 3'],
-      datasets: [
-        {
-          label: 'Hasil Tryout Anda',
-          data: [60, 62, 65],
-          borderColor: 'blue',
-          borderWidth: 1,
-        },
-        {
-          label: 'Nilai Batas Kelulusan',
-          data: [62, 65, 65],
-          borderColor: 'green',
-          borderWidth: 1,
-        },
-        {
-          label: 'Nilai Rata-rata Semua Peserta',
-          data: [58, 61, 63],
-          borderColor: 'orange',
-          borderWidth: 1,
-        },
-      ],
-    },
-  });
+  fetchChartData();
 });
 
-const results = ref([
-  { label: 'Try Out Paket 1', value: '61.5% (Belum Memenuhi Nilai Batas Kelulusan)', color: '#FFA39E', passed: false },
-  { label: 'Try Out Paket 2', value: '61.5% (Belum Memenuhi Nilai Batas Kelulusan)', color: '#FFA39E', passed: false },
-  { label: 'Try Out Paket 3', value: '65.5% (Memenuhi Nilai Batas Kelulusan)', color: '#005BC5', passed: true },
-]);
+// Watch for changes in route params
+watch(
+  () => route.params.menu,
+  (newMenuIndex) => {
+    if (newMenuIndex !== menuIndex.value) {
+      menuIndex.value = newMenuIndex;
+      fetchChartData();
+    }
+  }
+);
 </script>
 
 <template>
   <VCard class="outradius-card-item">
-      <VCol
-        cols="12"
-        md="12"
-      >
+      <VCol cols="12" md="12">
         <VCardTitle>
           <span style="color: #005BC5;">Progress Pengerjaan Tryout</span>
         </VCardTitle>
@@ -101,4 +163,3 @@ const results = ref([
   word-wrap: break-word; /* Allows the text to wrap to the next line */
 }
 </style>
-
