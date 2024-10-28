@@ -4,11 +4,13 @@ import AnalyzeAdvisDashboard from '@/views/analyze-advis/AnalyzeAdvisDashboard.v
 import ChartDashboard from '@/views/analyze-advis/ChartDashboard.vue';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const token = localStorage.getItem('token'); // Replace with the actual key you use for the token
 const userProfile = ref(null);
 const router = useRouter();
+const route = useRoute()
+const menuIndex = ref(route.params.menu)
 
 onMounted(async () => {
   if (token) {
@@ -39,14 +41,14 @@ onMounted(async () => {
       cols="12"
       sm="6"
     >
-      <AnalyzeAdvisDashboard :userProfile="userProfile" />
+      <AnalyzeAdvisDashboard :menuIndex="menuIndex" />
     </VCol>
 
     <VCol
       cols="12"
       sm="6"
     >
-      <ChartDashboard />
+      <ChartDashboard :menuIndex="menuIndex"/>
     </VCol>
   </VRow>
   <!-- <VRow class="match-height">
