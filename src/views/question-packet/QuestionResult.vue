@@ -8,6 +8,9 @@ const questionPacketResult = ref({});
 const skippedQuestions = ref([]);
 const router = useRouter();
 const route = useRoute()
+const analysisAdvice = ref({});
+const adviseByDiagnose = ref([]);
+const adviseByTopic = ref([]);
 const options = ref([])
 var token = localStorage.getItem('token');
 
@@ -15,6 +18,7 @@ const item = ["Reparasi Paru", "Reproduksi"]
 
 onMounted(async () => {
   await getQuestionPacketScore()
+  await fetchQuestionPacketAnalyzeResult()
   await getSkipQuestions()
 });
 
@@ -22,6 +26,7 @@ const getQuestionPacketScore = async () => {
   if (token) {
     try {
       const routeQuestionPacketID = localStorage.getItem('paket')
+      console.log("question packet id: " + routeQuestionPacketID)
       const response = await axios.get('https://gateway.berkompeten.com/api/student/user/test/result?id='+routeQuestionPacketID, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -41,6 +46,41 @@ const getQuestionPacketScore = async () => {
     router.push('/login');
   }
 };
+
+const fetchQuestionPacketAnalyzeResult = async () => {
+  if (token) {
+    try {
+      const questionPacketId = localStorage.getItem('paket');
+      const response = await axios.get(
+        `https://gateway.berkompeten.com/api/student/analys/result-by-question-packet-id?question_packet_id=${questionPacketId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      analysisAdvice.value = response.data.data;
+      adviseByDiagnose.value = Object.entries(response.data.data.advise_learn_by_diagnose).map(
+        ([subtopic, details]) => ({
+          subtopic,
+          ...details,
+        })
+      );
+
+      adviseByTopic.value = Object.entries(response.data.data.advise_learn_by_topic).map(([group_topic, subtopics]) => ({
+        group_topic,
+        subtopics,
+      }));
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        // Redirect to login page if the response status is 401
+        localStorage.removeItem('token');
+        router.push('/login');
+      }
+    }
+  }
+}
 
 const getSkipQuestions = async () => {
   if (token) {
@@ -149,13 +189,21 @@ const openDiscussion = async () => {
       </VCardItem>
       <VRow align="center" class="d-flex flex-wrap row-item">
         <div class="d-flex align-center flex-wrap mb-3">
-          <VChip class="d-flex flex-wrap v-item" color="#0080ff" size="small" v-for="child in item">{{ child }}</VChip>
+          <VChip
+            class="d-flex flex-wrap v-item"
+            color="#0080ff"
+            size="small"
+            v-for="(diagnosis, index) in adviseByDiagnose"
+            :key="index"
+          >
+            {{ diagnosis.subtopic }} ({{ diagnosis.group_topic }})
+          </VChip>
         </div>
       </VRow>
     </VCard>
   </div>
 
-  <div>
+  <div  v-if="skippedQuestions.length !== 0">
     <VCard class="outlined-card-item mb-4">
       <VCardItem style="max-block-size: 300px; overflow-y: auto;">
         <VCardItem v-for="(question, index) in skippedQuestions" :key="question.id" class="outlined-card-item">
