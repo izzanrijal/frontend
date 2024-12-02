@@ -3,8 +3,8 @@ import axios from 'axios';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-const diagnosisAdvice = ref({});
-const topicAdvice = ref({});
+const diagnosisAdvice = ref([]);
+const topicAdvice = ref([]);
 const data = ref({});
 const router = useRouter();
 const route = useRoute();
@@ -27,18 +27,31 @@ const fetchData = async () => {
         },
         params: {
           menu: menuIndex.value, // Pass the menu index as a query parameter
-        }
+        },
       });
 
+      // Process response data
       data.value = response.data.data;
-      diagnosisAdvice.value = response.data.data.advise_learn_by_diagnose;
-      topicAdvice.value = response.data.data.advise_learn_by_topic;
+      
+      // Transforming `advise_learn_by_diagnose` to an array for easier rendering
+      diagnosisAdvice.value = Object.entries(response.data.data.advise_learn_by_diagnose).map(([key, value]) => ({
+        subtopic: key,
+        ...value,
+      }));
+
+      // Transforming `advise_learn_by_topic` to an array for easier rendering
+      topicAdvice.value = Object.entries(response.data.data.advise_learn_by_topic).map(([key, value]) => ({
+        group_topic: key,
+        items: value,
+      }));
     } catch (error) {
       if (error.response && error.response.status === 401) {
         // Redirect to login page if the response status is 401
         localStorage.removeItem('token');
         localStorage.removeItem('profile');
         router.push('/login');
+      } else {
+        console.error('Error fetching data:', error);
       }
     }
   } else {
@@ -56,7 +69,6 @@ watch(
   (newMenuIndex) => {
     menuIndex.value = newMenuIndex;
     fetchData(); // Fetch data when the menu index changes
-    console.log("reload");
   }
 );
 </script>
@@ -82,23 +94,29 @@ watch(
               <span style="color: #005BC5;">Saran Prioritas Pembelajaran Berdasarkan Diagnosis</span>
             </v-card-title>
             <VCardSubtitle class="wrap-text">
-              #lorem78429 Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.
+              Berikut adalah diagnosis yang membutuhkan perhatian untuk perbaikan.
             </VCardSubtitle>
             <VCard>
-              <VCardItem 
-                v-for="(value, key, index) in (showMoreDiagnosis ? diagnosisAdvice : Object.keys(diagnosisAdvice).slice(0, 5).reduce((acc, curr) => ({ ...acc, [curr]: diagnosisAdvice[curr] }), {}))" 
-                :key="key"
-                :class="['item-margin item', index === 0 ? 'item-first' : (index !== Object.keys(diagnosisAdvice).length - 1 ? 'item' : '')]"
+              <VCardItem
+                v-for="(diagnosis, index) in (showMoreDiagnosis ? diagnosisAdvice : diagnosisAdvice.slice(0, 5))"
+                :key="index"
+                :class="['item-margin item', index === 0 ? 'item-first' : (index !== diagnosisAdvice.length - 1 ? 'item' : '')]"
               >
                 <v-list-item-content>
-                  <v-list-item-title><span style="color: #005BC5;"><b>{{ key }}</b></span></v-list-item-title>
-                  <v-list-item-subtitle v-for="(groupItem, groupIndex) in value" :key="groupIndex">
-                    <span style="color: #005BC5;">dari Group Topik {{ groupItem.group }}</span>
+                  <v-list-item-title>
+                    <span style="color: #005BC5;"><b>{{ diagnosis.subtopic }}</b></span>
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    <span style="color: #005BC5;">Dari Group Topik: {{ diagnosis.group_topic }}</span>
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </VCardItem>
               <div style="margin-block-start: 10px; text-align: center;">
-                <a href="#" @click.prevent="showMoreDiagnosis = !showMoreDiagnosis" style="color: #005BC5; text-decoration: none;">
+                <a
+                  href="#"
+                  @click.prevent="showMoreDiagnosis = !showMoreDiagnosis"
+                  style="color: #005BC5; text-decoration: none;"
+                >
                   {{ showMoreDiagnosis ? 'Lebih Sedikit' : 'Selengkapnya' }}
                 </a>
               </div>
@@ -111,23 +129,29 @@ watch(
               <span style="color: #005BC5;">Saran Prioritas Pembelajaran Berdasarkan Grup Topic</span>
             </v-card-title>
             <VCardSubtitle class="wrap-text">
-              #lorem78429 Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.
+              Berikut adalah grup topik yang memerlukan perhatian.
             </VCardSubtitle>
             <VCard>
-              <VCardItem 
-                v-for="(value, key, index) in (showMoreTopic ? topicAdvice : Object.keys(topicAdvice).slice(0, 5).reduce((acc, curr) => ({ ...acc, [curr]: topicAdvice[curr] }), {}))" 
-                :key="key"
-                :class="['item-margin item', index === 0 ? 'item-first' : (index !== Object.keys(topicAdvice).length - 1 ? 'item' : '')]"
+              <VCardItem
+                v-for="(topic, index) in (showMoreTopic ? topicAdvice : topicAdvice.slice(0, 5))"
+                :key="index"
+                :class="['item-margin item', index === 0 ? 'item-first' : (index !== topicAdvice.length - 1 ? 'item' : '')]"
               >
                 <v-list-item-content>
-                  <v-list-item-title><span style="color: #005BC5;"><b>{{ key }}</b></span></v-list-item-title>
-                  <v-list-item-subtitle v-for="(groupItem, groupIndex) in value" :key="groupIndex">
-                    <span style="color: #005BC5;">dari Sistem Topik {{ groupItem.group }}</span>
+                  <v-list-item-title>
+                    <span style="color: #005BC5;"><b>{{ topic.group_topic }}</b></span>
+                  </v-list-item-title>
+                  <v-list-item-subtitle v-for="(item, groupIndex) in topic.items" :key="groupIndex">
+                    <span style="color: #005BC5;">Subtopic: {{ item.subtopic }}</span>
                   </v-list-item-subtitle>
                 </v-list-item-content>
               </VCardItem>
               <div style="margin-block-start: 10px; text-align: center;">
-                <a href="#" @click.prevent="showMoreTopic = !showMoreTopic" style="color: #005BC5; text-decoration: none;">
+                <a
+                  href="#"
+                  @click.prevent="showMoreTopic = !showMoreTopic"
+                  style="color: #005BC5; text-decoration: none;"
+                >
                   {{ showMoreTopic ? 'Lebih Sedikit' : 'Selengkapnya' }}
                 </a>
               </div>
