@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { VCard } from 'vuetify/lib/components/index.mjs';
  // Replace with the actual key you use for the token
 const questionsPacket = ref({});
 const router = useRouter();
@@ -132,17 +133,24 @@ const openDetail = async (id, number) => {
                     </VAvatar>
                     <div class="me-n3" style="padding: 20px;">
                       
-                      <VCardTitle><span style="color: gray;">Total Soal</span></VCardTitle>
+                      <VCardTitle><span style="color: gray;"><b>Total Soal: {{ questionsPacket.total_question }}</b> </span></VCardTitle>
                       <!-- <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date === '-' && item.is_active === true">
                         Mulai dikerjakan: {{ item.start_date }}
                       </p>
                       <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date !== '-' && item.is_active === true">
                         Diselesaikan: {{ item.finish_date }}
                       </p> -->
+                      
                       <p
+                        v-if="questionsPacket.is_done === false"
                         style="color: black;"
                         href="javascript:void(0)"
-                      ><b>{{ questionsPacket.total_question }}</b> Soal</p>
+                      >Siapkan diri Anda untuk mengerjakan paket soal yang telah dirancang untuk menguji pemahaman Anda pada berbagai topik.</p>
+                      <p
+                        v-if="questionsPacket.is_done === true"
+                        style="color: black;"
+                        href="javascript:void(0)"
+                      >Anda telah selesai mengerjakan soal-soal dalam paket ini. Kini saatnya untuk meninjau jawaban dan memahami pembahasan untuk meningkatkan pemahaman Anda.</p>
                     </div>
                   </VRow>
                 </VCardItem>
@@ -159,14 +167,19 @@ const openDetail = async (id, number) => {
               </h6> -->
             </template>
           </VCardItem>
-          <VRow align="center" class="d-flex flex-wrap row-item">
+          <VCard align="center" class="d-flex flex-wrap row-item">
             <div class="d-flex align-center flex-wrap mb-3">
               <p><b>Detail</b></p>
             </div>
-            <VRow align="center" class="d-flex flex-wrap row-item">
-              <p>#Lorem29873 ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+            <VRow v-if="questionsPacket.is_done === false" align="center" class="d-flex flex-wrap row-item">
+              <li>Selesaikan paket soal ini untuk mendapatkan analisis yang dipersonalisasi khusus untuk Anda.</li>
+              <li>Tidak perlu terburu-buru—Anda dapat melanjutkannya kapan saja. Namun, pastikan paket selesai sebelum tes aktual dimulai. Semakin cepat selesai, semakin cepat pula hasil dan analisis Anda tersedia.</li>
+              <p>Perhatian: Kerjakan soal ini dengan jujur dan tanpa bantuan untuk hasil yang akurat. Jika tidak tahu jawabannya, tandai "Tidak Tahu" agar prioritas pembelajaran Anda dapat dipetakan dengan tepat.</p>
             </VRow>
-          </VRow>
+            <VRow v-if="questionsPacket.is_done === true" align="center" class="d-flex flex-wrap row-item">
+              <li>Tinjau jawaban Anda dan lihat pembahasan lengkap untuk setiap soal.</li>
+            </VRow>
+          </VCard>
          
         </VCard>
       </VCol>
@@ -188,13 +201,7 @@ const openDetail = async (id, number) => {
                 style="margin-block-start: 10px;"
               />
               <div class="d-flex flex-column row-item" style="padding: 10px;">
-                <!-- <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date === '-' && item.is_active === true">
-                  Mulai dikerjakan: {{ item.start_date }}
-                </p>
-                <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date !== '-' && item.is_active === true">
-                  Diselesaikan: {{ item.finish_date }}
-                </p> -->
-                <p class="mb-0"><span style=" color: #0080ff;margin-block-end: 0;">#Lorem29873 ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</span></p>
+                <p v-if="questionsPacket.is_done === true" class="mb-0"><span style=" color: #0080ff;margin-block-end: 0;">Perhatian: Halaman berikutnya akan menampilkan soal dan pembahasan dari paket ini. Gunakan sebagai bahan pembelajaran dan evaluasi untuk memahami soal-soal yang belum Anda kuasai.</span></p>
               </div>
             </VRow>
           </VCardItem>
