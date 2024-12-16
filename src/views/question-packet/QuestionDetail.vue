@@ -167,20 +167,21 @@ const openDetail = async (id, number) => {
               </h6> -->
             </template>
           </VCardItem>
-          <VCard align="center" class="d-flex flex-wrap row-item">
+          <VCardItem align="center" class="d-flex flex-wrap row-item">
             <div class="d-flex align-center flex-wrap mb-3">
               <p><b>Detail</b></p>
             </div>
-            <VRow v-if="questionsPacket.is_done === false" align="center" class="d-flex flex-wrap row-item">
-              <li>Selesaikan paket soal ini untuk mendapatkan analisis yang dipersonalisasi khusus untuk Anda.</li>
-              <li>Tidak perlu terburu-buru—Anda dapat melanjutkannya kapan saja. Namun, pastikan paket selesai sebelum tes aktual dimulai. Semakin cepat selesai, semakin cepat pula hasil dan analisis Anda tersedia.</li>
+            <div v-if="questionsPacket.is_done === false" >
+              <ul>
+                <li>Selesaikan paket soal ini untuk mendapatkan analisis yang dipersonalisasi khusus untuk Anda.</li>
+                <li>Tidak perlu terburu-buru—Anda dapat melanjutkannya kapan saja...</li>
+              </ul>
               <p>Perhatian: Kerjakan soal ini dengan jujur dan tanpa bantuan untuk hasil yang akurat. Jika tidak tahu jawabannya, tandai "Tidak Tahu" agar prioritas pembelajaran Anda dapat dipetakan dengan tepat.</p>
-            </VRow>
-            <VRow v-if="questionsPacket.is_done === true" align="center" class="d-flex flex-wrap row-item">
+            </div>
+            <div v-if="questionsPacket.is_done === true" >
               <li>Tinjau jawaban Anda dan lihat pembahasan lengkap untuk setiap soal.</li>
-            </VRow>
-          </VCard>
-         
+            </div>
+          </VCardItem>
         </VCard>
       </VCol>
     </VRow>
@@ -190,7 +191,7 @@ const openDetail = async (id, number) => {
         cols="12"
         md="12"
       >
-        <VCard class="mb-4">
+        <VCard class="mb-4" v-if="questionsPacket.is_done === true" >
           <VCardItem>
             <VRow class="d-flex flex-wrap row-item-parent">
               <VIcon
@@ -201,7 +202,7 @@ const openDetail = async (id, number) => {
                 style="margin-block-start: 10px;"
               />
               <div class="d-flex flex-column row-item" style="padding: 10px;">
-                <p v-if="questionsPacket.is_done === true" class="mb-0"><span style=" color: #0080ff;margin-block-end: 0;">Perhatian: Halaman berikutnya akan menampilkan soal dan pembahasan dari paket ini. Gunakan sebagai bahan pembelajaran dan evaluasi untuk memahami soal-soal yang belum Anda kuasai.</span></p>
+                <p class="mb-0"><span style=" color: #0080ff;margin-block-end: 0;">Perhatian: Halaman berikutnya akan menampilkan soal dan pembahasan dari paket ini. Gunakan sebagai bahan pembelajaran dan evaluasi untuk memahami soal-soal yang belum Anda kuasai.</span></p>
               </div>
             </VRow>
           </VCardItem>
@@ -267,4 +268,17 @@ const openDetail = async (id, number) => {
 .v-item {
   margin: 2px; /* Remove bottom margin for the last row */
 }
+
+ul {
+  list-style-type: disc; /* Keep bullets */
+  margin-inline-start: 20px; /* Indent the bullets */
+  padding-inline-start: 0; /* Ensure no extra padding */
+  text-align: start; /* Align content to the left */
+}
+
+ul li {
+  margin-block-end: 8px; /* Space between items */
+  text-align: start;
+}
+
 </style>
