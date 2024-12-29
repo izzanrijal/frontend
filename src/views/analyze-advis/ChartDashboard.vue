@@ -12,6 +12,7 @@ const chart = ref(null);
 var token = localStorage.getItem('token');
 const route = useRoute();
 const menuIndex = ref(route.params.menu);
+const recomendationAdvice = ref(''); // New ref for recommendation advice
 
 const fetchChartData = async () => {
   try {
@@ -86,6 +87,9 @@ const fetchChartData = async () => {
       color: parseFloat(score.score) >= 63.5 ? '#005BC5' : '#FFA39E',
       passed: parseFloat(score.score) >= 63.5
     }));
+
+    // Update recommendation advice
+    recomendationAdvice.value = data.recomandationAdvise;
   } catch (error) {
     console.error("Error fetching chart data:", error);
   }
@@ -136,10 +140,8 @@ watch(
             <span style="color: #005BC5;"> Rekomendasi & Advice </span>
           </VCardTitle>
           <VCardSubtitle class="wrap-text">
-            #lorem45952 Hasil 3 tryout Anda belum mencapai batas kelulusan. Diperlukan pembelajaran intensif lebih lanjut.
-          </VCardSubtitle>
-          <VCardSubtitle class="wrap-text">
-            Tekankan pentingnya latihan untuk meningkatkan keterampilan. Sarankan peserta untuk meluangkan waktu untuk latihan lebih lanjut dengan menggunakan sumber daya yang tersedia, seperti latihan soal atau simulasi tes.
+            <!-- Bind the recommendation advice as raw HTML -->
+            <div v-html="recomendationAdvice"></div>
           </VCardSubtitle>
         </VCardItem>
       </VCol>
