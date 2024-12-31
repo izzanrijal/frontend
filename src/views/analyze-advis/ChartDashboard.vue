@@ -89,10 +89,16 @@ const fetchChartData = async () => {
     }));
 
     // Update recommendation advice
-    recomendationAdvice.value = data.recomandationAdvise;
+    recomendationAdvice.value = decodeHtml(data.recomandationAdvise);
   } catch (error) {
     console.error("Error fetching chart data:", error);
   }
+};
+
+const decodeHtml = (html) => {
+  const txt = document.createElement("textarea");
+  txt.innerHTML = html;
+  return txt.value;
 };
 
 onMounted(() => {
@@ -159,6 +165,7 @@ watch(
 }
 
 .wrap-text {
+  font-family: Arial, sans-serif; /* Use a font that supports all required symbols */
   margin-block: 10px; /* Adds top margin */
   white-space: normal;
   word-break: break-all; /* Ensures long words are broken to fit within the container */
