@@ -88,8 +88,12 @@ const fetchChartData = async () => {
       passed: parseFloat(score.score) >= 63.5
     }));
 
+    console.log(data.recomandationAdvise);
+
     // Update recommendation advice
     recomendationAdvice.value = decodeHtml(data.recomandationAdvise);
+
+    console.log(recomendationAdvice.value);
   } catch (error) {
     console.error("Error fetching chart data:", error);
   }
@@ -141,7 +145,7 @@ watch(
             </div>
           </VCardText>
         </VCardItem>
-        <VCardItem class="card-item">
+        <div class="card-item-recommend">
           <VCardTitle>
             <span style="color: #005BC5;"> Rekomendasi & Advice </span>
           </VCardTitle>
@@ -149,7 +153,7 @@ watch(
             <!-- Bind the recommendation advice as raw HTML -->
             <div v-html="recomendationAdvice"></div>
           </VCardSubtitle>
-        </VCardItem>
+        </div>
       </VCol>
   </VCard>
 </template>
@@ -164,11 +168,36 @@ watch(
   border-block-end: 1px solid #ccc; /* Customize the color and size as needed */
 }
 
-.wrap-text {
-  font-family: Arial, sans-serif; /* Use a font that supports all required symbols */
-  margin-block: 10px; /* Adds top margin */
-  white-space: normal;
-  word-break: break-all; /* Ensures long words are broken to fit within the container */
-  word-wrap: break-word; /* Allows the text to wrap to the next line */
+.card-item-recommend {
+  border-block-end: 1px solid #ccc; /* Customize the color and size as needed */
+  margin-inline-start: 4px;
 }
+
+.wrap-text {
+  color: #333; /* Text color */
+  font-family: Arial, sans-serif; /* Use a clean, readable font */
+  font-size: 1rem; /* Legible font size */
+  line-height: 1.5; /* Improve readability */
+  margin-block: 10px; /* Add vertical spacing */
+  text-align: start; /* Align text to the start */
+  white-space: normal; /* Preserve text formatting */
+  word-break: break-word; /* Allow long words to wrap */
+}
+
+.wrap-text p, .wrap-text ul {
+  display: inline; /* Display both inline */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
+
+.wrap-text ul {
+  list-style-type: none; /* Remove bullet points */
+  padding-inline-start: 0; /* Remove indentation */
+}
+
+.wrap-text ul li {
+  display: inline; /* Make list items inline */
+  margin-inline-end: 10px; /* Add spacing between items */
+}
+
 </style>
