@@ -19,7 +19,10 @@ const form = reactive({
   remember: false,
 })
 
+const savedEmails = ref([]) // Store saved emails
 const vuetifyTheme = useTheme()
+const showSuggestions = ref(false);
+const filteredEmails = ref([]);
 
 const authThemeMask = computed(() => {
   return vuetifyTheme.global.name.value === 'light' ? authV1MaskLight : authV1MaskDark
@@ -29,13 +32,50 @@ const isPasswordVisible = ref(false)
 const loginError = ref(null)
 var token = localStorage.getItem('token');
 
+// Filter emails based on user input
+const filterEmails = () => {
+  const query = form.email.toLowerCase();
+  filteredEmails.value = savedEmails.value.filter((email) =>
+    email.toLowerCase().includes(query)
+  );
+};
+
+// Select email from suggestions
+const selectEmail = (email) => {
+  form.email = email;
+  showSuggestions.value = false;
+};
+
+// Hide suggestions on blur (with a slight delay to allow selection)
+const hideSuggestions = () => {
+  setTimeout(() => (showSuggestions.value = false), 200);
+};
+
 onMounted(async () => {
   console.log("token login: ", token)
 
   if (token) {
     router.push('/dashboard');
   }
+
+  // Load emails from localStorage
+  const emails = JSON.parse(localStorage.getItem('savedEmails')) || []
+  savedEmails.value = emails
 });
+
+// Save new email to storage when login is successful
+const saveEmail = (email) => {
+  if (!savedEmails.value.includes(email)) {
+    savedEmails.value.push(email);
+    localStorage.setItem('savedEmails', JSON.stringify(savedEmails.value));
+  }
+};
+
+const handleCustomEmail = (value) => {
+  if (!savedEmails.value.includes(value)) {
+    form.email = value; // Keep the custom value in the input
+  }
+};
 
 const login = async (tokenRecaptcha) => {
   try {
@@ -74,6 +114,9 @@ const login = async (tokenRecaptcha) => {
 
         // Save the token in local storage or Vuex store for future requests
         localStorage.setItem('token', token);
+
+        // Save email upon successful login
+        saveEmail(form.email)
 
         // Redirect to the desired route upon successful login
         router.push('/dashboard');
@@ -156,8 +199,27 @@ const navigateToForgotPassword = () => {
               <VTextField
                 v-model="form.email"
                 label="Email"
-                type="email"
+                placeholder="Enter your email"
+                clearable
+                autocomplete="off"
+                @focus="showSuggestions = true"
+                @blur="hideSuggestions"
+                @input="filterEmails"
               />
+
+              <!-- Suggestions Dropdown -->
+              <VList
+                v-if="showSuggestions && filteredEmails.length"
+                class="suggestions-list"
+              >
+                <VListItem
+                  v-for="email in filteredEmails"
+                  :key="email"
+                  @mousedown.prevent="selectEmail(email)"
+                >
+                  <VListItemTitle>{{ email }}</VListItemTitle>
+                </VListItem>
+              </VList>
             </VCol>
 
             <!-- password -->
@@ -259,4 +321,22 @@ const navigateToForgotPassword = () => {
 
 <style lang="scss" scoped>
 @use "@core/scss/pages/page-auth.scss";
+
+.suggestions-list {
+  padding: 0;
+  border: 1px solid #ccc;
+  background: white;
+  margin-block: 4px 0;
+  margin-inline: 0;
+  max-block-size: 150px;
+  overflow-y: auto;
+}
+
+.suggestions-list .v-list-item {
+  cursor: pointer;
+}
+
+.suggestions-list .v-list-item:hover {
+  background-color: #f0f0f0;
+}
 </style>
