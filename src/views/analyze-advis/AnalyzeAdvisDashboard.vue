@@ -137,13 +137,17 @@ watch(
                   <b>{{ index + 1 }}. {{ topic.group_topic }}</b>
                 </p>
                 <ul style="margin: 0; color: #005BC5; list-style-type: circle; padding-inline-start: 20px;">
-                  <li
-                    v-for="(subtopic, subIndex) in topic.items"
-                    :key="subIndex"
-                    style="margin-block-end: 5px;"
-                  >
-                    {{ subtopic.subtopic }}
-                  </li>
+                  <div v-for="(subtopic, subIndex) in topic.items"
+                  :key="subIndex" style="margin-block-end: 5px;">
+                    <li
+                      v-for="(sub, childIndex) in subtopic.subtopic"
+                      :key="childIndex"
+                      style="margin-block-end: 5px;"
+                    >
+                      {{ sub }}
+                    </li>
+                  </div>
+                  
                 </ul>
               </VCardItem>
               <div style="margin-block-start: 10px; text-align: center;">
