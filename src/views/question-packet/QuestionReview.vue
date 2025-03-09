@@ -21,7 +21,7 @@ const getQuestionPacketReview = async () => {
   if (token) {
     try {
       const routeQuestionPacketID = localStorage.getItem('paket')
-      const response = await axios.get('https://gateway.berkompeten.id/api/student/user/test/review?id='+routeQuestionPacketID, {
+      const response = await axios.get('/api/student/user/test/review?id='+routeQuestionPacketID, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -40,7 +40,7 @@ const getSkipQuestions = async () => {
   if (token) {
     try {
       const routeQuestionPacketID = localStorage.getItem('paket')
-      const response = await axios.get('https://gateway.berkompeten.id/api/student/user/skip/questions?id='+routeQuestionPacketID, {
+      const response = await axios.get('/api/student/user/skip/questions?id='+routeQuestionPacketID, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -74,7 +74,7 @@ const finishTest = async () => {
     // const tokenRecaptcha = await grecaptcha.execute('6LfXRJ8pAAAAAOt1gKzRNIj1GOYGtp-DB_tz73OR', { action: 'submit' });
     console.log("paket id: ",question_packet_id)
 
-    const response = await axios.post('https://gateway.berkompeten.id/api/student/user/finish-the-test', {
+    const response = await axios.post('/api/student/user/finish-the-test', {
       question_packet_id: question_packet_id
     }, {
       headers: {

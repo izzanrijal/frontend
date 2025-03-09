@@ -27,7 +27,7 @@ const token = localStorage.getItem('token')
 
 onMounted(async () => {
   try {
-      const response = await axios.get('https://gateway.berkompeten.id/api/student/profile', {
+      const response = await axios.get('/api/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -147,7 +147,7 @@ const currencies = [
 const fetchUniversityDetail = async (id) => {
   try {
     console.log("param universitas: ", id)
-    const response = await axios.get('https://gateway.berkompeten.id/api/student/master/university/detail?id='+id, {
+    const response = await axios.get('/api/student/master/university/detail?id='+id, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -165,7 +165,7 @@ const fetchUniversityDetail = async (id) => {
 const fetchEducationalStatusDetail = async (id) => {
   try {
     console.log("param edu: ", id)
-    const response = await axios.get('https://gateway.berkompeten.id/api/student/master/educational-status/detail?id='+id, {
+    const response = await axios.get('/api/student/master/educational-status/detail?id='+id, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

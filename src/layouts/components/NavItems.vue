@@ -14,7 +14,7 @@ onMounted(async () => {
   if (token) {
     try {
       // Fetch user profile data
-      const profileResponse = await axios.get('https://gateway.berkompeten.id/api/student/profile', {
+      const profileResponse = await axios.get('/api/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -22,7 +22,7 @@ onMounted(async () => {
       userProfile.value = profileResponse.data;
 
       // Fetch menu data
-      const menuResponse = await axios.get('https://gateway.berkompeten.id/api/student/analys/menu', {
+      const menuResponse = await axios.get('/api/student/analys/menu', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
