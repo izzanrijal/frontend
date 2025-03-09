@@ -16,7 +16,7 @@ onMounted(async () => {
     try {
       const routeQuestionPacketID = localStorage.getItem('paket');
       console.log("question packet detail id question header: ", routeQuestionPacketID)
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/question-packet/detail?id='+routeQuestionPacketID, {
+      const response = await axios.get('/api/student/question-packet/detail?id='+routeQuestionPacketID, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

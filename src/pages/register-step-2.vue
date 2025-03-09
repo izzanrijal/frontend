@@ -77,7 +77,7 @@ const register = async () => {
     console.log("university: ", form.university_id);
     console.log("educational: ", form.educational_status_id);
     console.log("name: ", form.name);
-    const response = await axios.post('https://gateway.berkompeten.com/api/student/register', {
+    const response = await axios.post('/api/student/register', {
       email: form.email,
       password: form.password,
       password_confirmation: form.password_confirmation,
@@ -138,7 +138,7 @@ const educationalStatusOptions = ref([])
 // Fetch univeristy options from the API
 const fetchExamDateOptions = async () => {
   try {
-    const response = await axios.get('https://gateway.berkompeten.com/api/student/exam-date')
+    const response = await axios.get('/api/student/exam-date')
     // Assuming the API response has an array of educational statuses
     examDateOptions.value = response.data.data.map(examDate => ({
       id: examDate.id,
@@ -152,7 +152,7 @@ const fetchExamDateOptions = async () => {
 // Fetch univeristy options from the API
 const fetchUniversityOptions = async () => {
   try {
-    const response = await axios.get('https://gateway.berkompeten.com/api/student/university')
+    const response = await axios.get('/api/student/university')
     // Assuming the API response has an array of educational statuses
     universityOptions.value = response.data.data.map(edu => ({
       id: edu.id,
@@ -166,7 +166,7 @@ const fetchUniversityOptions = async () => {
 // Fetch educational status options from the API
 const fetchEducationalStatusOptions = async () => {
   try {
-    const response = await axios.get('https://gateway.berkompeten.com/api/student/educational-status')
+    const response = await axios.get('/api/student/educational-status')
     // Assuming the API response has an array of educational statuses
     educationalStatusOptions.value = response.data.data.map(edu => ({
       id: edu.id,

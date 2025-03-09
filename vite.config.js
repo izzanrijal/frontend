@@ -65,7 +65,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         changeOrigin: true,
-        target: "https://gateway.berkompeten.com",
+        target: "https://gateway.berkompeten.id",
         historyApiFallback: true,
       }
     }
