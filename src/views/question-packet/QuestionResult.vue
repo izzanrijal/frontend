@@ -27,7 +27,7 @@ const getQuestionPacketScore = async () => {
     try {
       const routeQuestionPacketID = localStorage.getItem('paket')
       console.log("question packet id: " + routeQuestionPacketID)
-      const response = await axios.get('/api/student/user/test/result?id='+routeQuestionPacketID, {
+      const response = await axios.get('https://gateway.berkompeten.id/api/student/user/test/result?id='+routeQuestionPacketID, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -52,7 +52,7 @@ const fetchQuestionPacketAnalyzeResult = async () => {
     try {
       const questionPacketId = localStorage.getItem('paket');
       const response = await axios.get(
-        `/api/student/analys/result-by-question-packet-id?question_packet_id=${questionPacketId}`,
+        `https://gateway.berkompeten.id/api/student/analys/result-by-question-packet-id?question_packet_id=${questionPacketId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -86,7 +86,7 @@ const getSkipQuestions = async () => {
   if (token) {
     try {
       const routeQuestionPacketID = localStorage.getItem('paket')
-      const response = await axios.get('/api/student/user/skip/questions?id='+routeQuestionPacketID, {
+      const response = await axios.get('https://gateway.berkompeten.id/api/student/user/skip/questions?id='+routeQuestionPacketID, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

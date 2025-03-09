@@ -15,7 +15,7 @@ const menuIndex = ref(route.params.menu)
 onMounted(async () => {
   if (token) {
     try {
-      const response = await axios.get('/api/student/profile', {
+      const response = await axios.get('https://gateway.berkompeten.id/api/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
