@@ -76,7 +76,7 @@ const saveFormData = async () => {
   }
 
   try {
-    const response = await axios.post('https://gateway.berkompeten.com/api/student/register/step/1', {
+    const response = await axios.post('/api/student/register/step/1', {
       email: form.email,
       password: form.password
     })
