@@ -13,7 +13,7 @@ onMounted(async () => {
 const getCountDown = async () => {
   if (token) {
     try {
-      const response = await axios.get('https://gateway.berkompeten.id/api/student/dashboard/count-down-exam-date', {
+      const response = await axios.get('/api/student/dashboard/count-down-exam-date', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

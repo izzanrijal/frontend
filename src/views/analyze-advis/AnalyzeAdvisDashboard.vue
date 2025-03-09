@@ -21,7 +21,7 @@ const menuIndex = ref(route.params.menu || 1);
 const fetchData = async () => {
   if (token) {
     try {
-      const response = await axios.get('https://gateway.berkompeten.id/api/student/analys/result', {
+      const response = await axios.get('/api/student/analys/result', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
