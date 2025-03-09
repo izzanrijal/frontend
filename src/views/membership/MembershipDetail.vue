@@ -14,7 +14,7 @@ onMounted(async () => {
   if (token) {
     try {
       console.log("Membership id: ", id)
-      const response = await axios.get('https://gateway.berkompeten.com/api/student/master/membership/detail?id='+id, {
+      const response = await axios.get('/api/student/master/membership/detail?id='+id, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -52,7 +52,7 @@ const pay = async (id) => {
     console.log("token: ", token)
     console.log("id: ", id)
     // Make a request to the logout endpoint on your backend
-    const response = await axios.post('https://gateway.berkompeten.com/api/student/create-bill-payment', {
+    const response = await axios.post('/api/student/create-bill-payment', {
         id: id,
       }, {
       headers: {
