@@ -39,7 +39,7 @@ const getQuestion = async () => {
 
       // First request to get question data
       const response = await axios.get(
-        '/api/student/question?id=' +
+        'https://gateway.berkompeten.id/api/student/question?id=' +
           routeQuestionPacketID +
           '&number=' +
           number,
@@ -75,7 +75,7 @@ const getQuestion = async () => {
       if (props.mode === 'review') {
         console.log("run mode review")
         const reviewResponse = await axios.post(
-          '/api/student/user/review-answer',
+          'https://gateway.berkompeten.id/api/student/user/review-answer',
           {
             question_packet_id: routeQuestionPacketID,
             number: number
