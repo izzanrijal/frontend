@@ -14,7 +14,7 @@ onMounted(async () => {
 const getTopicToLearn = async () => {
   if (token) {
     try {
-      const response = await axios.get('/api/student/dashboard/get-need-to-learn-topic', {
+      const response = await axios.get('https://gateway.berkompeten.id/api/student/dashboard/get-need-to-learn-topic', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
