@@ -10,7 +10,7 @@ const profile = ref(null)
 
 onMounted(async () => {
   try {
-      const response = await axios.get('/api/student/profile', {
+      const response = await axios.get('https://gateway.berkompeten.id/api/student/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -52,7 +52,7 @@ const membershipPage = async () => {
 const logout = async () => {
   try {
     // Make a request to the logout endpoint on your backend
-    const response = await axios.post('/api/student/logout', null, {
+    const response = await axios.post('https://gateway.berkompeten.id/api/student/logout', null, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

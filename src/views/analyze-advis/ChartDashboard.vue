@@ -16,7 +16,7 @@ const recomendationAdvice = ref(''); // New ref for recommendation advice
 
 const fetchChartData = async () => {
   try {
-    const response = await axios.get('/api/student/analys/chart/result', {
+    const response = await axios.get('https://gateway.berkompeten.id/api/student/analys/chart/result', {
       headers: {
         Authorization: `Bearer ${token}`
       },
