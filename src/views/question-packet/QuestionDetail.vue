@@ -118,14 +118,14 @@ const openDetail = async (id, number) => {
           <VCardItem>
             <div class="info-content">
               <div class="info-icon">
-                <VAvatar color="primary" rounded size="52" class="elevation-1">
-                  <VIcon size="28" icon="ri-file-list-line" />
+                <VAvatar color="primary" rounded size="44" class="elevation-1">
+                  <VIcon size="22" icon="ri-file-list-line" />
                 </VAvatar>
               </div>
               <div class="info-text">
-                <VCardTitle class="total-question">
+                <div class="total-question">
                   Total Soal: {{ questionsPacket.total_question }}
-                </VCardTitle>
+                </div>
                 <p class="status-text" v-if="questionsPacket.is_done === false">
                   Siapkan diri Anda untuk mengerjakan paket soal yang telah dirancang untuk menguji pemahaman Anda pada berbagai topik.
                 </p>
@@ -151,8 +151,8 @@ const openDetail = async (id, number) => {
           
           <VCard color="info" variant="tonal" class="notice-card my-4">
             <VCardText class="notice-text">
-              <VIcon icon="ri-information-line" start class="mr-1" />
-              Kerjakan soal ini dengan jujur dan tanpa bantuan untuk hasil yang akurat. Jika tidak tahu jawabannya, tandai "Tidak Tahu" agar prioritas pembelajaran Anda dapat dipetakan dengan tepat.
+              <VIcon icon="ri-information-line" size="18" class="mr-1" />
+              <span>Kerjakan soal ini dengan jujur dan tanpa bantuan untuk hasil yang akurat. Jika tidak tahu jawabannya, tandai "Tidak Tahu" agar prioritas pembelajaran Anda dapat dipetakan dengan tepat.</span>
             </VCardText>
           </VCard>
         </div>
@@ -166,21 +166,22 @@ const openDetail = async (id, number) => {
       </VCardItem>
 
       <!-- Alert for completed test -->
-      <VCard 
-        v-if="questionsPacket.is_done === true" 
-        color="info"
-        variant="tonal"
-        class="alert-card mx-4 mb-6"
-      >
-        <VCardItem class="alert-item">
-          <template #prepend>
-            <VIcon icon="ri-information-line" size="24" class="mr-2" />
-          </template>
-          <VCardText class="alert-text pa-0">
-            Perhatian: Halaman berikutnya akan menampilkan soal dan pembahasan dari paket ini. Gunakan sebagai bahan pembelajaran dan evaluasi untuk memahami soal-soal yang belum Anda kuasai.
-          </VCardText>
-        </VCardItem>
-      </VCard>
+      <div v-if="questionsPacket.is_done === true" class="alert-wrapper">
+        <VCard 
+          color="info"
+          variant="tonal"
+          class="alert-card"
+        >
+          <VCardItem class="alert-item">
+            <template #prepend>
+              <VIcon icon="ri-information-line" size="18" class="mr-2" />
+            </template>
+            <VCardText class="alert-text pa-0">
+              Perhatian: Halaman berikutnya akan menampilkan soal dan pembahasan dari paket ini. Gunakan sebagai bahan pembelajaran dan evaluasi untuk memahami soal-soal yang belum Anda kuasai.
+            </VCardText>
+          </VCardItem>
+        </VCard>
+      </div>
 
       <!-- Action Button Section -->
       <VCardItem class="button-section">
@@ -188,13 +189,14 @@ const openDetail = async (id, number) => {
         <VBtn
           v-if="questionsPacket.is_done === false && questionsPacket.next_question === 1"
           block
-          size="large"
           color="primary"
+          variant="elevated"
+          height="40"
           class="action-button"
           elevation="1"
           @click="openQuestion(questionsPacket.id, 1)"
         >
-          <VIcon icon="ri-play-circle-line" start class="mr-2" />
+          <VIcon icon="ri-play-circle-line" size="18" class="mr-2" />
           Mulai Test
         </VBtn>
 
@@ -202,13 +204,14 @@ const openDetail = async (id, number) => {
         <VBtn
           v-if="questionsPacket.is_done === false && questionsPacket.next_question !== 1"
           block
-          size="large"
           color="primary" 
+          variant="elevated"
+          height="40"
           class="action-button"
           elevation="1"
           @click="openQuestion(questionsPacket.id, questionsPacket.next_question)"
         >
-          <VIcon icon="ri-arrow-right-circle-line" start class="mr-2" />
+          <VIcon icon="ri-arrow-right-circle-line" size="18" class="mr-2" />
           Lanjutkan Test
         </VBtn>
 
@@ -216,13 +219,14 @@ const openDetail = async (id, number) => {
         <VBtn
           v-if="questionsPacket.is_done === true"
           block
-          size="large"
           color="primary"
+          variant="elevated"
+          height="40"
           class="action-button"
           elevation="1"
           @click="openDetail(questionsPacket.id, 1)"
         >
-          <VIcon icon="ri-file-search-line" start class="mr-2" />
+          <VIcon icon="ri-file-search-line" size="18" class="mr-2" />
           Detail & Pembahasan
         </VBtn>
       </VCardItem>
@@ -232,30 +236,39 @@ const openDetail = async (id, number) => {
 
 <style lang="scss" scoped>
 .detail-page-container {
+  width: 100%;
   max-width: 960px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 12px;
+  
+  @media (max-width: 600px) {
+    padding: 8px 4px;
+  }
 }
 
 .main-card {
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
 }
 
 .header-section {
-  padding: 24px 24px 8px;
+  padding: 20px 16px 8px;
 }
 
 .packet-title {
-  font-size: 1.5rem !important;
+  font-size: 1.2rem !important;
   font-weight: 700 !important;
   color: #333 !important;
   line-height: 1.3;
+  
+  @media (max-width: 600px) {
+    font-size: 1.1rem !important;
+  }
 }
 
 .info-card-section {
-  padding: 0 24px 16px;
+  padding: 0 16px 16px;
 }
 
 .info-card {
@@ -267,32 +280,51 @@ const openDetail = async (id, number) => {
 .info-content {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  gap: 12px;
+  
+  @media (max-width: 600px) {
+    gap: 10px;
+  }
 }
 
 .total-question {
-  font-size: 1.1rem !important;
+  font-size: 1rem !important;
   font-weight: 600 !important;
   color: #555;
   margin-bottom: 8px;
+  
+  @media (max-width: 600px) {
+    font-size: 0.9rem !important;
+    margin-bottom: 4px;
+  }
 }
 
 .status-text {
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   color: #666;
   margin: 0;
+  
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
 }
 
 .detail-section {
-  padding: 8px 24px 16px;
+  padding: 8px 16px 16px;
 }
 
 .detail-heading {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #333;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+  
+  @media (max-width: 600px) {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
 }
 
 .detail-content {
@@ -306,42 +338,80 @@ const openDetail = async (id, number) => {
   li {
     margin-bottom: 8px;
     line-height: 1.5;
+    font-size: 0.9rem;
+    
+    @media (max-width: 600px) {
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
   }
 }
 
 .notice-card {
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .notice-text {
   display: flex;
-  align-items: center;
-  font-size: 0.95rem;
+  align-items: flex-start;
+  font-size: 0.85rem;
   line-height: 1.5;
+  
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+  
+  span {
+    padding-top: 1px;
+  }
+}
+
+.alert-wrapper {
+  padding: 0 16px;
+  margin-bottom: 16px;
+  
+  @media (max-width: 600px) {
+    padding: 0 12px;
+    margin-bottom: 12px;
+  }
 }
 
 .alert-card {
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .alert-item {
-  padding: 16px;
+  padding: 12px;
+  
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
 }
 
 .alert-text {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   line-height: 1.5;
+  
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
 }
 
 .button-section {
-  padding: 16px 24px 24px;
+  padding: 0 16px 20px;
 }
 
 .action-button {
   font-weight: 600;
   letter-spacing: 0.5px;
-  height: 48px;
-  border-radius: 12px;
+  border-radius: 8px;
+  
+  @media (max-width: 600px) {
+    font-size: 0.85rem;
+  }
 }
 
 /* Utility classes */

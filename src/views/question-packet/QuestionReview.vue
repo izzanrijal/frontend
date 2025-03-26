@@ -4,7 +4,7 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
- // Replace with the actual key you use for the token
+// Replace with the actual key you use for the token
 const questionPacket = ref({});
 const skippedQuestions = ref([]);
 const router = useRouter()
@@ -127,6 +127,9 @@ const handleHover = (index, isHover) => {
           <VImg 
             :src="reviewLogo" 
             class="review-image" 
+            width="120"
+            height="120"
+            contain
             alt="Review Illustration"
           />
         </div>
@@ -136,52 +139,63 @@ const handleHover = (index, isHover) => {
         </VCardTitle>
         
         <!-- Stats section -->
-        <div class="stats-section">
-          <div class="stats-container">
+        <VRow dense class="stats-section ma-0">
+          <VCol cols="12" sm="6" class="pa-2">
             <div class="stats-card">
               <div class="stats-label">Soal yang telah dikerjakan</div>
               <div class="stats-value completed">{{ questionPacket.total_answered }}</div>
             </div>
-            
+          </VCol>
+          
+          <VCol cols="12" sm="6" class="pa-2">
             <div class="stats-card">
               <div class="stats-label">Soal yang belum dikerjakan</div>
               <div class="stats-value pending">{{ questionPacket.total_skip }}</div>
             </div>
-          </div>
-        </div>
+          </VCol>
+        </VRow>
         
         <!-- Action buttons -->
-        <div class="action-buttons">
-          <VBtn 
-            color="primary" 
-            size="large"
-            class="action-button" 
-            elevation="1"
-            @click="finishTest"
-          >
-            <VIcon icon="ri-check-line" class="mr-2" />
-            Selesaikan Tes
-          </VBtn>
+        <VRow dense class="button-row ma-0">
+          <VCol cols="12" sm="6" class="pa-2">
+            <VBtn 
+              color="primary" 
+              block
+              variant="elevated"
+              height="40"
+              elevation="1"
+              @click="finishTest"
+            >
+              <VIcon icon="ri-check-line" size="18" class="mr-2" />
+              Selesaikan Tes
+            </VBtn>
+          </VCol>
           
-          <VBtn 
-            variant="outlined" 
-            color="primary" 
-            size="large"
-            class="action-button" 
-            @click="previousPage"
-          >
-            <VIcon icon="ri-arrow-left-line" class="mr-2" />
-            Kembali Mengerjakan
-          </VBtn>
-        </div>
+          <VCol cols="12" sm="6" class="pa-2">
+            <VBtn 
+              variant="outlined" 
+              color="primary" 
+              block
+              height="40"
+              @click="previousPage"
+            >
+              <VIcon icon="ri-arrow-left-line" size="18" class="mr-2" />
+              Kembali Mengerjakan
+            </VBtn>
+          </VCol>
+        </VRow>
       </VCardItem>
       
       <!-- Skipped questions section -->
       <VCardItem class="skipped-questions-section">
         <div class="section-title">
-          <VIcon icon="ri-error-warning-line" color="warning" class="mr-2" />
-          Soal-soal yang belum diberikan jawaban: 
-          <span class="highlight">Ada {{ questionPacket.total_skip }} Soal</span>
+          <div class="title-container">
+            <VIcon icon="ri-error-warning-line" color="warning" size="20" class="mr-2" />
+            <span class="title-text">
+              Soal-soal yang belum diberikan jawaban: 
+              <span class="highlight">Ada {{ questionPacket.total_skip }} Soal</span>
+            </span>
+          </div>
         </div>
         
         <!-- Skipped questions list -->
@@ -197,7 +211,7 @@ const handleHover = (index, isHover) => {
             </VAlert>
           </div>
           
-          <VCardItem
+          <div 
             v-for="(question, index) in skippedQuestions"
             :key="question.id"
             class="question-card"
@@ -210,7 +224,7 @@ const handleHover = (index, isHover) => {
               <div class="question-number">{{ question.question_number }}</div>
               <div class="question-text">{{ question.question }}</div>
             </div>
-          </VCardItem>
+          </div>
         </div>
       </VCardItem>
     </VCard>
@@ -219,79 +233,87 @@ const handleHover = (index, isHover) => {
 
 <style lang="scss" scoped>
 .review-page-container {
+  width: 100%;
   max-width: 960px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 12px;
+
+  @media (max-width: 600px) {
+    padding: 8px 4px;
+  }
 }
 
 .review-card {
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
 }
 
 .header-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 32px 24px 0;
+  padding: 20px 16px 16px;
 }
 
 .image-container {
-  width: 160px;
-  height: 160px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .review-image {
-  max-width: 100%;
-  height: auto;
   object-fit: contain;
 }
 
 .review-title {
-  font-size: 1.5rem !important;
+  font-size: 1.2rem !important;
   font-weight: 700 !important;
   color: #0080ff !important;
   text-align: center;
-  margin-bottom: 24px !important;
+  margin-bottom: 16px !important;
+  
+  @media (max-width: 600px) {
+    font-size: 1rem !important;
+    margin-bottom: 12px !important;
+  }
 }
 
 .stats-section {
   width: 100%;
-  margin-bottom: 24px;
-}
-
-.stats-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
+  margin-bottom: 12px !important;
 }
 
 .stats-card {
-  flex: 1;
+  height: 100%;
   background-color: #f5f7fa;
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: 8px;
+  padding: 12px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .stats-label {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #555;
   font-weight: 500;
+  
+  @media (max-width: 600px) {
+    font-size: 0.75rem;
+  }
 }
 
 .stats-value {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
+  
+  @media (max-width: 600px) {
+    font-size: 1.3rem;
+  }
   
   &.completed {
     color: #0080ff;
@@ -302,50 +324,65 @@ const handleHover = (index, isHover) => {
   }
 }
 
-.action-buttons {
-  display: flex;
-  gap: 16px;
+.button-row {
   width: 100%;
-  margin-bottom: 24px;
-}
-
-.action-button {
-  flex: 1;
-  border-radius: 12px;
-  height: 48px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  margin-bottom: 4px !important;
 }
 
 .skipped-questions-section {
-  padding: 0 24px 24px;
+  padding: 0 16px 16px;
+  
+  @media (max-width: 600px) {
+    padding: 0 12px 16px;
+  }
 }
 
 .section-title {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #333;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  
+  @media (max-width: 600px) {
+    font-size: 0.85rem;
+  }
+}
+
+.title-container {
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.title-text {
+  display: inline-block;
+  padding-top: 2px;
 }
 
 .highlight {
   color: #0080ff;
-  margin-left: 4px;
+  margin-left: 2px;
 }
 
 .questions-list-container {
   max-height: 300px;
   overflow-y: auto;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid #eaeaea;
   padding: 8px;
   background-color: #fafafa;
+  
+  @media (max-width: 600px) {
+    padding: 4px;
+  }
 }
 
 .no-questions {
-  padding: 16px;
+  padding: 12px;
 }
 
 .question-card {
@@ -355,6 +392,7 @@ const handleHover = (index, isHover) => {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
   cursor: pointer;
+  padding: 8px 12px;
   
   &:hover, &.hovered {
     background-color: #f0f7ff;
@@ -366,31 +404,54 @@ const handleHover = (index, isHover) => {
   &:last-child {
     margin-bottom: 0;
   }
+  
+  @media (max-width: 600px) {
+    padding: 6px 8px;
+    margin-bottom: 6px;
+  }
 }
 
 .question-content {
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  width: 100%;
+  
+  @media (max-width: 600px) {
+    gap: 8px;
+  }
 }
 
 .question-number {
   background-color: #0080ff;
   color: white;
-  border-radius: 8px;
-  min-width: 28px;
-  height: 28px;
+  border-radius: 6px;
+  min-width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  
+  @media (max-width: 600px) {
+    min-width: 22px;
+    height: 22px;
+    font-size: 0.75rem;
+  }
 }
 
 .question-text {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #333;
   line-height: 1.5;
+  word-break: break-word;
+  
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
 }
 
 /* Utility classes */
