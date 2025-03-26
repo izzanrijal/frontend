@@ -104,181 +104,254 @@ const openDetail = async (id, number) => {
 </script>
 
 <template>
-  <VCard class="vcardtext-container">
-    <VRow>
-      <VCol
-          cols="12"
-          md="12"
-        >
-        <VCard class="mb-4">
-          <VCardItem>
-            <VCardTitle><span style="color: black; font-size: large;">{{ questionsPacket.name }}</span></VCardTitle>
-            <VCol
-                cols="12"
-                md="12"
-              >
-              <VCard class="mb-4">
-                <VCardItem>
-                  <VRow align="center" class="d-flex flex-wrap row-item-parent">
-                    <VAvatar
-                          color="#0080ff"
-                          rounded
-                          size="40"
-                          class="elevation-2"
-                        >
-                      <VIcon
-                        size="24"
-                        icon="ri-file-list-line"
-                      />
-                    </VAvatar>
-                    <div class="me-n3" style="padding: 20px;">
-                      
-                      <VCardTitle><span style="color: gray;"><b>Total Soal: {{ questionsPacket.total_question }}</b> </span></VCardTitle>
-                      <!-- <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date === '-' && item.is_active === true">
-                        Mulai dikerjakan: {{ item.start_date }}
-                      </p>
-                      <p style="color: #0080ff;" class="font-weight-semibold mb-1" v-if="item.finish_date !== '-' && item.is_active === true">
-                        Diselesaikan: {{ item.finish_date }}
-                      </p> -->
-                      
-                      <p
-                        v-if="questionsPacket.is_done === false"
-                        style="color: black;"
-                        href="javascript:void(0)"
-                      >Siapkan diri Anda untuk mengerjakan paket soal yang telah dirancang untuk menguji pemahaman Anda pada berbagai topik.</p>
-                      <p
-                        v-if="questionsPacket.is_done === true"
-                        style="color: black;"
-                        href="javascript:void(0)"
-                      >Anda telah selesai mengerjakan soal-soal dalam paket ini. Kini saatnya untuk meninjau jawaban dan memahami pembahasan untuk meningkatkan pemahaman Anda.</p>
-                    </div>
-                  </VRow>
-                </VCardItem>
-              </VCard>
-            </VCol>
+  <div class="detail-page-container">
+    <!-- Main Content Card -->
+    <VCard class="main-card">
+      <!-- Header Section with Title -->
+      <VCardItem class="header-section">
+        <VCardTitle class="packet-title">{{ questionsPacket.name }}</VCardTitle>
+      </VCardItem>
 
-            <template #append>
-              
-              <!-- <h6 class="text-h6" v-else="item.finish_date !== '-'">
-                <a
-                  :style="{ color: item.is_accessed ? '#0080ff' : '#cccccc' }"
-                  href="javascript:void(0)"
-                >Detail & Pembahasan</a>
-              </h6> -->
-            </template>
-          </VCardItem>
-          <VCardItem align="center" class="d-flex flex-wrap row-item">
-            <div class="d-flex align-center flex-wrap mb-3">
-              <p><b>Detail</b></p>
-            </div>
-            <div v-if="questionsPacket.is_done === false" >
-              <ul>
-                <li>Selesaikan paket soal ini untuk mendapatkan analisis yang dipersonalisasi khusus untuk Anda.</li>
-                <li>Tidak perlu terburu-buru—Anda dapat melanjutkannya kapan saja...</li>
-              </ul>
-              <p>Perhatian: Kerjakan soal ini dengan jujur dan tanpa bantuan untuk hasil yang akurat. Jika tidak tahu jawabannya, tandai "Tidak Tahu" agar prioritas pembelajaran Anda dapat dipetakan dengan tepat.</p>
-            </div>
-            <div v-if="questionsPacket.is_done === true" >
-              <li>Tinjau jawaban Anda dan lihat pembahasan lengkap untuk setiap soal.</li>
-            </div>
-          </VCardItem>
-        </VCard>
-      </VCol>
-    </VRow>
-    <!-- Detail Alert -->
-    <VRow>
-      <VCol
-        cols="12"
-        md="12"
-      >
-        <VCard class="mb-4" v-if="questionsPacket.is_done === true" >
+      <!-- Info Card Section -->
+      <VCardItem class="info-card-section">
+        <VCard class="info-card" elevation="0">
           <VCardItem>
-            <VRow class="d-flex flex-wrap row-item-parent">
-              <VIcon
-                size="24"
-                icon="ri-information-line"
-                color="#0080ff"
-                class="mr-2"
-                style="margin-block-start: 10px;"
-              />
-              <div class="d-flex flex-column row-item" style="padding: 10px;">
-                <p class="mb-0"><span style=" color: #0080ff;margin-block-end: 0;">Perhatian: Halaman berikutnya akan menampilkan soal dan pembahasan dari paket ini. Gunakan sebagai bahan pembelajaran dan evaluasi untuk memahami soal-soal yang belum Anda kuasai.</span></p>
+            <div class="info-content">
+              <div class="info-icon">
+                <VAvatar color="primary" rounded size="52" class="elevation-1">
+                  <VIcon size="28" icon="ri-file-list-line" />
+                </VAvatar>
               </div>
-            </VRow>
+              <div class="info-text">
+                <VCardTitle class="total-question">
+                  Total Soal: {{ questionsPacket.total_question }}
+                </VCardTitle>
+                <p class="status-text" v-if="questionsPacket.is_done === false">
+                  Siapkan diri Anda untuk mengerjakan paket soal yang telah dirancang untuk menguji pemahaman Anda pada berbagai topik.
+                </p>
+                <p class="status-text" v-if="questionsPacket.is_done === true">
+                  Anda telah selesai mengerjakan soal-soal dalam paket ini. Kini saatnya untuk meninjau jawaban dan memahami pembahasan untuk meningkatkan pemahaman Anda.
+                </p>
+              </div>
+            </div>
           </VCardItem>
         </VCard>
-      </VCol>
-    </VRow>
-    <!-- end of detail alert -->
-    <VRow align="center" class="d-flex flex-wrap" style="margin-inline: 1px;  padding-block-start: 20px;">
-      <VBtn v-if="questionsPacket.is_done === false && questionsPacket.next_question === 1"
-            block
-            type="submit"
-            @click="openQuestion(questionsPacket.id, 1)"
-            color="#0080ff"
-          >
+      </VCardItem>
+
+      <!-- Detail Section -->
+      <VCardItem class="detail-section">
+        <h3 class="detail-heading">Detail</h3>
+        
+        <!-- Content for not completed test -->
+        <div v-if="questionsPacket.is_done === false" class="detail-content">
+          <ul class="detail-list">
+            <li>Selesaikan paket soal ini untuk mendapatkan analisis yang dipersonalisasi khusus untuk Anda.</li>
+            <li>Tidak perlu terburu-buru—Anda dapat melanjutkannya kapan saja.</li>
+          </ul>
+          
+          <VCard color="info" variant="tonal" class="notice-card my-4">
+            <VCardText class="notice-text">
+              <VIcon icon="ri-information-line" start class="mr-1" />
+              Kerjakan soal ini dengan jujur dan tanpa bantuan untuk hasil yang akurat. Jika tidak tahu jawabannya, tandai "Tidak Tahu" agar prioritas pembelajaran Anda dapat dipetakan dengan tepat.
+            </VCardText>
+          </VCard>
+        </div>
+        
+        <!-- Content for completed test -->
+        <div v-if="questionsPacket.is_done === true" class="detail-content">
+          <ul class="detail-list">
+            <li>Tinjau jawaban Anda dan lihat pembahasan lengkap untuk setiap soal.</li>
+          </ul>
+        </div>
+      </VCardItem>
+
+      <!-- Alert for completed test -->
+      <VCard 
+        v-if="questionsPacket.is_done === true" 
+        color="info"
+        variant="tonal"
+        class="alert-card mx-4 mb-6"
+      >
+        <VCardItem class="alert-item">
+          <template #prepend>
+            <VIcon icon="ri-information-line" size="24" class="mr-2" />
+          </template>
+          <VCardText class="alert-text pa-0">
+            Perhatian: Halaman berikutnya akan menampilkan soal dan pembahasan dari paket ini. Gunakan sebagai bahan pembelajaran dan evaluasi untuk memahami soal-soal yang belum Anda kuasai.
+          </VCardText>
+        </VCardItem>
+      </VCard>
+
+      <!-- Action Button Section -->
+      <VCardItem class="button-section">
+        <!-- Button for starting a new test -->
+        <VBtn
+          v-if="questionsPacket.is_done === false && questionsPacket.next_question === 1"
+          block
+          size="large"
+          color="primary"
+          class="action-button"
+          elevation="1"
+          @click="openQuestion(questionsPacket.id, 1)"
+        >
+          <VIcon icon="ri-play-circle-line" start class="mr-2" />
           Mulai Test
-      </VBtn>
-      <VBtn v-if="questionsPacket.is_done === false && questionsPacket.next_question !== 1"
-            block
-            type="submit"
-            @click="openQuestion(questionsPacket.id, questionsPacket.next_question)"
-            color="#0080ff"
-          >
+        </VBtn>
+
+        <!-- Button for continuing a test -->
+        <VBtn
+          v-if="questionsPacket.is_done === false && questionsPacket.next_question !== 1"
+          block
+          size="large"
+          color="primary" 
+          class="action-button"
+          elevation="1"
+          @click="openQuestion(questionsPacket.id, questionsPacket.next_question)"
+        >
+          <VIcon icon="ri-arrow-right-circle-line" start class="mr-2" />
           Lanjutkan Test
-      </VBtn>
-      <VBtn v-if="questionsPacket.is_done === true"
-            block
-            type="submit"
-            @click="openDetail(questionsPacket.id, 1)"
-            color="#0080ff"
-          >
+        </VBtn>
+
+        <!-- Button for review -->
+        <VBtn
+          v-if="questionsPacket.is_done === true"
+          block
+          size="large"
+          color="primary"
+          class="action-button"
+          elevation="1"
+          @click="openDetail(questionsPacket.id, 1)"
+        >
+          <VIcon icon="ri-file-search-line" start class="mr-2" />
           Detail & Pembahasan
-      </VBtn>
-    </VRow>
-  </VCard>
+        </VBtn>
+      </VCardItem>
+    </VCard>
+  </div>
 </template>
+
 <style lang="scss" scoped>
-
-.custom-title-style {
-  margin-block-end: 0 !important;
+.detail-page-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
 }
 
-/* Add custom styling for scroll and reduce gap */
-.vcardtext-container {
-  margin-block-end: 15px; /* Adjust this margin to reduce the gap between rows */
+.main-card {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
 }
 
-.vcardtext-container{
-  padding: 7px; /* Remove bottom margin for the last row */
+.header-section {
+  padding: 24px 24px 8px;
 }
 
-.row-item-parent{
-  margin-inline: 4px 1px;
-
-  /* Remove bottom margin for the last row */
+.packet-title {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: #333 !important;
+  line-height: 1.3;
 }
 
-.row-item{
-  margin-inline: 14px 1px;
-
-  /* Remove bottom margin for the last row */
+.info-card-section {
+  padding: 0 24px 16px;
 }
 
-.v-item {
-  margin: 2px; /* Remove bottom margin for the last row */
+.info-card {
+  border-radius: 12px;
+  border: 1px solid rgba(0, 128, 255, 0.1);
+  background-color: rgba(0, 128, 255, 0.02);
 }
 
-ul {
-  list-style-type: disc; /* Keep bullets */
-  margin-inline-start: 20px; /* Indent the bullets */
-  padding-inline-start: 0; /* Ensure no extra padding */
-  text-align: start; /* Align content to the left */
+.info-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
 }
 
-ul li {
-  margin-block-end: 8px; /* Space between items */
-  text-align: start;
+.total-question {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  color: #555;
+  margin-bottom: 8px;
 }
 
+.status-text {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #666;
+  margin: 0;
+}
+
+.detail-section {
+  padding: 8px 24px 16px;
+}
+
+.detail-heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.detail-content {
+  color: #666;
+}
+
+.detail-list {
+  padding-left: 24px;
+  margin-bottom: 16px;
+  
+  li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+}
+
+.notice-card {
+  border-radius: 12px;
+}
+
+.notice-text {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.alert-card {
+  border-radius: 12px;
+}
+
+.alert-item {
+  padding: 16px;
+}
+
+.alert-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.button-section {
+  padding: 16px 24px 24px;
+}
+
+.action-button {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  height: 48px;
+  border-radius: 12px;
+}
+
+/* Utility classes */
+.primary {
+  background-color: #0080ff !important;
+  color: white !important;
+}
+
+.info {
+  background-color: rgba(0, 128, 255, 0.1) !important;
+  color: #0080ff !important;
+}
 </style>
