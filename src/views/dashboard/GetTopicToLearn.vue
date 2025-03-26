@@ -43,6 +43,9 @@ const getTopicToLearn = async () => {
           <VCardTitle>
             <span style="color: #005BC5;">Daftar Topik/Penyakit Prioritas</span>
           </VCardTitle>
+          <div class="text-body-2 text-secondary mt-2">
+            Daftar berikut adalah gambaran awal topik sebagai panduan memulai pembelajaran. Temukan detail lengkapnya di halaman Hasil Analisis dan Advis.
+          </div>
         </VCardItem>
 
         <VCardText v-if="topicLists.length > 0">
