@@ -59,7 +59,7 @@ const openDetail = (id) => {
           >
             <VIcon
               size="24"
-              icon="ri-apps-line"
+              icon="ri-time-line"
             />
           </VAvatar>
           <VRow align="center">

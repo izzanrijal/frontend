@@ -142,7 +142,7 @@ const questions = [
                   >
                 <VIcon
                   size="24"
-                  icon="ri-apps-line"
+                  icon="ri-bar-chart-line"
                 />
               </VAvatar>
               <div class="me-n3" style="padding: 20px;">

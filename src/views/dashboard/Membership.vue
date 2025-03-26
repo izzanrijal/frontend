@@ -7,7 +7,7 @@ const { props } = defineProps(['userProfile']);
     <VCardText>
       <div class="mb-2">
         <VBtn size="small" class="custom-rounded-button" color="#0080FF">
-          <i class="ri-verified-badge-line"></i> {{ userProfile && userProfile.profile && userProfile.profile.membership && userProfile.profile.membership.name }}
+          <i class="ri-vip-crown-line"></i> {{ userProfile && userProfile.profile && userProfile.profile.membership && userProfile.profile.membership.name }}
         </VBtn>
         <div class="text-body-1">
           Masa Langganan Tersisa
@@ -36,7 +36,7 @@ const { props } = defineProps(['userProfile']);
   padding-block-start: 10px; /* Adjust the value to add the desired padding */
 }
 
-.ri-verified-badge-line {
+.ri-vip-crown-line {
   border-radius: 3px; /* Add border-radius for rounded corners */
   background-color: silver; /* Set the desired background color */
   color: #0080FF; /* Set the desired text color */

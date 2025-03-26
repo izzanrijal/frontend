@@ -87,7 +87,7 @@ const pay = async (id) => {
                 >
               <VIcon
                 size="24"
-                icon="ri-apps-line"
+                icon="ri-vip-crown-line"
               />
             </VAvatar>
             <div class="me-n3" style="padding: 7px;">

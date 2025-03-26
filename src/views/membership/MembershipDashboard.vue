@@ -83,7 +83,7 @@ const currentMembershipText = computed(() => {
                   >
                 <VIcon
                   size="24"
-                  icon="ri-apps-line"
+                  icon="ri-vip-crown-line"
                   class="icon"
                 />
               </VAvatar>

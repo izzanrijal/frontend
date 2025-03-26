@@ -13,6 +13,8 @@ declare module 'vue' {
     ErrorHeader: typeof import('./src/components/ErrorHeader.vue')['default']
     LoadingModal: typeof import('./src/components/LoadingModal.vue')['default']
     MoreBtn: typeof import('./src/@core/components/MoreBtn.vue')['default']
+    QuestionPagination: typeof import('./src/components/QuestionPagination.vue')['default']
+    ResponsiveContainer: typeof import('./src/components/ResponsiveContainer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ThemeSwitcher: typeof import('./src/@core/components/ThemeSwitcher.vue')['default']

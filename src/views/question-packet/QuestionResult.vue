@@ -126,7 +126,7 @@ const openDiscussion = async () => {
             <div class="me-n3" style="padding: 20px;">
               <VRow align="center" class="d-flex flex-wrap row-item-parent">
                 <VAvatar color="#0080ff" rounded size="40" class="elevation-2">
-                  <VIcon size="32" icon="ri-apps-line" />
+                  <VIcon size="32" icon="ri-medal-line" />
                 </VAvatar>
                 <div class="me-n3" style="display: flex; flex-grow: 1; padding: 20px;">
                   <VCol cols="12" md="6">
@@ -168,7 +168,7 @@ const openDiscussion = async () => {
             <div class="me-n3" style="padding: 20px;">
               <VRow align="center" class="d-flex flex-wrap row-item-parent">
                 <VAvatar color="#0080ff" rounded size="40" class="elevation-2">
-                  <VIcon size="24" icon="ri-apps-line" />
+                  <VIcon size="24" icon="ri-bar-chart-line" />
                 </VAvatar>
                 <div class="me-n3" style="padding: 20px;">
                   <VCardTitle>
@@ -278,5 +278,4 @@ const openDiscussion = async () => {
     margin: 2px; /* Reduce chip spacing for smaller screens */
   }
 }
-</style>
-
+</style> 

@@ -49,7 +49,7 @@ const getQuestionPacketIsAvailable = async () => {
         >
           <VIcon
             size="24"
-            icon="ri-file-3-line"
+            icon="ri-file-list-line"
           />
         </VAvatar>
         <p class="text-body-1 mb-0">

@@ -128,7 +128,7 @@ const openDetail = async (id, number) => {
                         >
                       <VIcon
                         size="24"
-                        icon="ri-apps-line"
+                        icon="ri-file-list-line"
                       />
                     </VAvatar>
                     <div class="me-n3" style="padding: 20px;">
@@ -196,7 +196,7 @@ const openDetail = async (id, number) => {
             <VRow class="d-flex flex-wrap row-item-parent">
               <VIcon
                 size="24"
-                icon="ri-error-warning-line"
+                icon="ri-information-line"
                 color="#0080ff"
                 class="mr-2"
                 style="margin-block-start: 10px;"

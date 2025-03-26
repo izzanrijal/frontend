@@ -81,7 +81,7 @@ const getFilteredTopics = (topics) => {
                   >
                 <VIcon
                   size="24"
-                  icon="ri-apps-line"
+                  icon="ri-file-text-line"
                   class="icon"
                 />
               </VAvatar>

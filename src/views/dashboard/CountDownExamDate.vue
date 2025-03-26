@@ -46,7 +46,7 @@ const getCountDown = async () => {
       >
         <VIcon
           size="24"
-          icon="ri-hourglass-fill"
+          icon="ri-timer-line"
         />
       </VAvatar>
       <p class="text-body-1 mb-0">

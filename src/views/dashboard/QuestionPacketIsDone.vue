@@ -50,7 +50,7 @@ const getQuestionPacketIsDone = async () => {
         >
           <VIcon
             size="24"
-            icon="ri-file-check-line"
+            icon="ri-task-line"
           />
         </VAvatar>
         <p class="text-body-1 mb-0">
