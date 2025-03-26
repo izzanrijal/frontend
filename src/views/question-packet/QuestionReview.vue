@@ -71,7 +71,6 @@ const finishTest = async () => {
   const question_packet_id = localStorage.getItem('paket')
 
   try {
-    // const tokenRecaptcha = await grecaptcha.execute('6LfXRJ8pAAAAAOt1gKzRNIj1GOYGtp-DB_tz73OR', { action: 'submit' });
     console.log("paket id: ",question_packet_id)
 
     const response = await axios.post('https://gateway.berkompeten.id/api/student/user/finish-the-test', {

@@ -131,7 +131,6 @@ const nextPage = async () => {
 
   try {
     isLoading.value = true;
-    // const tokenRecaptcha = await grecaptcha.execute('6LfXRJ8pAAAAAOt1gKzRNIj1GOYGtp-DB_tz73OR', { action: 'submit' });
     console.log("paket id: ",question_packet_id)
     console.log("ques id: ",question_id)
     console.log("answer: ",answer)

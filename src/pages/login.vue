@@ -10,6 +10,9 @@ import { useTheme } from 'vuetify'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 
+// Get Cloudflare Turnstile site key from environment variables
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_CLOUDFLARE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'
+const turnstileWidgetId = ref(null)
 
 const router = useRouter()
 
@@ -51,6 +54,48 @@ const hideSuggestions = () => {
   setTimeout(() => (showSuggestions.value = false), 200);
 };
 
+// Add Turnstile initialization function
+const initTurnstile = () => {
+  if (window.turnstile) {
+    // Remove previous widget if it exists
+    if (turnstileWidgetId.value) {
+      window.turnstile.remove(turnstileWidgetId.value);
+    }
+    
+    // Render turnstile with invisible/managed mode
+    turnstileWidgetId.value = window.turnstile.render('#turnstile-container', {
+      sitekey: TURNSTILE_SITE_KEY,
+      theme: 'light',
+      callback: function(token) {
+        // Store token in a hidden input for form submission
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.name = 'cf-turnstile-response';
+        tokenInput.value = token;
+        
+        // Remove any existing token input
+        const existingInput = document.querySelector('input[name="cf-turnstile-response"]');
+        if (existingInput) existingInput.remove();
+        
+        // Add the new token input to the form
+        document.querySelector('form')?.appendChild(tokenInput);
+      },
+      'expired-callback': () => {
+        // Token expired, re-render the widget
+        initTurnstile();
+      },
+      'error-callback': () => {
+        // Handle error, but don't show error to user for invisible mode
+        console.error('Turnstile encountered an error');
+      },
+      appearance: 'interaction-only' // Only show when needed based on risk assessment
+    });
+  } else {
+    // If turnstile isn't loaded yet, try again after a short delay
+    setTimeout(initTurnstile, 500);
+  }
+};
+
 onMounted(async () => {
   console.log("token login: ", token)
 
@@ -61,6 +106,9 @@ onMounted(async () => {
   // Load emails from localStorage
   const emails = JSON.parse(localStorage.getItem('savedEmails')) || []
   savedEmails.value = emails
+  
+  // Initialize Turnstile when the component is mounted
+  initTurnstile();
 });
 
 // Save new email to storage when login is successful
@@ -77,76 +125,70 @@ const handleCustomEmail = (value) => {
   }
 };
 
-const login = async (tokenRecaptcha) => {
+const login = async () => {
   try {
-    // Execute reCAPTCHA
-    grecaptcha.ready(async function() {
-      try {
-        // const tokenRecaptcha = await grecaptcha.execute('6LfXRJ8pAAAAAOt1gKzRNIj1GOYGtp-DB_tz73OR', { action: 'submit' });
-        console.log("rec resp: ",tokenRecaptcha)
-        if (form.email === "") {
-          loginError.value = "email is required"
-          return
-        }
+    if (form.email === "") {
+      loginError.value = "email is required"
+      return
+    }
 
-        if (form.password === "") {
-          loginError.value = "password is required"
-          return
-        }
+    if (form.password === "") {
+      loginError.value = "password is required"
+      return
+    }
 
-        if (form.password.length < 8) {
-          loginError.value = "password length must be 8 character or more";
-          return
-        }
+    if (form.password.length < 8) {
+      loginError.value = "password length must be 8 character or more";
+      return
+    }
 
-        const response = await axios.post('https://gateway.berkompeten.id/api/student/login', {
-          email: form.email,
-          password: form.password,
-          'g-recaptcha-response': tokenRecaptcha, // Include reCAPTCHA token in the request
-        });
+    // Get Cloudflare Turnstile token if available (it might not be if user is not suspicious)
+    const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')?.value;
+    const requestData = {
+      email: form.email,
+      password: form.password,
+    };
+    
+    // Only include the token if it exists (for suspicious traffic)
+    if (turnstileResponse) {
+      requestData['cf-turnstile-response'] = turnstileResponse;
+    }
 
-        console.log(response);
+    const response = await axios.post('https://gateway.berkompeten.id/api/student/login', requestData);
 
-        // Assuming your backend returns a token upon successful login
-        const token = response.data.token;
+    console.log(response);
 
-        console.log(token);
+    // Assuming your backend returns a token upon successful login
+    const token = response.data.token;
 
-        // Save the token in local storage or Vuex store for future requests
-        localStorage.setItem('token', token);
+    console.log(token);
 
-        // Save email upon successful login
-        saveEmail(form.email)
+    // Save the token in local storage or Vuex store for future requests
+    localStorage.setItem('token', token);
 
-        // Redirect to the desired route upon successful login
-        router.push('/dashboard');
-      } catch (error) {
-        // Handle login error (display error message, redirect, etc.)
-        console.error('Login failed:', error);
-        if (error.response && error.response.data) {
-          loginError.value = error.response.data.message;
+    // Save email upon successful login
+    saveEmail(form.email)
 
-          if (error.response.data.errors){
-            loginError.value = error.response.data.errors;
-          }
-
-          // Check if the user does not exist and store email in local storage
-          if (error.response.data.is_exist === false) {
-            localStorage.setItem('email', form.email);
-            router.push('/register');
-          }
-          return
-        } else {
-          loginError.value = 'An unexpected error occurred during login.';
-          return
-        }
-      }
-    });
+    // Redirect to the desired route upon successful login
+    router.push('/dashboard');
   } catch (error) {
     // Handle login error (display error message, redirect, etc.)
-    console.error('Login failed:', error)
+    console.error('Login failed:', error);
     if (error.response && error.response.data) {
-      loginError.value = error.response.data.errors;
+      loginError.value = error.response.data.message;
+
+      if (error.response.data.errors){
+        loginError.value = error.response.data.errors;
+      }
+      
+      // Special handling for captcha-related errors but don't explicitly mention captcha
+      if (error.response.status === 429 || 
+          (error.response.data.errors && typeof error.response.data.errors === 'string' && 
+           error.response.data.errors.toLowerCase().includes('captcha'))) {
+        // Refresh Turnstile widget for another attempt
+        initTurnstile();
+        loginError.value = "Please try again";
+      }
 
       // Check if the user does not exist and store email in local storage
       if (error.response.data.is_exist === false) {
@@ -249,7 +291,10 @@ const navigateToForgotPassword = () => {
               </div>
 
               <!-- login button -->
-              <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-callback="login">
+              <div>
+                <!-- Hidden container for Turnstile -->
+                <div id="turnstile-container" class="mb-2"></div>
+                
                 <VBtn
                   block
                   type="submit"
