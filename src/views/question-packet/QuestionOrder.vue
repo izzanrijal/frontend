@@ -3,6 +3,7 @@ import { emitter } from '@/main';
 import axios from 'axios';
 import { nextTick, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import LoadingModal from '@/components/LoadingModal.vue';
 
  // Replace with the actual key you use for the token
 const groupedButtons = ref([]);
@@ -12,6 +13,7 @@ const routeQuestionPacketID = ref(null)
 const soal = ref(null)
 var token = localStorage.getItem('token');
 const errorMessage = ref(null)
+const isLoading = ref(false);
 
 const buttonsPerRow = 5;
 onMounted(async () => {
@@ -83,12 +85,14 @@ const getOrderNumber = async () => {
 const previousPage = async () => {
   if (soal.value != 1){
     console.log("previous without answer: ", +soal.value - 1)
+    isLoading.value = true;
     jumpPage(+soal.value - 1)
     return
   }
 };
 
 const jumpPage = async (number) => {
+  isLoading.value = true;
   localStorage.setItem('number', number)
   localStorage.removeItem('answer');
   localStorage.removeItem('answerValue');
@@ -96,6 +100,10 @@ const jumpPage = async (number) => {
   await nextTick()
   scrollToCurrentNumber()
   emitter.emit('refreshQuestion', {'number': number})
+  
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 800);
 };
 
 const nextPage = async () => {
@@ -106,6 +114,7 @@ const nextPage = async () => {
     
   if (answer === null && soal.value != questionLength){
     console.log("next without answer: ", +soal.value + 1)
+    isLoading.value = true;
     jumpPage(+soal.value + 1)
     return
   }
@@ -121,6 +130,7 @@ const nextPage = async () => {
   }
 
   try {
+    isLoading.value = true;
     // const tokenRecaptcha = await grecaptcha.execute('6LfXRJ8pAAAAAOt1gKzRNIj1GOYGtp-DB_tz73OR', { action: 'submit' });
     console.log("paket id: ",question_packet_id)
     console.log("ques id: ",question_id)
@@ -146,9 +156,11 @@ const nextPage = async () => {
     
     if (soal.value == questionLength) {
       router.push("/review")
+      isLoading.value = false;
+      return;
     }
     
-    nextPage()
+    jumpPage(+soal.value + 1)
   } catch (error) {
     // Handle login error (display error message, redirect, etc.)
     console.error('answer failed:', error);
@@ -157,6 +169,7 @@ const nextPage = async () => {
     } else {
       errorMessage.value = 'An unexpected error occurred during login.';
     }
+    isLoading.value = false;
   }
 };
 
@@ -170,6 +183,8 @@ const scrollToCurrentNumber = () => {
 </script>
 
 <template>
+  <LoadingModal v-model="isLoading" />
+
   <VCard>
     <VRow no-gutters>
       <VCol
