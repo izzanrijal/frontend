@@ -1,6 +1,6 @@
 <script setup>
 import { emitter } from '@/main';
-import axios from 'axios';
+import { apiService } from '@/plugins/axios';
 import { marked } from 'marked';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -14,7 +14,7 @@ const userAnswer = ref(null);
 const router = useRouter();
 const route = useRoute();
 const options = ref([]);
-var token = localStorage.getItem('token');
+const isLoading = ref(false);
 const dialog = ref(false); // For dialog control
 const props = defineProps({
   mode: String, // Accepting mode as a prop from parent
@@ -22,7 +22,6 @@ const props = defineProps({
 
 onMounted(async () => {
   emitter.on('refreshQuestion', (evt) => {
-    console.log("run emit trigger: ", evt.number);
     selectedOption.value = null;
     selectedOptionYakin.value = null;
     getQuestion();
@@ -32,79 +31,57 @@ onMounted(async () => {
 });
 
 const getQuestion = async () => {
-  if (token) {
-    try {
-      const routeQuestionPacketID = localStorage.getItem('paket');
-      const number = localStorage.getItem('number');
+  isLoading.value = true;
+  try {
+    const routeQuestionPacketID = localStorage.getItem('paket');
+    const number = localStorage.getItem('number');
 
-      // First request to get question data
-      const response = await axios.get(
-        'https://gateway.berkompeten.id/api/student/question?id=' +
-          routeQuestionPacketID +
-          '&number=' +
-          number,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      question.value = response.data.data;
-      localStorage.setItem('question_id', response.data.data.id);
+    // First request to get question data - use caching for faster loads of the same question
+    const response = await apiService.get('/student/question', {
+      id: routeQuestionPacketID,
+      number: number
+    }, { useCache: true });
 
-      const optionA = { label: response.data.data.option_a, value: 'A' };
-      const optionB = { label: response.data.data.option_b, value: 'B' };
-      const optionC = { label: response.data.data.option_c, value: 'C' };
-      const optionD = { label: response.data.data.option_d, value: 'D' };
-      const optionE = { label: response.data.data.option_e, value: 'E' };
+    question.value = response.data.data;
+    localStorage.setItem('question_id', response.data.data.id);
 
-      options.value = [optionA, optionB, optionC, optionD, optionE];
+    // Create options array more efficiently
+    options.value = [
+      { label: response.data.data.option_a, value: 'A' },
+      { label: response.data.data.option_b, value: 'B' },
+      { label: response.data.data.option_c, value: 'C' },
+      { label: response.data.data.option_d, value: 'D' },
+      { label: response.data.data.option_e, value: 'E' }
+    ];
 
-      if (question.value.student_answer) {
-        selectedOption.value = question.value.student_answer;
-        localStorage.setItem('answer', selectedOption.value);
-      }
-
-      if (question.value.student_answer_value) {
-        selectedOptionYakin.value = question.value.student_answer_value;
-        localStorage.setItem('answerValue', selectedOptionYakin.value);
-      }
-
-      // If mode is 'review', make additional request to review-answer endpoint
-      console.log("mode: ", props.mode)
-      if (props.mode === 'review') {
-        console.log("run mode review")
-        const reviewResponse = await axios.post(
-          'https://gateway.berkompeten.id/api/student/user/review-answer',
-          {
-            question_packet_id: routeQuestionPacketID,
-            number: number
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          }
-        );
-
-        correctAnswer.value = reviewResponse.data.data.correct_answer;
-        userAnswer.value = reviewResponse.data.data.user_answer;
-        discussion.value = marked(reviewResponse.data.data.discussion);
-
-        // Set selectedOption to userAnswer from the review
-        selectedOption.value = userAnswer.value;
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        // Redirect to login page if the response status is 401
-        localStorage.removeItem('token');
-        localStorage.removeItem('profile');
-        router.push('/login');
-      }
+    if (question.value.student_answer) {
+      selectedOption.value = question.value.student_answer;
+      localStorage.setItem('answer', selectedOption.value);
     }
-  } else {
-    // Redirect to login page if token is not present
-    router.push('/login');
+
+    if (question.value.student_answer_value) {
+      selectedOptionYakin.value = question.value.student_answer_value;
+      localStorage.setItem('answerValue', selectedOptionYakin.value);
+    }
+
+    // If mode is 'review', make additional request to review-answer endpoint
+    if (props.mode === 'review') {
+      const reviewResponse = await apiService.post('/student/user/review-answer', {
+        question_packet_id: routeQuestionPacketID,
+        number: number
+      });
+
+      correctAnswer.value = reviewResponse.data.data.correct_answer;
+      userAnswer.value = reviewResponse.data.data.user_answer;
+      discussion.value = marked(reviewResponse.data.data.discussion);
+
+      // Set selectedOption to userAnswer from the review
+      selectedOption.value = userAnswer.value;
+    }
+  } catch (error) {
+    console.error('Error fetching question:', error);
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -118,32 +95,23 @@ const keyakinan = [
 ];
 
 const saveToLocalStorage = () => {
-  console.log("selected option: ", selectedOption.value);
   localStorage.setItem('answer', selectedOption.value);
 };
 
 const saveYakinToLocalStorage = () => {
-  console.log("selected option yakin: ", selectedOptionYakin.value);
   localStorage.setItem('answerValue', selectedOptionYakin.value);
 };
 
 const isCorrectAnswer = (value, label) => {
   var isCorrectAnswer = false
-  console.log("val: ", value)
-  console.log("label: ", label)
-  console.log("correct answer: ", correctAnswer.value)
-  console.log("is correct answer: ", isCorrectAnswer)
   if (value === correctAnswer.value) {
     isCorrectAnswer = true;
     correctAnswerLabel.value = label
-    console.log("correct answer label: ", correctAnswerLabel.value)
   }
   return isCorrectAnswer;
 };
 
 const isWrongAnswer = (value) => {
-  console.log("val: ", value)
-  console.log("user answer: ", userAnswer.value)
   return value === userAnswer.value && value !== correctAnswer.value;
 };
 

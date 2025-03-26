@@ -54,20 +54,40 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 50000,
+    // Optimize bundle output
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console logs in production
+        drop_debugger: true
+      }
+    },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Split vendor code into separate chunks for better caching
+          'vendor': ['vue', 'vue-router', 'pinia'],
+          'axios': ['axios'],
+          'vuetify': ['vuetify'],
+          'chart': ['chart.js'],
+        }
+      }
+    }
   },
   optimizeDeps: {
     exclude: ['vuetify'],
     entries: [
       './src/**/*.vue',
     ],
+    // Prebundle dependencies to improve startup time
+    include: ['axios', 'chart.js', 'marked', 'mitt']
   },
-  // server: {
-  //   proxy: {
-  //     "/api": {
-  //       changeOrigin: true,
-  //       target: "https://gateway.berkompeten.id",
-  //       historyApiFallback: true,
-  //     }
-  //   }
-  // },
+  server: {
+    // Enable HMR for faster development
+    hmr: true,
+    // Optimize server cold-start time
+    warmup: {
+      clientFiles: ['./src/main.js']
+    }
+  }
 })

@@ -1,5 +1,5 @@
 <script setup>
-import axios from 'axios';
+import { apiService } from '@/plugins/axios';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -8,7 +8,7 @@ const topicAdvice = ref([]);
 const data = ref({});
 const router = useRouter();
 const route = useRoute();
-const token = localStorage.getItem('token');
+const isLoading = ref(false);
 
 // State to control the "show more" functionality
 const showMoreDiagnosis = ref(false);
@@ -19,44 +19,30 @@ const menuIndex = ref(route.params.menu || 1);
 
 // Function to fetch data from the API based on the menu index
 const fetchData = async () => {
-  if (token) {
-    try {
-      const response = await axios.get('https://gateway.berkompeten.id/api/student/analys/result', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          menu: menuIndex.value, // Pass the menu index as a query parameter
-        },
-      });
+  isLoading.value = true;
+  try {
+    const response = await apiService.get('/student/analys/result', {
+      menu: menuIndex.value,
+    }, { useCache: true }); // Use caching for this request
 
-      // Process response data
-      data.value = response.data.data;
-      
-      // Transforming `advise_learn_by_diagnose` to an array for easier rendering
-      diagnosisAdvice.value = Object.entries(response.data.data.advise_learn_by_diagnose).map(([key, value]) => ({
-        subtopic: key,
-        ...value,
-      }));
+    // Process response data
+    data.value = response.data.data;
+    
+    // Transforming `advise_learn_by_diagnose` to an array for easier rendering
+    diagnosisAdvice.value = Object.entries(response.data.data.advise_learn_by_diagnose).map(([key, value]) => ({
+      subtopic: key,
+      ...value,
+    }));
 
-      // Transforming `advise_learn_by_topic` to an array for easier rendering
-      topicAdvice.value = Object.entries(response.data.data.advise_learn_by_topic).map(([key, value]) => ({
-        group_topic: key,
-        items: value,
-      }));
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        // Redirect to login page if the response status is 401
-        localStorage.removeItem('token');
-        localStorage.removeItem('profile');
-        router.push('/login');
-      } else {
-        console.error('Error fetching data:', error);
-      }
-    }
-  } else {
-    // Redirect to login page if token is not present
-    router.push('/login');
+    // Transforming `advise_learn_by_topic` to an array for easier rendering
+    topicAdvice.value = Object.entries(response.data.data.advise_learn_by_topic).map(([key, value]) => ({
+      group_topic: key,
+      items: value,
+    }));
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  } finally {
+    isLoading.value = false;
   }
 };
 

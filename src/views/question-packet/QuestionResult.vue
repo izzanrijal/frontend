@@ -1,133 +1,111 @@
 <script setup>
+import { apiService } from '@/plugins/axios';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
- // Replace with the actual key you use for the token
+// State variables
 const questionPacketResult = ref({});
-const skippedQuestions = ref([]);
-const router = useRouter();
-const route = useRoute()
 const analysisAdvice = ref({});
 const adviseByDiagnose = ref([]);
 const adviseByTopic = ref([]);
-const options = ref([])
-var token = localStorage.getItem('token');
+const skippedQuestions = ref([]);
+const errorMessage = ref('');
+const isLoading = ref(false);
 
-const item = ["Reparasi Paru", "Reproduksi"]
+const router = useRouter();
+const route = useRoute();
 
-onMounted(async () => {
-  await getQuestionPacketScore()
-  await fetchQuestionPacketAnalyzeResult()
-  await getSkipQuestions()
+// When the component mounts, fetch all required data
+onMounted(() => {
+  fetchQuestionPacketResult();
+  fetchQuestionPacketAnalyzeResult();
+  getSkipQuestions();
 });
 
-const getQuestionPacketScore = async () => {
-  if (token) {
-    try {
-      const routeQuestionPacketID = localStorage.getItem('paket')
-      console.log("question packet id: " + routeQuestionPacketID)
-      const response = await axios.get('https://gateway.berkompeten.id/api/student/user/test/result?id='+routeQuestionPacketID, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      questionPacketResult.value = response.data.data;
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        // Redirect to login page if the response status is 401
-        localStorage.removeItem('token');
-        localStorage.removeItem('profile');
-        router.push('/login');
-      }
-    }
-  } else {
-    // Redirect to login page if token is not present
-    router.push('/login');
+const fetchQuestionPacketResult = async () => {
+  isLoading.value = true;
+  try {
+    const routeQuestionPacketID = localStorage.getItem('paket');
+    const response = await apiService.get('/student/user/test/result', {
+      id: routeQuestionPacketID
+    }, { useCache: true });
+    
+    questionPacketResult.value = response.data.data;
+  } catch (error) {
+    console.error('Error fetching question packet result:', error);
+  } finally {
+    isLoading.value = false;
   }
 };
 
 const fetchQuestionPacketAnalyzeResult = async () => {
-  if (token) {
-    try {
-      const questionPacketId = localStorage.getItem('paket');
-      const response = await axios.get(
-        `https://gateway.berkompeten.id/api/student/analys/result-by-question-packet-id?question_packet_id=${questionPacketId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  isLoading.value = true;
+  try {
+    const questionPacketId = localStorage.getItem('paket');
+    const response = await apiService.get('/student/analys/result-by-question-packet-id', {
+      question_packet_id: questionPacketId
+    }, { useCache: true });
 
-      analysisAdvice.value = response.data.data;
-      adviseByDiagnose.value = Object.entries(response.data.data.advise_learn_by_diagnose).map(
-        ([subtopic, details]) => ({
-          subtopic,
-          ...details,
-        })
-      );
+    analysisAdvice.value = response.data.data;
+    adviseByDiagnose.value = Object.entries(response.data.data.advise_learn_by_diagnose).map(
+      ([subtopic, details]) => ({
+        subtopic,
+        ...details,
+      })
+    );
 
-      adviseByTopic.value = Object.entries(response.data.data.advise_learn_by_topic).map(([group_topic, subtopics]) => ({
-        group_topic,
-        subtopics,
-      }));
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        // Redirect to login page if the response status is 401
-        localStorage.removeItem('token');
-        router.push('/login');
-      }
-    }
+    adviseByTopic.value = Object.entries(response.data.data.advise_learn_by_topic).map(([group_topic, subtopics]) => ({
+      group_topic,
+      subtopics,
+    }));
+  } catch (error) {
+    console.error('Error fetching analysis advice:', error);
+  } finally {
+    isLoading.value = false;
   }
 }
 
 const getSkipQuestions = async () => {
-  if (token) {
-    try {
-      const routeQuestionPacketID = localStorage.getItem('paket')
-      const response = await axios.get('https://gateway.berkompeten.id/api/student/user/skip/questions?id='+routeQuestionPacketID, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      skippedQuestions.value = response.data.data;
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        // Redirect to login page if the response status is 401
-        localStorage.removeItem('token');
-        localStorage.removeItem('profile');
-        router.push('/login');
-      }
-    }
-  } else {
-    // Redirect to login page if token is not present
-    router.push('/login');
+  isLoading.value = true;
+  try {
+    const routeQuestionPacketID = localStorage.getItem('paket');
+    const response = await apiService.get('/student/user/skip/questions', {
+      id: routeQuestionPacketID
+    }, { useCache: true });
+    
+    skippedQuestions.value = response.data.data;
+  } catch (error) {
+    console.error('Error fetching skipped questions:', error);
+  } finally {
+    isLoading.value = false;
   }
 };
 
 const openDiscussion = async () => {
-  question_packet_id = localStorage.getItem('paket')
+  const question_packet_id = localStorage.getItem('paket');
+  const answer = localStorage.getItem('answer');
+  const answerValue = localStorage.getItem('answerValue');
+  const question_id = localStorage.getItem('question_id');
 
-  if (answer === null ){
-    errorMessage.value = "Tolong pilih jawaban terlebih dahulu"
-    return
+  if (answer === null) {
+    errorMessage.value = "Tolong pilih jawaban terlebih dahulu";
+    return;
   }
 
-  if (answerValue === null){
-    errorMessage.value = "Tolong pilih seberapa yakin jawaban anda terlebih dahulu"
-    return
+  if (answerValue === null) {
+    errorMessage.value = "Tolong pilih seberapa yakin jawaban anda terlebih dahulu";
+    return;
   }
 
-  if (question_id === null){
-    errorMessage.value = "question id is empty. please contact your administrator"
-    return
+  if (question_id === null) {
+    errorMessage.value = "question id is empty. please contact your administrator";
+    return;
   }
 
   try {
-    router.push('/dashboard')
+    router.push('/dashboard');
   } catch (error) {
-    // Handle login error (display error message, redirect, etc.)
     console.error('answer failed:', error);
     if (error.response && error.response.data) {
       errorMessage.value = error.response.data.errors;
@@ -135,7 +113,6 @@ const openDiscussion = async () => {
       errorMessage.value = 'An unexpected error occurred during login.';
     }
   }
-
 };
 </script>
 

@@ -1,49 +1,32 @@
 <script setup>
 import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
-import axios from 'axios';
+import { apiService } from '@/plugins/axios';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-const token = localStorage.getItem('token'); // Replace with the actual key you use for the token
 const userProfile = ref(null);
 const router = useRouter();
 const menuItems = ref([]); // Store menu items from the API
+const isLoading = ref(false);
 
 // Fetch user profile and menu data on component mount
 onMounted(async () => {
-  if (token) {
-    try {
-      // Fetch user profile data
-      const profileResponse = await axios.get('https://gateway.berkompeten.id/api/student/profile', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      userProfile.value = profileResponse.data;
+  isLoading.value = true;
+  try {
+    // Fetch user profile data with caching - profile doesn't change frequently
+    const profileResponse = await apiService.get('/student/profile', {}, { useCache: true });
+    userProfile.value = profileResponse.data;
 
-      // Fetch menu data
-      const menuResponse = await axios.get('https://gateway.berkompeten.id/api/student/analys/menu', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          id: 2 // Send the `id` parameter as required
-        }
-      });
+    // Fetch menu data with caching - menu structure doesn't change frequently
+    const menuResponse = await apiService.get('/student/analys/menu', { id: 2 }, { useCache: true });
 
-      if (!menuResponse.data.error) {
-        menuItems.value = menuResponse.data.data.menus; // Store menus in `menuItems`
-      }
-
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        // Redirect to login page if the response status is 401
-        router.push('/login');
-      }
+    if (!menuResponse.data.error) {
+      menuItems.value = menuResponse.data.data.menus; // Store menus in `menuItems`
     }
-  } else {
-    // Redirect to login page if token is not present
-    router.push('/login');
+  } catch (error) {
+    console.error('Error fetching navigation data:', error);
+  } finally {
+    isLoading.value = false;
   }
 });
 </script>

@@ -1,5 +1,5 @@
 <script setup>
-import axios from 'axios';
+import { apiService } from '@/plugins/axios';
 import { Chart, registerables } from 'chart.js';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -9,21 +9,17 @@ Chart.register(...registerables);
 const canvas = ref(null);
 const results = ref([]);
 const chart = ref(null);
-var token = localStorage.getItem('token');
+const isLoading = ref(false);
 const route = useRoute();
 const menuIndex = ref(route.params.menu);
 const recomendationAdvice = ref(''); // New ref for recommendation advice
 
 const fetchChartData = async () => {
+  isLoading.value = true;
   try {
-    const response = await axios.get('https://gateway.berkompeten.id/api/student/analys/chart/result', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      params: {
-        menu: menuIndex.value,
-      }
-    });
+    const response = await apiService.get('/student/analys/chart/result', {
+      menu: menuIndex.value,
+    }, { useCache: true }); // Use caching for better performance
 
     if (response.data.error) {
       console.error(response.data.message);
@@ -70,7 +66,7 @@ const fetchChartData = async () => {
           ],
         },
         options: {
-          plugins: { // Make sure there are no undefined plugins or unnecessary configurations
+          plugins: {
             legend: {
               display: true,
               position: 'top',
@@ -88,14 +84,12 @@ const fetchChartData = async () => {
       passed: parseFloat(score.score) >= 63.5
     }));
 
-    console.log(data.recomandationAdvise);
-
     // Update recommendation advice
     recomendationAdvice.value = decodeHtml(data.recomandationAdvise);
-
-    console.log(recomendationAdvice.value);
   } catch (error) {
     console.error("Error fetching chart data:", error);
+  } finally {
+    isLoading.value = false;
   }
 };
 
