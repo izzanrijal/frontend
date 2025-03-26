@@ -6,7 +6,11 @@ export default defineComponent({
   setup(props, { slots }) {
     const isOverlayNavActive = ref(false)
     const isLayoutOverlayVisible = ref(false)
+    const isNavCollapsed = ref(false)
     const toggleIsOverlayNavActive = useToggle(isOverlayNavActive)
+    const toggleIsNavCollapsed = () => {
+      isNavCollapsed.value = !isNavCollapsed.value
+    }
     const route = useRoute()
     const { mdAndDown } = useDisplay()
 
@@ -17,7 +21,11 @@ export default defineComponent({
     
     return () => {
       // 👉 Vertical nav
-      const verticalNav = h(VerticalNav, { isOverlayNavActive: isOverlayNavActive.value, toggleIsOverlayNavActive }, {
+      const verticalNav = h(VerticalNav, { 
+        isOverlayNavActive: isOverlayNavActive.value, 
+        toggleIsOverlayNavActive,
+        isNavCollapsed: isNavCollapsed.value
+      }, {
         'nav-header': () => slots['vertical-nav-header']?.({ toggleIsOverlayNavActive }),
         'before-nav-items': () => slots['before-vertical-nav-items']?.(),
         'default': () => slots['vertical-nav-content']?.(),
@@ -29,6 +37,8 @@ export default defineComponent({
       const navbar = h('header', { class: ['layout-navbar navbar-blur'] }, [
         h('div', { class: 'navbar-content-container' }, slots.navbar?.({
           toggleVerticalOverlayNavActive: toggleIsOverlayNavActive,
+          toggleIsNavCollapsed,
+          isNavCollapsed: isNavCollapsed.value
         })),
       ])
 
@@ -51,6 +61,7 @@ export default defineComponent({
         class: [
           'layout-wrapper layout-nav-type-vertical layout-navbar-static layout-footer-static layout-content-width-fluid',
           mdAndDown.value && 'layout-overlay-nav',
+          isNavCollapsed.value && !mdAndDown.value && 'layout-vertical-nav-collapsed',
           route.meta.layoutWrapperClasses,
         ],
       }, [

@@ -14,7 +14,8 @@
 
     @at-root {
       // ℹ️ Add styles for collapsed vertical nav
-      .layout-vertical-nav-collapsed#{$sl-layout-nav-type-vertical}.hovered {
+      .layout-vertical-nav-collapsed#{$sl-layout-nav-type-vertical}.hovered,
+      #{$sl-layout-nav-type-vertical}.collapsed.hovered {
         @include mixins.elevation(6);
       }
     }
@@ -34,17 +35,6 @@
         transition: transform 0.25s ease-in-out;
         transform: scale(0.6);
         margin-right: 10px;
-
-        @at-root {
-          // Move logo a bit to align center with the icons in vertical nav mini variant
-          .layout-vertical-nav-collapsed#{$sl-layout-nav-type-vertical}:not(.hovered) .nav-header .app-logo {
-            transform: translateX(variables.$vertical-nav-header-logo-translate-x-when-vertical-nav-mini - 20px);
-
-            @include layoutsMixins.rtl {
-              transform: translateX(-(variables.$vertical-nav-header-logo-translate-x-when-vertical-nav-mini - 20px));
-            }
-          }
-        }
       }
 
       .app-title {
@@ -63,21 +53,19 @@
       background:
         linear-gradient(
           rgb(#{variables.$vertical-nav-background-color-rgb}) 5%,
-          rgba(#{variables.$vertical-nav-background-color-rgb}, 75%) 45%,
-          rgba(#{variables.$vertical-nav-background-color-rgb}, 20%) 80%,
+          rgba(#{variables.$vertical-nav-background-color-rgb}, 85%) 30%,
+          rgba(#{variables.$vertical-nav-background-color-rgb}, 50%) 65%,
+          rgba(#{variables.$vertical-nav-background-color-rgb}, 30%) 75%,
           transparent
         );
-      block-size: 55px;
+      block-size: 64px;
       inline-size: 100%;
       inset-block-start: calc(#{variables.$vertical-nav-header-height} - 2px);
       opacity: 0;
       pointer-events: none;
+      transform: translateX(-8px);
       transition: opacity 0.15s ease-in-out;
       will-change: opacity;
-
-      @include layoutsMixins.rtl {
-        transform: translateX(8px);
-      }
     }
 
     &.scrolled {

@@ -17,10 +17,16 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  isNavCollapsed: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 })
 
 const { mdAndDown } = useDisplay()
 const refNav = ref()
+const isHovered = ref(false)
 
 /*ℹ️ Close overlay side when route is changed
 Close overlay vertical nav when link is clicked
@@ -41,6 +47,16 @@ const handleNavScroll = evt => {
 const toggleOverlayNav = () => {
   props.toggleIsOverlayNavActive(!props.isOverlayNavActive);
 }
+
+const onMouseEnter = () => {
+  if (props.isNavCollapsed && !mdAndDown.value) {
+    isHovered.value = true
+  }
+}
+
+const onMouseLeave = () => {
+  isHovered.value = false
+}
 </script>
 
 <template>
@@ -54,15 +70,22 @@ const toggleOverlayNav = () => {
         'visible': isOverlayNavActive,
         'scrolled': isVerticalNavScrolled,
         'overlay-nav': mdAndDown,
+        'collapsed': isNavCollapsed && !mdAndDown,
+        'hovered': isHovered,
       },
     ]"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
   >
     <!-- 👉 Header -->
     <div class="nav-header">
       <div class="d-flex align-items-center">
         <!-- 👉 Logo -->
         <RouterLink to="/" class="app-logo app-title-wrapper">
-          <div class="d-flex" v-html="logo" />
+          <div v-if="isNavCollapsed && !mdAndDown && !isHovered" class="logo-placeholder">
+            <VIcon icon="ri-shape-line" size="28" color="#0080ff" />
+          </div>
+          <div v-else class="d-flex" v-html="logo" />
         </RouterLink>
         
         <!-- 👉 Toggle button -->
@@ -105,6 +128,18 @@ const toggleOverlayNav = () => {
     text-transform: uppercase;
   }
 }
+
+.logo-placeholder {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
 </style>
 
 <style lang="scss">
@@ -137,6 +172,12 @@ const toggleOverlayNav = () => {
   inset-inline-start: 0;
   transition: inline-size 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
   will-change: transform, inline-size;
+  background-color: variables.$vertical-nav-background-color;
+
+  &.hovered {
+    inline-size: variables.$layout-vertical-nav-width !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
 
   .nav-header {
     display: flex;
@@ -170,6 +211,12 @@ const toggleOverlayNav = () => {
     // overflow-y: auto;
   }
 
+  .nav-item-title, 
+  .nav-group-arrow,
+  .nav-item-badge {
+    transition: opacity 0.25s ease-in-out;
+  }
+
   .nav-item-title {
     overflow: hidden;
     margin-inline-end: auto;
@@ -178,9 +225,34 @@ const toggleOverlayNav = () => {
   }
 
   // 👉 Collapsed
-  .layout-vertical-nav-collapsed & {
+  .layout-vertical-nav-collapsed &,
+  &.collapsed {
     &:not(.hovered) {
       inline-size: variables.$layout-vertical-nav-collapsed-width;
+
+      // Center the app logo in collapsed state
+      .nav-header {
+        justify-content: center;
+        
+        .app-title-wrapper {
+          margin: 0 auto;
+          display: flex;
+          justify-content: center;
+        }
+      }
+
+      // Hide text in collapsed state
+      .nav-item-title, 
+      .nav-group-arrow,
+      .nav-item-badge {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      // Hide header action in collapsed state on desktop
+      .header-action {
+        display: none;
+      }
     }
   }
 }
