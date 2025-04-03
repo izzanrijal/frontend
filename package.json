@@ -10,7 +10,7 @@
     "start": "vite preview --port 5050",
     "lint": "eslint . -c .eslintrc.cjs --fix --ext .ts,.js,.cjs,.vue,.tsx,.jsx",
     "build:icons": "tsx src/plugins/iconify/build-icons.js",
-    "postinstall": "npm run build:icons"
+    "postinstall": "echo 'skipping build:icons in deploy'"
   },
   "dependencies": {
     "@coreui/vue": "^4.10.2",
