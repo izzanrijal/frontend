@@ -4,13 +4,8 @@
   "private": true,
   "type": "module",
 "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview --port 5050",
-  "start": "vite preview --port 5050",
-  "lint": "eslint . -c .eslintrc.cjs --fix --ext .ts,.js,.cjs,.vue,.tsx,.jsx",
-  "build:icons": "tsx src/plugins/iconify/build-icons.js",
-  "postinstall": "npx tsx src/plugins/iconify/build-icons.js"
+  "predeploy": "npm run build:icons",
+  "build:icons": "tsx src/plugins/iconify/build-icons.js"
 },
   "dependencies": {
     "@coreui/vue": "^4.10.2",
