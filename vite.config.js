@@ -89,5 +89,8 @@ export default defineConfig({
     warmup: {
       clientFiles: ['./src/main.js']
     }
+  },
+  preview: {
+    allowedHosts: ['app.berkompeten.id']
   }
 })

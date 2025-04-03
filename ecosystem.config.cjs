@@ -2,8 +2,8 @@ module.exports = {
   apps: [
     {
       name: 'materio-vuetify-app',
-      script: 'npm',
-      args: 'run preview',
+      script: 'node_modules/vite/bin/vite.js',
+      args: 'preview --host app.berkompeten.id',
       cwd: './',
       instances: 1,
       autorestart: true,
