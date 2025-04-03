@@ -122,3 +122,12 @@ vite.config.js.timestamp-*
 # pnpm-lock.yaml
 # yarn.lock
 .ssh
+
+# Iconify
+# src/plugins/iconify/icons.css
+
+# PM2
+pids/
+logs/
+pm2.log
+ecosystem.config.js
