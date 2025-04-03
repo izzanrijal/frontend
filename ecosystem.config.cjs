@@ -24,7 +24,7 @@ deploy: {
     ref: 'origin/master',
     repo: 'git@github.com:izzanrijal/frontend.git',
     path: '/home/berkompetenapp/apps/fe-berkompeten',
-    'post-deploy': 'npm install && pm2 reload ecosystem.config.cjs --env production'
+    'post-deploy': 'npm install && npm run build:icons && /home/berkompetenapp/.nvm/versions/node/v22.12.0/bin/pm2 reload ecosystem.config.cjs --env production'
   }
 }
 
