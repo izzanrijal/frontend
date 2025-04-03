@@ -88,9 +88,14 @@ export default defineConfig({
     // Optimize server cold-start time
     warmup: {
       clientFiles: ['./src/main.js']
-    }
+    },
+    host: true, // Listen on all addresses
+    port: 5050
   },
   preview: {
-    allowedHosts: ['app.berkompeten.id']
+    host: true, // Listen on all addresses including localhost and network
+    port: 5050,
+    strictPort: true,
+    allowedHosts: ['localhost', '127.0.0.1', 'app.berkompeten.id']
   }
 })
