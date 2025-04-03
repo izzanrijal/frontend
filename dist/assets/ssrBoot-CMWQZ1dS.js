@@ -1,0 +1,1 @@
+import{s as o,l as s,c as t,k as n}from"./vendor-B8wJr56A.js";function a(){const a=o(!1);s((()=>{window.requestAnimationFrame((()=>{a.value=!0}))}));return{ssrBootStyles:t((()=>a.value?void 0:{transition:"none !important"})),isBooted:n(a)}}export{a as u};
