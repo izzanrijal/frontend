@@ -65,13 +65,13 @@ module.exports = {
       max_memory_restart: '1G',
       env: {
         NODE_ENV: 'production',
-        PORT: 5050,
+        PORT: 5050, #port harus selalu di set, dan juga allowed domain, namun kali ini pakai host 0.0.0.0
         HOST: '0.0.0.0'
       }
     }
   ],
 
-  deploy: {
+  deploy: { #params harus ditulis untuk fungsi deployment dari pm2
     production: {
       user: 'berkompetenapp',
       host: '82.197.70.234',
@@ -126,7 +126,7 @@ chmod +x build-and-deploy.sh
   "preview": "vite preview --port 5050",
   "start": "vite preview --port 5050",
   "build:icons": "tsx src/plugins/iconify/build-icons.js",
-  "predeploy": "npm run build:icons"
+  "predeploy": "npm run build:icons" # predeploy dulu karena gagal build saat di pm2, push predeploy ke git remote untuk dipakai dist pre-deploy
 }
 ```
 
