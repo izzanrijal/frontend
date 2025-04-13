@@ -52,8 +52,8 @@ onMounted(async () => {
       v-if="userProfile.membership.name === 'Trial'"
       :item="{
         title: 'Analisis Paket Soal 1 sd. Paket Soal 3',
-        to: '/paket-soal',
-        icon: 'ri-file-edit-line',
+        to: '/example-analisa-advis',
+        icon: 'ri-bar-chart-2-line',
       }"
   />
 
