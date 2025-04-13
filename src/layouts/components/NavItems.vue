@@ -48,6 +48,15 @@ onMounted(async () => {
       }"
   />
 
+  <VerticalNavLink
+      v-if="userProfile.membership.name === 'Trial'"
+      :item="{
+        title: 'Analisis Paket Soal 1 sd. Paket Soal 3',
+        to: '/paket-soal',
+        icon: 'ri-file-edit-line',
+      }"
+  />
+
   <!-- Dynamic Menu Links from API -->
   <VerticalNavLink
     v-for="(menu, index) in menuItems" :key="index"
