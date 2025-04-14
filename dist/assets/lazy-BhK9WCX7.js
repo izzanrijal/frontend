@@ -1,1 +1,0 @@
-import{p as e}from"./vuetify-C3ORsIgB.js";import{s as a,c as o,j as s}from"./vendor-B8wJr56A.js";const t=e({eager:Boolean},"lazy");function n(e,t){const n=a(!1),r=o((()=>n.value||e.eager||t.value));return s(t,(()=>n.value=!0)),{isBooted:n,hasContent:r,onAfterLeave:function(){e.eager||(n.value=!1)}}}export{t as m,n as u};

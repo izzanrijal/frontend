@@ -1,1 +1,0 @@
-import{_ as o}from"./index-BybbEtVx.js";import{O as s,B as r,v as t,A as a}from"./vendor-B8wJr56A.js";import"./vuetify-C3ORsIgB.js";import"./axios-fZjk1EK6.js";const e={class:"layout-wrapper layout-blank"};const i=o({},[["render",function(o,i){const n=a("RouterView");return r(),s("div",e,[t(n)])}]]);export{i as default};
