@@ -1,6 +1,6 @@
 <script setup>
-import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
 import { apiService } from '@/plugins/axios';
+import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -49,7 +49,7 @@ onMounted(async () => {
   />
 
   <VerticalNavLink
-      v-if="userProfile.profile.membership.name === 'Trial'"
+      v-if="userProfile.value.profile.membership.name === 'Trial'"
       :item="{
         title: 'Analisis Paket Soal 1 sd. Paket Soal 3',
         to: '/example-analisa-advis',
