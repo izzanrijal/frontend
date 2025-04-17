@@ -168,6 +168,12 @@ onMounted(async () => {
   }
 }
 
+.app-logo img {
+  max-width: 180px;
+  height: auto;
+  display: block;
+}
+
 .welcome-text {
   color: #0080ff; /* Set the desired color */
 
