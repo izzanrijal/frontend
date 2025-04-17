@@ -3,8 +3,8 @@ import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 import logo from '@images/berkompeten_logo.svg?raw'
 import authV1MaskDark from '@images/pages/auth-v1-mask-dark.png'
 import authV1MaskLight from '@images/pages/auth-v1-mask-light.png'
-import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
-import authV1Tree from '@images/pages/auth-v1-tree.png'
+// import authV1Tree2 from '@images/pages/auth-v1-tree-2.png'
+// import authV1Tree from '@images/pages/auth-v1-tree.png'
 import { useTheme } from 'vuetify'
 
 import axios from 'axios'
@@ -357,23 +357,11 @@ const navigateToForgotPassword = () => {
       </VCardText>
     </VCard>
 
-    <VImg
-      class="auth-footer-start-tree d-none d-md-block"
-      :src="authV1Tree"
-      :width="250"
-    />
-
-    <VImg
-      :src="authV1Tree2"
-      class="auth-footer-end-tree d-none d-md-block"
-      :width="350"
-    />
-
     <!-- bg img -->
-    <VImg
+    <!-- <VImg
       class="auth-footer-mask d-none d-md-block"
       :src="authThemeMask"
-    />
+    /> -->
   </div>
 </template>
 
