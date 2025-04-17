@@ -95,7 +95,7 @@ export default defineConfig({
       '/api': {
         target: 'https://gateway.berkompeten.id',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, '/api'),
+        rewrite: path => path.replace(/^\/api/, ''), // Remove /api prefix
       },
     },
   },
