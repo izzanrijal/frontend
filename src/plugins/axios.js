@@ -32,8 +32,13 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Handle 401 Unauthorized errors globally
-    if (error.response && error.response.status === 401) {
+    // Prevent infinite redirect loop
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !window.location.pathname.startsWith('/login') &&
+      window.location.pathname !== '/login'
+    ) {
       localStorage.removeItem('token')
       localStorage.removeItem('profile')
       window.location.href = '/login'
