@@ -175,15 +175,6 @@ watch(
   margin: 10px;
 }
 
-.item-margin {
-  padding: 10px;
-  margin: 5px; /* Optional: Adjust padding/margin for compactness */
-}
-
-.item {
-  /* Optional border or item styling */
-}
-
 .text-success {
   color: green;
 }
