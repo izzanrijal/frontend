@@ -170,16 +170,18 @@ const login = async () => {
     }
 
     const response = await axios.post('/api/student/login', requestData);
-
-    console.log(response);
-
-    // Assuming your backend returns a token upon successful login
-    const token = response.data.token;
-
-    console.log(token);
-
-    // Save the token in local storage or Vuex store for future requests
+    console.log('Login response:', response.data);
+    // Cek kemungkinan struktur token
+    let token = response.data.token;
+    if (!token && response.data.data && response.data.data.token) {
+      token = response.data.data.token;
+    }
+    if (!token) {
+      loginError.value = 'Login gagal: token tidak ditemukan di response.';
+      return;
+    }
     localStorage.setItem('token', token);
+    console.log('Token yang disimpan:', token);
 
     // Save email upon successful login
     saveEmail(form.email)
