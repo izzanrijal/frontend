@@ -85,7 +85,12 @@ const onMouseLeave = () => {
           <div v-if="isNavCollapsed && !mdAndDown && !isHovered" class="logo-placeholder">
             <VIcon icon="ri-shape-line" size="28" color="#0080ff" />
           </div>
-          <div v-else class="d-flex" v-html="logo" style="width:100%;justify-content:center;align-items:center;display:flex;max-width:140px;max-height:40px;object-fit:contain;" />
+          <div
+            v-else
+            class="d-flex logo-svg-wrapper"
+            v-html="logo"
+            style="width:100%;justify-content:center;align-items:center;display:flex;"
+          />
         </RouterLink>
         
         <!-- 👉 Toggle button -->
@@ -137,6 +142,16 @@ const onMouseLeave = () => {
   background-color: white;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
+}
+
+.logo-svg-wrapper svg {
+  width: 100% !important;
+  max-width: 140px !important;
+  height: 40px !important;
+  max-height: 40px !important;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
 }
 </style>
 
