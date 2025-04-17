@@ -15,10 +15,12 @@ onMounted(async () => {
   try {
     // Fetch user profile data with caching - profile doesn't change frequently
     const profileResponse = await apiService.get('/student/profile', {}, { useCache: true });
+    console.log('profileResponse production', profileResponse.data);
     userProfile.value = profileResponse.data;
 
     // Fetch menu data with caching - menu structure doesn't change frequently
     const menuResponse = await apiService.get('/student/analys/menu', { id: 2 }, { useCache: true });
+    console.log('menuResponse production', menuResponse.data);
 
     if (!menuResponse.data.error) {
       menuItems.value = menuResponse.data.data.menus; // Store menus in `menuItems`
@@ -32,6 +34,10 @@ onMounted(async () => {
 </script>
 
 <template>
+  <div v-if="isLoading">Loading menu...</div>
+  <div v-else-if="menuItems.length === 0">
+    <span class="text-error">Menu tidak tersedia.</span>
+  </div>
   <!-- Dashboard and other static links -->
   <VerticalNavLink
       :item="{

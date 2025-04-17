@@ -24,7 +24,6 @@
 
     // 👉 Nav header
     .nav-header {
-      overflow: hidden;
       padding: variables.$vertical-nav-header-padding;
       margin-inline: variables.$vertical-nav-header-inline-spacing;
       min-block-size: variables.$vertical-nav-header-height;
@@ -33,8 +32,11 @@
       .app-logo {
         flex-shrink: 0;
         transition: transform 0.25s ease-in-out;
-        transform: scale(0.6);
-        margin-right: 10px;
+        transform: scale(1);
+        margin-right: 16px;
+        max-width: 140px;
+        max-height: 40px;
+        overflow: visible;
       }
 
       .app-title {
