@@ -90,7 +90,14 @@ export default defineConfig({
       clientFiles: ['./src/main.js']
     },
     host: true, // Listen on all addresses
-    port: 5050
+    port: 5050,
+    proxy: {
+      '/api': {
+        target: 'https://gateway.berkompeten.id',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '/api'),
+      },
+    },
   },
   preview: {
     host: true, // Listen on all addresses including localhost and network

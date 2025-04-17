@@ -29,7 +29,7 @@ const fetchChartData = async () => {
     const data = response.data.data;
     const labels = data.userScores.map(item => item.tryout);
     const userScores = data.userScores.map(item => parseFloat(item.score));
-    const passingThreshold = data.passingThreshold.map(item => item.score);
+    const passingThreshold = data.passingThreshold.map(item => 66.0); // Update passing threshold to 66.0
     const averageScores = data.averageScores.map(item => item.score);
 
     // Check for chart instance existence before attempting to update or create

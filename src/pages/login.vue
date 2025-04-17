@@ -11,6 +11,7 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 // Get Cloudflare Turnstile site key from environment variables
+const IS_DEV = import.meta.env.DEV;
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_CLOUDFLARE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'
 const turnstileWidgetId = ref(null)
 
@@ -56,6 +57,7 @@ const hideSuggestions = () => {
 
 // Add Turnstile initialization function
 const initTurnstile = () => {
+  if (IS_DEV) return; // Disable turnstile in dev mode
   if (window.turnstile) {
     // Remove previous widget if it exists
     if (turnstileWidgetId.value) {
@@ -142,19 +144,20 @@ const login = async () => {
       return
     }
 
-    // Get Cloudflare Turnstile token if available (it might not be if user is not suspicious)
-    const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')?.value;
     const requestData = {
       email: form.email,
       password: form.password,
     };
-    
-    // Only include the token if it exists (for suspicious traffic)
-    if (turnstileResponse) {
-      requestData['cf-turnstile-response'] = turnstileResponse;
+
+    // Hanya tambahkan cf-turnstile-response jika mode production
+    if (!IS_DEV) {
+      const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')?.value;
+      if (turnstileResponse) {
+        requestData['cf-turnstile-response'] = turnstileResponse;
+      }
     }
 
-    const response = await axios.post('https://gateway.berkompeten.id/api/student/login', requestData);
+    const response = await axios.post('/api/student/login', requestData);
 
     console.log(response);
 
@@ -175,12 +178,13 @@ const login = async () => {
     // Handle login error (display error message, redirect, etc.)
     console.error('Login failed:', error);
     if (error.response && error.response.data) {
-      loginError.value = error.response.data.message;
+      console.error('Backend error:', error.response.data); 
+      loginError.value = error.response.data.message || JSON.stringify(error.response.data);
 
       if (error.response.data.errors){
         loginError.value = error.response.data.errors;
       }
-      
+
       // Special handling for captcha-related errors but don't explicitly mention captcha
       if (error.response.status === 429 || 
           (error.response.data.errors && typeof error.response.data.errors === 'string' && 
