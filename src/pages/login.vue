@@ -102,15 +102,27 @@ onMounted(async () => {
   console.log("token login: ", token)
 
   if (token) {
-    router.push('/dashboard');
+    // Pastikan token valid dengan cek profile
+    try {
+      const response = await axios.get('/api/student/profile', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (response.data && response.data.profile) {
+        router.push('/dashboard');
+      } else {
+        localStorage.removeItem('token');
+      }
+    } catch (e) {
+      localStorage.removeItem('token');
+    }
+  } else {
+    // Load emails from localStorage
+    const emails = JSON.parse(localStorage.getItem('savedEmails')) || []
+    savedEmails.value = emails
+    
+    // Initialize Turnstile when the component is mounted
+    initTurnstile();
   }
-
-  // Load emails from localStorage
-  const emails = JSON.parse(localStorage.getItem('savedEmails')) || []
-  savedEmails.value = emails
-  
-  // Initialize Turnstile when the component is mounted
-  initTurnstile();
 });
 
 // Save new email to storage when login is successful
