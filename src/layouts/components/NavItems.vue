@@ -22,8 +22,35 @@ onMounted(async () => {
     const menuResponse = await apiService.get('/student/analys/menu', { id: 2 }, { useCache: true });
     console.log('menuResponse production', menuResponse.data);
 
-    if (!menuResponse.data.error) {
-      menuItems.value = menuResponse.data.data.menus; // Store menus in `menuItems`
+    if (!menuResponse.data.error && Array.isArray(menuResponse.data.data?.menus)) {
+      // Filter out menu items whose 'link' doesn't match any valid route
+      const validRoutes = [
+        '/dashboard',
+        '/paket-soal',
+        '/detail',
+        '/review',
+        '/result',
+        '/soal',
+        '/soal-review',
+        '/profile/:tab',
+        '/otp',
+        '/upgrade/membership',
+        '/membership/detail',
+        '/lab-values',
+        '/example-analisa-advis',
+        '/analisa-advis/:menu',
+      ];
+      // Accept both static and dynamic (with params) routes
+      menuItems.value = menuResponse.data.data.menus.filter(menu => {
+        return validRoutes.some(route => {
+          if (route.includes(':')) {
+            // Dynamic route, check prefix
+            const base = route.split('/:')[0];
+            return menu.link.startsWith(base);
+          }
+          return menu.link === route;
+        });
+      });
     }
   } catch (error) {
     console.error('Error fetching navigation data:', error);

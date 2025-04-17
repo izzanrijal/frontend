@@ -81,11 +81,11 @@ const onMouseLeave = () => {
     <div class="nav-header">
       <div class="d-flex align-items-center">
         <!-- 👉 Logo -->
-        <RouterLink to="/" class="app-logo app-title-wrapper">
+        <RouterLink to="/" class="app-logo app-title-wrapper" style="width:100%;justify-content:center;align-items:center;display:flex">
           <div v-if="isNavCollapsed && !mdAndDown && !isHovered" class="logo-placeholder">
             <VIcon icon="ri-shape-line" size="28" color="#0080ff" />
           </div>
-          <div v-else class="d-flex" v-html="logo" />
+          <div v-else class="d-flex" v-html="logo" style="width:100%;justify-content:center;align-items:center;display:flex;max-width:140px;max-height:40px;object-fit:contain;" />
         </RouterLink>
         
         <!-- 👉 Toggle button -->
@@ -118,15 +118,13 @@ const onMouseLeave = () => {
 <style lang="scss" scoped>
 .app-logo {
   display: flex;
-  align-items: left;
-  column-gap: 0.75rem;
-
-  .app-logo-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    line-height: 0.75rem;
-    text-transform: uppercase;
-  }
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 140px;
+  max-height: 40px;
+  margin: 0 auto;
+  overflow: visible;
 }
 
 .logo-placeholder {
