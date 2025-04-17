@@ -1,7 +1,10 @@
 import axios from 'axios'
 
 // Base API URL for centralization
-const API_BASE_URL = 'https://gateway.berkompeten.id/api'
+const API_BASE_URL =
+  (import.meta.env.PROD || window.location.hostname === 'app.berkompeten.id')
+    ? 'https://gateway.berkompeten.id/api'
+    : '/api'
 
 // Create axios instance with default configuration
 const apiClient = axios.create({
@@ -36,7 +39,10 @@ apiClient.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token')
       localStorage.removeItem('profile')
-      window.location.href = '/login'
+      // Only redirect if not already on login page
+      if (!window.location.pathname.includes('/login')) {
+        window.location.href = '/login'
+      }
     }
     return Promise.reject(error)
   }

@@ -10,7 +10,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTheme } from 'vuetify'
 
-const form = reactive({
+const form = ref({
   email: '',
   password: '',
   password_confirmation: '',
@@ -42,52 +42,52 @@ const authThemeMask = computed(() => {
 
 const register = async () => {
   try {
-    if (form.name == "") {
+    if (form.value.name == "") {
       errorMessage.value = "name is required";
       return
     }
 
-    if (form.gender == "") {
+    if (form.value.gender == "") {
       errorMessage.value = "gender is required";
       return
     }
 
-    if (form.phone_number == "") {
+    if (form.value.phone_number == "") {
       errorMessage.value = "phone number is required";
       return
     }
 
-    if (form.exam_date_id == "") {
+    if (form.value.exam_date_id == "") {
       errorMessage.value = "tahun masuk is required";
       return
     }
 
-    if (form.university_id == "") {
+    if (form.value.university_id == "") {
       errorMessage.value = "universitas is required";
       return
     }
 
-    if (form.educational_status_id == "") {
+    if (form.value.educational_status_id == "") {
       errorMessage.value = "status edukasi is required";
       return
     }
 
-    console.log("form: ", form);
-    console.log("gender: ", form.gender.toLowerCase());
-    console.log("university: ", form.university_id);
-    console.log("educational: ", form.educational_status_id);
-    console.log("name: ", form.name);
-    const response = await axios.post('https://gateway.berkompeten.id/api/student/register', {
-      email: form.email,
-      password: form.password,
-      password_confirmation: form.password_confirmation,
-      name: form.name,
-      gender: form.gender.toLowerCase(),
-      phone_number: form.phone_number,
-      year_of_entry: form.year_of_entry,
-      exam_date_id: form.exam_date_id.toString(),
-      university_id: form.university_id.toString(),
-      educational_status_id: form.educational_status_id.toString()
+    console.log("form: ", form.value);
+    console.log("gender: ", form.value.gender.toLowerCase());
+    console.log("university: ", form.value.university_id);
+    console.log("educational: ", form.value.educational_status_id);
+    console.log("name: ", form.value.name);
+    const response = await axios.post('/api/student/register', {
+      email: form.value.email,
+      password: form.value.password,
+      password_confirmation: form.value.password_confirmation,
+      name: form.value.name,
+      gender: form.value.gender.toLowerCase(),
+      phone_number: form.value.phone_number,
+      year_of_entry: form.value.year_of_entry,
+      exam_date_id: form.value.exam_date_id.toString(),
+      university_id: form.value.university_id.toString(),
+      educational_status_id: form.value.educational_status_id.toString()
     })
 
     console.log("register response: ", response);
@@ -114,15 +114,15 @@ onMounted(() => {
   fetchEducationalStatusOptions()
   fetchExamDateOptions()
   const storedEmail = localStorage.getItem('email');
-  form.name = localStorage.getItem('name');
+  form.value.name = localStorage.getItem('name');
   const storedPassword = localStorage.getItem('password');
   const storedConfirmPassword = localStorage.getItem('confirm_password');
   console.log("email r 2: ", storedEmail);
   console.log("password r 2: ", storedPassword);
   console.log("confirm password r 2: ", storedConfirmPassword);
-  form.email = storedEmail;
-  form.password = storedPassword;
-  form.password_confirmation = storedConfirmPassword;
+  form.value.email = storedEmail;
+  form.value.password = storedPassword;
+  form.value.password_confirmation = storedConfirmPassword;
 });
 
 const genderOptions = [

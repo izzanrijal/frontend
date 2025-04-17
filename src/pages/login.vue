@@ -11,6 +11,7 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 // Get Cloudflare Turnstile site key from environment variables
+const IS_DEV = import.meta.env.DEV;
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_CLOUDFLARE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'
 const turnstileWidgetId = ref(null)
 
@@ -56,6 +57,7 @@ const hideSuggestions = () => {
 
 // Add Turnstile initialization function
 const initTurnstile = () => {
+  if (IS_DEV) return; // Disable turnstile in dev mode
   if (window.turnstile) {
     // Remove previous widget if it exists
     if (turnstileWidgetId.value) {
@@ -100,15 +102,27 @@ onMounted(async () => {
   console.log("token login: ", token)
 
   if (token) {
-    router.push('/dashboard');
+    // Pastikan token valid dengan cek profile
+    try {
+      const response = await axios.get('/api/student/profile', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (response.data && response.data.profile) {
+        router.push('/dashboard');
+      } else {
+        localStorage.removeItem('token');
+      }
+    } catch (e) {
+      localStorage.removeItem('token');
+    }
+  } else {
+    // Load emails from localStorage
+    const emails = JSON.parse(localStorage.getItem('savedEmails')) || []
+    savedEmails.value = emails
+    
+    // Initialize Turnstile when the component is mounted
+    initTurnstile();
   }
-
-  // Load emails from localStorage
-  const emails = JSON.parse(localStorage.getItem('savedEmails')) || []
-  savedEmails.value = emails
-  
-  // Initialize Turnstile when the component is mounted
-  initTurnstile();
 });
 
 // Save new email to storage when login is successful
@@ -142,29 +156,32 @@ const login = async () => {
       return
     }
 
-    // Get Cloudflare Turnstile token if available (it might not be if user is not suspicious)
-    const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')?.value;
     const requestData = {
       email: form.email,
       password: form.password,
     };
-    
-    // Only include the token if it exists (for suspicious traffic)
-    if (turnstileResponse) {
-      requestData['cf-turnstile-response'] = turnstileResponse;
+
+    // Hanya tambahkan cf-turnstile-response jika mode production
+    if (!IS_DEV) {
+      const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')?.value;
+      if (turnstileResponse) {
+        requestData['cf-turnstile-response'] = turnstileResponse;
+      }
     }
 
-    const response = await axios.post('https://gateway.berkompeten.id/api/student/login', requestData);
-
-    console.log(response);
-
-    // Assuming your backend returns a token upon successful login
-    const token = response.data.token;
-
-    console.log(token);
-
-    // Save the token in local storage or Vuex store for future requests
+    const response = await axios.post('/api/student/login', requestData);
+    console.log('Login response:', response.data);
+    // Cek kemungkinan struktur token
+    let token = response.data.token;
+    if (!token && response.data.data && response.data.data.token) {
+      token = response.data.data.token;
+    }
+    if (!token) {
+      loginError.value = 'Login gagal: token tidak ditemukan di response.';
+      return;
+    }
     localStorage.setItem('token', token);
+    console.log('Token yang disimpan:', token);
 
     // Save email upon successful login
     saveEmail(form.email)
@@ -175,12 +192,13 @@ const login = async () => {
     // Handle login error (display error message, redirect, etc.)
     console.error('Login failed:', error);
     if (error.response && error.response.data) {
-      loginError.value = error.response.data.message;
+      console.error('Backend error:', error.response.data); 
+      loginError.value = error.response.data.message || JSON.stringify(error.response.data);
 
       if (error.response.data.errors){
         loginError.value = error.response.data.errors;
       }
-      
+
       // Special handling for captcha-related errors but don't explicitly mention captcha
       if (error.response.status === 429 || 
           (error.response.data.errors && typeof error.response.data.errors === 'string' && 
