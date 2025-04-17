@@ -21,7 +21,7 @@ module.exports = {
       user: 'berkompetenapp',
       host: '82.197.70.234',
       key: '.ssh/deploy_key',
-      ref: 'origin/master',
+      ref: 'login-error',
       repo: 'git@github.com:izzanrijal/frontend.git',
       path: '/home/berkompetenapp/apps/fe-berkompeten',
 	'post-deploy': 'npm install && /home/berkompetenapp/.nvm/versions/node/v22.12.0/bin/pm2 reload ecosystem.config.cjs --env production'

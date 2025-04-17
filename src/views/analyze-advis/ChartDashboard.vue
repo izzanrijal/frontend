@@ -79,9 +79,9 @@ const fetchChartData = async () => {
     // Update results section
     results.value = data.userScores.map(score => ({
       label: score.tryout,
-      value: `${score.score}% (${parseFloat(score.score) >= 66.0 ? 'Memenuhi Nilai Batas Kelulusan' : 'Belum Memenuhi Nilai Batas Kelulusan'})`,
-      color: parseFloat(score.score) >= 66.0 ? '#005BC5' : '#FFA39E',
-      passed: parseFloat(score.score) >= 66.0
+      value: `${score.score}% (${parseFloat(score.score) >= 66 ? 'Memenuhi Nilai Batas Kelulusan' : 'Belum Memenuhi Nilai Batas Kelulusan'})`,
+      color: parseFloat(score.score) >= 66 ? '#005BC5' : '#FFA39E',
+      passed: parseFloat(score.score) >= 66
     }));
 
     // Update recommendation advice

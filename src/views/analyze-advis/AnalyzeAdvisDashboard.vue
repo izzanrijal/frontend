@@ -33,7 +33,7 @@ const fetchData = async () => {
       subtopic: key,
       ...value,
       // Add lulus check if score exists
-      lulus: value.score !== undefined ? parseFloat(value.score) >= 66.0 : undefined,
+      lulus: value.score !== undefined ? parseFloat(value.score) >= 66 : undefined,
     }));
 
     // Transforming `advise_learn_by_topic` to an array for easier rendering
@@ -41,7 +41,7 @@ const fetchData = async () => {
       group_topic: key,
       items: value.map(item => ({
         ...item,
-        lulus: item.score !== undefined ? parseFloat(item.score) >= 66.0 : undefined,
+        lulus: item.score !== undefined ? parseFloat(item.score) >= 66 : undefined,
       })),
     }));
   } catch (error) {
