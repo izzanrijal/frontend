@@ -32,12 +32,17 @@ const fetchData = async () => {
     diagnosisAdvice.value = Object.entries(response.data.data.advise_learn_by_diagnose).map(([key, value]) => ({
       subtopic: key,
       ...value,
+      // Add lulus check if score exists
+      lulus: value.score !== undefined ? parseFloat(value.score) >= 66.0 : undefined,
     }));
 
     // Transforming `advise_learn_by_topic` to an array for easier rendering
     topicAdvice.value = Object.entries(response.data.data.advise_learn_by_topic).map(([key, value]) => ({
       group_topic: key,
-      items: value,
+      items: value.map(item => ({
+        ...item,
+        lulus: item.score !== undefined ? parseFloat(item.score) >= 66.0 : undefined,
+      })),
     }));
   } catch (error) {
     console.error('Error fetching data:', error);
