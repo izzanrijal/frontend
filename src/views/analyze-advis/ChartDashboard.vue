@@ -52,8 +52,8 @@ const fetchChartData = async () => {
               borderWidth: 1,
             },
             {
-              label: 'Nilai Batas Kelulusan',
-              data: passingThreshold,
+              label: 'Nilai Batas Kelulusan (66)',
+              data: passingThreshold.map(() => 66),
               borderColor: 'green',
               borderWidth: 1,
             },
