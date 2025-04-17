@@ -69,6 +69,7 @@ export const apiService = {
     if (useCache && cache.has(cacheKey)) {
       const cachedData = cache.get(cacheKey)
       if (Date.now() < cachedData.expiry) {
+        // Only return the cached response.data, not the whole response object
         return Promise.resolve(cachedData.data)
       }
       // Cache expired, remove it
@@ -78,15 +79,16 @@ export const apiService = {
     try {
       const response = await apiClient.get(endpoint, { params })
       
-      // Cache the response if caching is enabled
+      // Cache the response.data if caching is enabled
       if (useCache) {
         cache.set(cacheKey, {
-          data: response,
+          data: response.data,
           expiry: Date.now() + cacheDuration,
         })
       }
       
-      return response
+      // Always return response.data for consistency
+      return response.data
     } catch (error) {
       throw error
     }
@@ -155,4 +157,4 @@ export const apiService = {
   }
 }
 
-export default apiClient 
+export default apiClient
