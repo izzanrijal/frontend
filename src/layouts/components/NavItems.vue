@@ -49,7 +49,7 @@ onMounted(async () => {
   />
 
   <VerticalNavLink
-      v-if="userProfile.value.profile.membership.name === 'Trial'"
+      v-if="userProfile.value && userProfile.value.profile && userProfile.value.profile.membership && userProfile.value.profile.membership.name === 'Trial'"
       :item="{
         title: 'Analisis Paket Soal 1 sd. Paket Soal 3',
         to: '/example-analisa-advis',
