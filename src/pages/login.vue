@@ -11,6 +11,7 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 
 // Get Cloudflare Turnstile site key from environment variables
+const IS_DEVELOPMENT = import.meta.env.MODE !== 'production';
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_CLOUDFLARE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'
 const turnstileWidgetId = ref(null)
 
@@ -56,6 +57,7 @@ const hideSuggestions = () => {
 
 // Add Turnstile initialization function
 const initTurnstile = () => {
+  if (IS_DEVELOPMENT) return; // Nonaktifkan turnstile saat development
   if (window.turnstile) {
     // Remove previous widget if it exists
     if (turnstileWidgetId.value) {
@@ -143,7 +145,10 @@ const login = async () => {
     }
 
     // Get Cloudflare Turnstile token if available (it might not be if user is not suspicious)
-    const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')?.value;
+    let turnstileResponse = null;
+    if (!IS_DEVELOPMENT) {
+      turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')?.value;
+    }
     const requestData = {
       email: form.email,
       password: form.password,
