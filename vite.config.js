@@ -91,7 +91,15 @@ export default defineConfig({
     },
     host: true, // Listen on all addresses
     port: 5050,
-	allowedHosts: ['localhost', '127.0.0.1', 'app.berkompeten.id']
+    proxy: {
+      '/api': {
+        target: 'https://gateway.berkompeten.id',
+        changeOrigin: true,
+        secure: false,
+        rewrite: path => path.replace(/^\/api/, '/api'),
+      },
+    },
+    allowedHosts: ['localhost', '127.0.0.1', 'app.berkompeten.id']
   },
   preview: {
     host: true, // Listen on all addresses including localhost and network

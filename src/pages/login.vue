@@ -159,7 +159,11 @@ const login = async () => {
       requestData['cf-turnstile-response'] = turnstileResponse;
     }
 
-    const response = await axios.post('https://gateway.berkompeten.id/api/student/login', requestData);
+    console.log('Request Data:', requestData);
+
+    // Ganti endpoint ke proxy agar bebas CORS saat development
+    const apiUrl = IS_DEVELOPMENT ? '/api/student/login' : 'https://gateway.berkompeten.id/api/student/login';
+    const response = await axios.post(apiUrl, requestData);
 
     console.log(response);
 
@@ -180,6 +184,7 @@ const login = async () => {
     // Handle login error (display error message, redirect, etc.)
     console.error('Login failed:', error);
     if (error.response && error.response.data) {
+      console.error('Response data:', error.response.data);
       loginError.value = error.response.data.message;
 
       if (error.response.data.errors){
@@ -203,6 +208,9 @@ const login = async () => {
       return
     } else {
       loginError.value = 'An unexpected error occurred during login.';
+      if (error.request) {
+        console.error('Request:', error.request);
+      }
       return
     }
   }
