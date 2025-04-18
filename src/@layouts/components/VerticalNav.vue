@@ -83,7 +83,7 @@ const onMouseLeave = () => {
         <!-- 👉 Logo -->
         <RouterLink to="/" class="app-logo app-title-wrapper">
           <div v-if="isNavCollapsed && !mdAndDown && !isHovered" class="logo-placeholder">
-            <VIcon icon="ri-shape-line" size="28" color="#0080ff" />
+            <img src="/favicon.ico" alt="Logo" style="width: 28px; height: 28px; display: block;" />
           </div>
           <div v-else class="d-flex" v-html="logo" />
         </RouterLink>
