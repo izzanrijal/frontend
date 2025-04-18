@@ -1,5 +1,18 @@
 <template>
   <VRow class="match-height">
+    <VCol cols="12">
+      <VAlert type="info" variant="outlined" class="mb-4" color="#005BC5" border="start" style="background: #f5faff;">
+        <template #prepend>
+          <v-icon color="#005BC5">mdi-information-outline</v-icon>
+        </template>
+        <span style="font-weight: 500; color: #005BC5;">
+          Halaman ini hanya berisi contoh hasil analisa & advis.
+        </span>
+        <div style="margin-top: 2px; color: #222;">
+          Setelah Anda menyelesaikan seluruh paket soal 1-3 atau 4-6, hasil analisa dan saran pembelajaran yang tampil di sini akan digantikan dengan hasil riil sesuai performa Anda. Silakan gunakan halaman ini sebagai referensi, bukan sebagai hasil akhir.
+        </div>
+      </VAlert>
+    </VCol>
     <VCol cols="12" sm="6">
       <VCard class="outradius-card-item">
         <VCard>
