@@ -153,7 +153,7 @@ function toggleShowMoreTopic() {
 async function fetchData() {
   isLoading.value = true
   try {
-    const response = await fetch('/src/assets/user13_result.json')
+    const response = await fetch('/user13_result.json')
     const json = await response.json()
     diagnosisAdvice.value = Object.entries(json.data.advise_learn_by_diagnose).map(([subtopic, detail]) => ({
       subtopic,

@@ -1,0 +1,1498 @@
+{
+    "error": false,
+    "message": "Success get result data",
+    "data": {
+        "title": "Analisis Paket Soal 1 sd. Paket Soal 3",
+        "description": "Kesimpulan dari hasil analisan dalam pengerjaan 3 paket soal",
+        "advise_learn_by_diagnose": {
+            "Metode Penelitian Ilmiah dan Riset": {
+                "group_topic": "Ilmu Kesehatan Masyarakat, Riset, dan JKN",
+                "rekurensi": 8,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 96
+            },
+            "Aborsi Spontan Komplit Inkomplit": {
+                "group_topic": "Gangguan pada Kehamilan",
+                "rekurensi": 5,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 60
+            },
+            "Kasus Etik": {
+                "group_topic": "Etika dan Profesionalisme",
+                "rekurensi": 5,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 60
+            },
+            "Hipertensi Esensial": {
+                "group_topic": "Hipertensi",
+                "rekurensi": 6,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 54
+            },
+            "Fraktur Terbuka Tertutup": {
+                "group_topic": "Trauma",
+                "rekurensi": 5,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 52.5
+            },
+            "Ilmu Kesehatan Masyarakat & Pengendalian Penyakit": {
+                "group_topic": "Ilmu Kesehatan Masyarakat, Riset, dan JKN",
+                "rekurensi": 4,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 48
+            },
+            "Malaria": {
+                "group_topic": "Infeksi Hematologi",
+                "rekurensi": 4,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 48
+            },
+            "Perdarahan Post Partum": {
+                "group_topic": "Persalinan dan Nifas",
+                "rekurensi": 4,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 48
+            },
+            "Kejang Demam": {
+                "group_topic": "Gangguan Neurologik Pediatrik",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 36
+            },
+            "Leptospirosis Tanpa Komplikasi": {
+                "group_topic": "Infeksi Hematologi",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 36
+            },
+            "Taeniasis": {
+                "group_topic": "Infestasi Cacing dan Lainnya",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 36
+            },
+            "Faringitis": {
+                "group_topic": "Laring dan Faring",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 36
+            },
+            "Herpes Zoster Non Oftalmikus dan Non Diseminata": {
+                "group_topic": "Infeksi Virus",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 36
+            },
+            "Infeksi Saluran Kemih": {
+                "group_topic": "Saluran Kemih",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 36
+            },
+            "Benda Asing Hidung": {
+                "group_topic": "Hidung",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 36
+            },
+            "Hordeolum": {
+                "group_topic": "Kelopak Mata",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 4,
+                "ranking_score": 36
+            },
+            "Hemoroid Grade 3-4": {
+                "group_topic": "Kolon",
+                "rekurensi": 4,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 36
+            },
+            "Hipoglikemia Berat": {
+                "group_topic": "Diabetes",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Infark Miokard": {
+                "group_topic": "Angina",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Apendisitis Akut": {
+                "group_topic": "Bedah Digestif",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Preeklampsia": {
+                "group_topic": "Gangguan pada Kehamilan",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Hyperemesis Gravidarum": {
+                "group_topic": "Gangguan pada Kehamilan",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Atrial Flutter": {
+                "group_topic": "Aritmia",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Hernia Inguinalis Femoralis Skrotalis Reponibilis Irreponibilis": {
+                "group_topic": "Dinding Rongga Abdomen dan Hernia",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Hematothoraks": {
+                "group_topic": "Gawat Paru",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Angina Pektoris": {
+                "group_topic": "Angina",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Hematoma Perdarahan Epidural": {
+                "group_topic": "Trauma",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Tetanus": {
+                "group_topic": "Infeksi",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Infeksi Intra-Uterin Korioamnionitis": {
+                "group_topic": "Gangguan pada Kehamilan",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3.5,
+                "ranking_score": 31.5
+            },
+            "Xeroftalmia": {
+                "group_topic": "Kornea",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Hemofilia": {
+                "group_topic": "Gangguan Darah",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Gangguan Afektif Bipolar": {
+                "group_topic": "Gangguan Afektif",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Rhinitis Kronik": {
+                "group_topic": "Hidung",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Pterigium": {
+                "group_topic": "Konjungtiva",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Perforasi Membran Timpani": {
+                "group_topic": "Telinga",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Dermatitis Kontak Iritan": {
+                "group_topic": "Dermatitis",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Obesitas": {
+                "group_topic": "Gizi dan Metabolisme",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "TB Paru dengan Komplikasi": {
+                "group_topic": "Tuberkulosis",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Tonsilitis": {
+                "group_topic": "Laring dan Faring",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Gangguan Anxietas Menyeluruh": {
+                "group_topic": "Gangguan Neurotik Berhubungan dengan Stres",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Cluster Headache": {
+                "group_topic": "Sakit Kepala",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Penyakit Ginjal Kronik": {
+                "group_topic": "Penyakit Ginjal",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 3,
+                "ranking_score": 27
+            },
+            "Jaminan Kesehatan Nasional (JKN) & BPJS": {
+                "group_topic": "Ilmu Kesehatan Masyarakat, Riset, dan JKN",
+                "rekurensi": 3,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 24
+            },
+            "Gangguan Tidur Non Organik": {
+                "group_topic": "Gangguan Tidur",
+                "rekurensi": 3,
+                "jumlah_test": 3,
+                "kompetensi": 2,
+                "ranking_score": 18
+            },
+            "Distonia Akut dan Parkinsonisme": {
+                "group_topic": "Emergensi Karena Efek Samping Obat",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Benda Asing di Konjungtiva": {
+                "group_topic": "Konjungtiva",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Epistaksis": {
+                "group_topic": "Hidung",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Otitis Eksterna": {
+                "group_topic": "Telinga",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "TB Paru Tanpa Komplikasi": {
+                "group_topic": "Tuberkulosis",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Presbiopia": {
+                "group_topic": "Kelainan Refraksi",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Skizofrenia Tanpa Penyulit": {
+                "group_topic": "Psikotik Skizofrenia Gangguan Waham Menetap Psikotik Akut dan Skizoafektif",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Intoleransi Makanan": {
+                "group_topic": "Intoleransi Keracunan Makanan",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Kekerasan Tajam": {
+                "group_topic": "Perlukaan",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Hepatitis A": {
+                "group_topic": "Hepar",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Impetigo Bullosa dan Krustosa": {
+                "group_topic": "Infeksi Bakteri",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Diabetes Melitus Tipe 1 Tanpa Komplikasi": {
+                "group_topic": "Diabetes",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Gastroenteritis Termasuk Kolera Giardiasis": {
+                "group_topic": "Infeksi Abdomen",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Blefaritis": {
+                "group_topic": "Kelopak Mata",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Gangguan Depresi Ringan-Sedang": {
+                "group_topic": "Gangguan Afektif",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Lepra Tanpa Komplikasi": {
+                "group_topic": "Infeksi Bakteri",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Demam Dengue, DHF": {
+                "group_topic": "Infeksi Hematologi",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Diabetes Melitus Tipe 2": {
+                "group_topic": "Diabetes",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Reaksi Anafilaktik": {
+                "group_topic": "Penyakit Autoimun",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Demam Tifoid": {
+                "group_topic": "Infeksi Abdomen",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Sifilis Primer dan Laten": {
+                "group_topic": "Infeksi Bakteri",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 4,
+                "ranking_score": 16
+            },
+            "Benda Asing di Trakea": {
+                "group_topic": "Trakea",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3.5,
+                "ranking_score": 14
+            },
+            "Ruptur Uretra": {
+                "group_topic": "Alat Kelamin Pria",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3.5,
+                "ranking_score": 14
+            },
+            "Takikardi Supraventrikular Ventrikular\"": {
+                "group_topic": "Aritmia",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3.5,
+                "ranking_score": 14
+            },
+            "Cushing's Disease": {
+                "group_topic": "Endokrin Lainnya",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3.5,
+                "ranking_score": 14
+            },
+            "Kehamilan Ektopik": {
+                "group_topic": "Gangguan pada Kehamilan",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3.5,
+                "ranking_score": 14
+            },
+            "Status Epilepticus": {
+                "group_topic": "Epilepsi dan Kejang Lainnya",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3.5,
+                "ranking_score": 14
+            },
+            "Cardiorespiratory Arrest Henti Jantung Paru": {
+                "group_topic": "Gawat Jantung",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3.5,
+                "ranking_score": 14
+            },
+            "Luka Bakar Derajat 2 Lebih 10 Persen Luas Permukaan Tubuh": {
+                "group_topic": "Trauma",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3.5,
+                "ranking_score": 14
+            },
+            "Fibrilasi Atrial": {
+                "group_topic": "Aritmia",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3.5,
+                "ranking_score": 14
+            },
+            "Luka Tembak": {
+                "group_topic": "Perlukaan",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3.5,
+                "ranking_score": 14
+            },
+            "Distosia": {
+                "group_topic": "Persalinan dan Nifas",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3.5,
+                "ranking_score": 14
+            },
+            "Varises Esophagus": {
+                "group_topic": "Esophagus",
+                "rekurensi": 3,
+                "jumlah_test": 2,
+                "kompetensi": 2,
+                "ranking_score": 12
+            },
+            "Infeksi pada Kehamilan TORCH Hepatitis B Malaria": {
+                "group_topic": "Gangguan pada Kehamilan",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Epilepsi": {
+                "group_topic": "Epilepsi dan Kejang Lainnya",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Refluks Gastro-Esofagus": {
+                "group_topic": "Lambung Duodenum Jejunum Ileum",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Fraktur Klavikula": {
+                "group_topic": "Trauma",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Neuralgia Trigeminal": {
+                "group_topic": "Sakit Kepala",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Sindroma Nefrotik": {
+                "group_topic": "Penyakit Ginjal",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Vertigo Sentral": {
+                "group_topic": "Gangguan Sistem Vestibular",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Ulkus Gaster Duodenum": {
+                "group_topic": "Lambung Duodenum Jejunum Ileum",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Hiperplasia Prostat Jinak": {
+                "group_topic": "Prostat",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Hipertensi pada Kehamilan": {
+                "group_topic": "Gangguan pada Kehamilan",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Sinusitis": {
+                "group_topic": "Hidung",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Anemia pada Kehamilan": {
+                "group_topic": "Gangguan pada Kehamilan",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Kondiloma Akuminata": {
+                "group_topic": "Infeksi Virus",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Presbiakusis": {
+                "group_topic": "Telinga",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Anemia Hemolitik": {
+                "group_topic": "Gangguan Darah",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            },
+            "Goiter": {
+                "group_topic": "Tiroid",
+                "rekurensi": 2,
+                "jumlah_test": 2,
+                "kompetensi": 3,
+                "ranking_score": 12
+            }
+        },
+        "advise_learn_by_topic": {
+            "Gangguan pada Kehamilan": [
+                {
+                    "subtopic": [
+                        "Aborsi Spontan Komplit Inkomplit",
+                        "Anemia pada Kehamilan",
+                        "Diproporsi Kepala Panggul",
+                        "Hipertensi pada Kehamilan",
+                        "Hyperemesis Gravidarum",
+                        "Infeksi Intra-Uterin Korioamnionitis",
+                        "Infeksi pada Kehamilan TORCH Hepatitis B Malaria",
+                        "Kehamilan Ektopik",
+                        "Kehamilan Ganda",
+                        "Mola Hidatidosa",
+                        "Preeklampsia",
+                        "Vasa Previa"
+                    ],
+                    "group_topic": "Gangguan pada Kehamilan",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 639323.9999771671
+                }
+            ],
+            "Ilmu Kesehatan Masyarakat, Riset, dan JKN": [
+                {
+                    "subtopic": [
+                        "Ilmu Kesehatan Masyarakat & Pengendalian Penyakit",
+                        "Jaminan Kesehatan Nasional (JKN) & BPJS",
+                        "Metode Penelitian Ilmiah dan Riset"
+                    ],
+                    "group_topic": "Ilmu Kesehatan Masyarakat, Riset, dan JKN",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 64800
+                }
+            ],
+            "Trauma": [
+                {
+                    "subtopic": [
+                        "Fraktur Klavikula",
+                        "Fraktur Terbuka Tertutup",
+                        "Hematoma Perdarahan Epidural",
+                        "Luka Bakar Derajat 2 Lebih 10 Persen Luas Permukaan Tubuh"
+                    ],
+                    "group_topic": "Trauma",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 23616
+                }
+            ],
+            "Hidung": [
+                {
+                    "subtopic": [
+                        "Benda Asing Hidung",
+                        "Epistaksis",
+                        "Rhinitis Kronik",
+                        "Sinusitis"
+                    ],
+                    "group_topic": "Hidung",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 11899.99999881
+                }
+            ],
+            "Telinga": [
+                {
+                    "subtopic": [
+                        "Mastoiditis",
+                        "Otitis Eksterna",
+                        "Perforasi Membran Timpani",
+                        "Presbiakusis",
+                        "Tuli Kongenital Perseptif Konduktif"
+                    ],
+                    "group_topic": "Telinga",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 10199.999998980002
+                }
+            ],
+            "Infeksi Hematologi": [
+                {
+                    "subtopic": [
+                        "Demam Dengue",
+                        "DHF",
+                        "Leptospirosis Tanpa Komplikasi",
+                        "Malaria"
+                    ],
+                    "group_topic": "Infeksi Hematologi",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 9072
+                }
+            ],
+            "Persalinan dan Nifas": [
+                {
+                    "subtopic": [
+                        "Distosia",
+                        "Fisiologi Kehamilan",
+                        "Perdarahan Post Partum",
+                        "Retensi Plasenta",
+                        "Ruptur Uteri"
+                    ],
+                    "group_topic": "Persalinan dan Nifas",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 7650
+                }
+            ],
+            "Aritmia": [
+                {
+                    "subtopic": [
+                        "Atrial Flutter",
+                        "Fibrilasi Atrial",
+                        "Fibrilasi Ventrikular",
+                        "Takikardi Supraventrikular Ventrikular\""
+                    ],
+                    "group_topic": "Aritmia",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 4927.999998767999
+                }
+            ],
+            "Gangguan Darah": [
+                {
+                    "subtopic": [
+                        "Anemia Aplastik",
+                        "Anemia Hemolitik",
+                        "Hemofilia",
+                        "Thalasemia"
+                    ],
+                    "group_topic": "Gangguan Darah",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 3871.999999032
+                }
+            ],
+            "Diabetes": [
+                {
+                    "subtopic": [
+                        "Diabetes Melitus Tipe 1 Tanpa Komplikasi",
+                        "Diabetes Melitus Tipe 2",
+                        "Hipoglikemia Berat"
+                    ],
+                    "group_topic": "Diabetes",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 2967.999999576
+                }
+            ],
+            "Laring dan Faring": [
+                {
+                    "subtopic": [
+                        "Faringitis",
+                        "Karsinoma Nasofaring",
+                        "Tonsilitis"
+                    ],
+                    "group_topic": "Laring dan Faring",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 2736.999999609
+                }
+            ],
+            "Penyakit Ginjal": [
+                {
+                    "subtopic": [
+                        "Acute Kidney Injury",
+                        "Glomerulonefritis Akut",
+                        "Penyakit Ginjal Kronik",
+                        "Sindroma Nefrotik"
+                    ],
+                    "group_topic": "Penyakit Ginjal",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 2351.999999664
+                }
+            ],
+            "Infeksi Bakteri": [
+                {
+                    "subtopic": [
+                        "Impetigo Bullosa dan Krustosa",
+                        "Lepra Tanpa Komplikasi",
+                        "Sifilis Primer dan Laten"
+                    ],
+                    "group_topic": "Infeksi Bakteri",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 1872
+                }
+            ],
+            "Angina": [
+                {
+                    "subtopic": [
+                        "Angina Pektoris",
+                        "Infark Miokard"
+                    ],
+                    "group_topic": "Angina",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 1638
+                }
+            ],
+            "Hipertensi": [
+                {
+                    "subtopic": [
+                        "Hipertensi Esensial"
+                    ],
+                    "group_topic": "Hipertensi",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 1404
+                }
+            ],
+            "Sakit Kepala": [
+                {
+                    "subtopic": [
+                        "Cluster Headache",
+                        "Neuralgia Trigeminal",
+                        "Tension Headache"
+                    ],
+                    "group_topic": "Sakit Kepala",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 1368
+                }
+            ],
+            "Kelopak Mata": [
+                {
+                    "subtopic": [
+                        "Blefaritis",
+                        "Hordeolum"
+                    ],
+                    "group_topic": "Kelopak Mata",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 899.9999996399999
+                }
+            ],
+            "Infeksi Virus": [
+                {
+                    "subtopic": [
+                        "Herpes Zoster Non Oftalmikus dan Non Diseminata",
+                        "Kondiloma Akuminata"
+                    ],
+                    "group_topic": "Infeksi Virus",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 809.999999676
+                }
+            ],
+            "Infeksi Abdomen": [
+                {
+                    "subtopic": [
+                        "Demam Tifoid",
+                        "Disentri Basiler Amuba",
+                        "Gastroenteritis Termasuk Kolera Giardiasis"
+                    ],
+                    "group_topic": "Infeksi Abdomen",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 799.99999968
+                }
+            ],
+            "Etika dan Profesionalisme": [
+                {
+                    "subtopic": [
+                        "Kasus Etik"
+                    ],
+                    "group_topic": "Etika dan Profesionalisme",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 799.99999968
+                }
+            ],
+            "Gangguan Afektif": [
+                {
+                    "subtopic": [
+                        "Gangguan Afektif Bipolar",
+                        "Gangguan Depresi Ringan-Sedang"
+                    ],
+                    "group_topic": "Gangguan Afektif",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 764.999999694
+                }
+            ],
+            "Tuberkulosis": [
+                {
+                    "subtopic": [
+                        "TB Paru dengan Komplikasi",
+                        "TB Paru Tanpa Komplikasi"
+                    ],
+                    "group_topic": "Tuberkulosis",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 764.999999694
+                }
+            ],
+            "Konjungtiva": [
+                {
+                    "subtopic": [
+                        "Benda Asing di Konjungtiva",
+                        "Pterigium"
+                    ],
+                    "group_topic": "Konjungtiva",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 764.999999694
+                }
+            ],
+            "Kolon": [
+                {
+                    "subtopic": [
+                        "Divertikulosis Divertikulitis",
+                        "Hemoroid Grade 3-4"
+                    ],
+                    "group_topic": "Kolon",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 629.9999997480002
+                }
+            ],
+            "Infestasi Cacing dan Lainnya": [
+                {
+                    "subtopic": [
+                        "Schistosomiasis",
+                        "Taeniasis"
+                    ],
+                    "group_topic": "Infestasi Cacing dan Lainnya",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 383.999999904
+                }
+            ],
+            "Perlukaan": [
+                {
+                    "subtopic": [
+                        "Kekerasan Tajam",
+                        "Luka Tembak"
+                    ],
+                    "group_topic": "Perlukaan",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 359.99999991000004
+                }
+            ],
+            "Gangguan Neurologik Pediatrik": [
+                {
+                    "subtopic": [
+                        "Cerebral Palsy",
+                        "Kejang Demam"
+                    ],
+                    "group_topic": "Gangguan Neurologik Pediatrik",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 335.999999916
+                }
+            ],
+            "Infeksi": [
+                {
+                    "subtopic": [
+                        "Meningitis",
+                        "Tetanus"
+                    ],
+                    "group_topic": "Infeksi",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 335.999999916
+                }
+            ],
+            "Dinding Rongga Abdomen dan Hernia": [
+                {
+                    "subtopic": [
+                        "Hernia Inguinalis Femoralis Skrotalis Reponibilis Irreponibilis",
+                        "Peritonitis"
+                    ],
+                    "group_topic": "Dinding Rongga Abdomen dan Hernia",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 335.999999916
+                }
+            ],
+            "Epilepsi dan Kejang Lainnya": [
+                {
+                    "subtopic": [
+                        "Epilepsi",
+                        "Status Epilepticus"
+                    ],
+                    "group_topic": "Epilepsi dan Kejang Lainnya",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 311.999999922
+                }
+            ],
+            "Kornea": [
+                {
+                    "subtopic": [
+                        "Keratitis Bakteri Virus Fungus Parasit",
+                        "Xeroftalmia"
+                    ],
+                    "group_topic": "Kornea",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 287.99999992799997
+                }
+            ],
+            "Dermatitis": [
+                {
+                    "subtopic": [
+                        "Dermatitis Kontak Alergika",
+                        "Dermatitis Kontak Iritan"
+                    ],
+                    "group_topic": "Dermatitis",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 287.99999992799997
+                }
+            ],
+            "Gangguan Neurotik Berhubungan dengan Stres": [
+                {
+                    "subtopic": [
+                        "Gangguan Anxietas Menyeluruh",
+                        "Gangguan Somatoform"
+                    ],
+                    "group_topic": "Gangguan Neurotik Berhubungan dengan Stres",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 263.99999993399996
+                }
+            ],
+            "Neoplasma": [
+                {
+                    "subtopic": [
+                        "Basal Cell Carcinoma",
+                        "Squamous Cell Carcinoma"
+                    ],
+                    "group_topic": "Neoplasma",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 191.999999952
+                }
+            ],
+            "Lambung Duodenum Jejunum Ileum": [
+                {
+                    "subtopic": [
+                        "Refluks Gastro-Esofagus",
+                        "Ulkus Gaster Duodenum"
+                    ],
+                    "group_topic": "Lambung Duodenum Jejunum Ileum",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 159.99999996
+                }
+            ],
+            "Kelainan Refraksi": [
+                {
+                    "subtopic": [
+                        "Miopia Ringan",
+                        "Presbiopia"
+                    ],
+                    "group_topic": "Kelainan Refraksi",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 144
+                }
+            ],
+            "Saluran Kemih": [
+                {
+                    "subtopic": [
+                        "Infeksi Saluran Kemih"
+                    ],
+                    "group_topic": "Saluran Kemih",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 144
+                }
+            ],
+            "Penyakit Autoimun": [
+                {
+                    "subtopic": [
+                        "Demam Reumatik",
+                        "Reaksi Anafilaktik"
+                    ],
+                    "group_topic": "Penyakit Autoimun",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 132
+                }
+            ],
+            "Gawat Paru": [
+                {
+                    "subtopic": [
+                        "Hematothoraks"
+                    ],
+                    "group_topic": "Gawat Paru",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 126
+                }
+            ],
+            "Bedah Digestif": [
+                {
+                    "subtopic": [
+                        "Apendisitis Akut"
+                    ],
+                    "group_topic": "Bedah Digestif",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 126
+                }
+            ],
+            "Gizi dan Metabolisme": [
+                {
+                    "subtopic": [
+                        "Obesitas"
+                    ],
+                    "group_topic": "Gizi dan Metabolisme",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 108
+                }
+            ],
+            "Gangguan Tidur": [
+                {
+                    "subtopic": [
+                        "Gangguan Tidur Non Organik"
+                    ],
+                    "group_topic": "Gangguan Tidur",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 72
+                }
+            ],
+            "Hepar": [
+                {
+                    "subtopic": [
+                        "Hepatitis A",
+                        "Hepatitis C"
+                    ],
+                    "group_topic": "Hepar",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 66
+                }
+            ],
+            "Paru": [
+                {
+                    "subtopic": [
+                        "Bronkiolitis Akut",
+                        "Bronkitis Kronis",
+                        "Efusi Pleura"
+                    ],
+                    "group_topic": "Paru",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 63
+                }
+            ],
+            "Gawat Jantung": [
+                {
+                    "subtopic": [
+                        "Cardiorespiratory Arrest Henti Jantung Paru",
+                        "Syok Septik Hipovolemik Kardiogenik Neurogenik"
+                    ],
+                    "group_topic": "Gawat Jantung",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 63
+                }
+            ],
+            "Sendi": [
+                {
+                    "subtopic": [
+                        "Artritis Gout Kronis",
+                        "Artritis Septik",
+                        "Osteoartritis"
+                    ],
+                    "group_topic": "Sendi",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 54
+                }
+            ],
+            "Tiroid": [
+                {
+                    "subtopic": [
+                        "Goiter",
+                        "Tiroiditis"
+                    ],
+                    "group_topic": "Tiroid",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 54
+                }
+            ],
+            "Kelainan Organ Genital": [
+                {
+                    "subtopic": [
+                        "Kista dan Abses Kelenjar Bartolini",
+                        "Polip Endoserviks"
+                    ],
+                    "group_topic": "Kelainan Organ Genital",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 42
+                }
+            ],
+            "Esophagus": [
+                {
+                    "subtopic": [
+                        "Varises Esophagus"
+                    ],
+                    "group_topic": "Esophagus",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 36
+                }
+            ],
+            "Emergensi Karena Efek Samping Obat": [
+                {
+                    "subtopic": [
+                        "Distonia Akut dan Parkinsonisme"
+                    ],
+                    "group_topic": "Emergensi Karena Efek Samping Obat",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 21.333333312
+                }
+            ],
+            "Psikotik Skizofrenia Gangguan Waham Menetap Psikotik Akut dan Skizoafektif": [
+                {
+                    "subtopic": [
+                        "Skizofrenia Tanpa Penyulit"
+                    ],
+                    "group_topic": "Psikotik Skizofrenia Gangguan Waham Menetap Psikotik Akut dan Skizoafektif",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 21.333333312
+                }
+            ],
+            "Intoleransi Keracunan Makanan": [
+                {
+                    "subtopic": [
+                        "Intoleransi Makanan"
+                    ],
+                    "group_topic": "Intoleransi Keracunan Makanan",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 21.333333312
+                }
+            ],
+            "Gigitan Serangga dan Infestasi": [
+                {
+                    "subtopic": [
+                        "Cutaneus Larva Migran",
+                        "Skabies"
+                    ],
+                    "group_topic": "Gigitan Serangga dan Infestasi",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 21.333333312
+                }
+            ],
+            "Penyakit Neurovaskuler": [
+                {
+                    "subtopic": [
+                        "Infark Serebral",
+                        "Perdarahan Subarachnoid"
+                    ],
+                    "group_topic": "Penyakit Neurovaskuler",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 18.666666648
+                }
+            ],
+            "Trakea": [
+                {
+                    "subtopic": [
+                        "Benda Asing di Trakea"
+                    ],
+                    "group_topic": "Trakea",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 18.666666648
+                }
+            ],
+            "Alat Kelamin Pria": [
+                {
+                    "subtopic": [
+                        "Ruptur Uretra"
+                    ],
+                    "group_topic": "Alat Kelamin Pria",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 18.666666648
+                }
+            ],
+            "Endokrin Lainnya": [
+                {
+                    "subtopic": [
+                        "Cushing's Disease"
+                    ],
+                    "group_topic": "Endokrin Lainnya",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 18.666666648
+                }
+            ],
+            "Gangguan Sistem Vestibular": [
+                {
+                    "subtopic": [
+                        "Vertigo Sentral"
+                    ],
+                    "group_topic": "Gangguan Sistem Vestibular",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 15.999999984
+                }
+            ],
+            "Prostat": [
+                {
+                    "subtopic": [
+                        "Hiperplasia Prostat Jinak"
+                    ],
+                    "group_topic": "Prostat",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 15.999999984
+                }
+            ],
+            "Kondisi Klinis pada Gangguan Mental dan Perilaku akibat Penggunaan Zat Psikoaktif": [
+                {
+                    "subtopic": [
+                        "Intoksikasi Akut"
+                    ],
+                    "group_topic": "Kondisi Klinis pada Gangguan Mental dan Perilaku akibat Penggunaan Zat Psikoaktif",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 10.666666656
+                }
+            ],
+            "Kelainan Pigmentasi": [
+                {
+                    "subtopic": [
+                        "Melasma"
+                    ],
+                    "group_topic": "Kelainan Pigmentasi",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 10.666666656
+                }
+            ],
+            "Kematian": [
+                {
+                    "subtopic": [
+                        "Kematian Mendadak"
+                    ],
+                    "group_topic": "Kematian",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 10.666666656
+                }
+            ],
+            "Pernapasan": [
+                {
+                    "subtopic": [
+                        "Asfiksia Mekanik"
+                    ],
+                    "group_topic": "Pernapasan",
+                    "rekurensi": 0,
+                    "jumlah_test": 0,
+                    "kompetensi": 0,
+                    "ranking_score": 10.666666656
+                }
+            ]
+        }
+    }
+}
