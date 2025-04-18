@@ -76,7 +76,7 @@ const isTrialUser = computed(() => {
         to: '/contoh-analisa-advis/1',
         icon: 'ri-bar-chart-2-line',
       }"
-      v-if="true"
+      v-if="userProfile && userProfile.profile && userProfile.profile.membership && userProfile.profile.membership.name === 'Trial'"
   />
 
   <!-- Dynamic Menu Links from API -->
