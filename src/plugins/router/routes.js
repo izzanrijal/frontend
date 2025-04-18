@@ -56,6 +56,10 @@ export const routes = [
         path: 'analisa-advis/:menu',
         component: () => import('@/pages/result-analyst-dashboard.vue'),
       },
+      {
+        path: 'contoh-analisa-advis/1',
+        component: () => import('@/pages/contoh-analisa-advis.vue'),
+      },
     ],
   },
   {

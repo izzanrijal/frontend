@@ -1,7 +1,7 @@
 <script setup>
 import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
 import { apiService } from '@/plugins/axios';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const userProfile = ref(null);
@@ -29,6 +29,17 @@ onMounted(async () => {
     isLoading.value = false;
   }
 });
+
+// Helper to check if user is trial (proxy: hanya menu trial yang aktif)
+const isTrialUser = computed(() => {
+  // menuItems.value harus sudah terisi (dari API)
+  if (!menuItems.value || !Array.isArray(menuItems.value)) return false;
+  // Cek: jika semua menu yang bisa diakses adalah paket trial saja (misal: judul atau id menu mengandung 'Trial')
+  // Implementasi: asumsikan menu trial memiliki property isTrial === true atau id === 1,2,3
+  // Ganti logic sesuai struktur menuItems
+  const nonTrialMenus = menuItems.value.filter(menu => !menu.isTrial && ![1,2,3].includes(menu.id));
+  return nonTrialMenus.length === 0 && menuItems.value.length > 0;
+});
 </script>
 
 <template>
@@ -46,6 +57,14 @@ onMounted(async () => {
         to: '/paket-soal',
         icon: 'ri-file-edit-line',
       }"
+  />
+  <VerticalNavLink
+    v-if="isTrialUser"
+    :item="{
+      title: 'Contoh Hasil Analisa & Advis',
+      to: '/contoh-analisa-advis/1',
+      icon: 'ri-lightbulb-flash-line',
+    }"
   />
 
   <!-- Dynamic Menu Links from API -->
