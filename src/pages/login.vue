@@ -33,6 +33,7 @@ const authThemeMask = computed(() => {
 
 const isPasswordVisible = ref(false)
 const loginError = ref(null)
+const isLoading = ref(false)
 var token = localStorage.getItem('token');
 
 // Filter emails based on user input
@@ -142,6 +143,8 @@ const login = async () => {
       return
     }
 
+    isLoading.value = true
+
     // Get Cloudflare Turnstile token if available (it might not be if user is not suspicious)
     const turnstileResponse = document.querySelector('[name="cf-turnstile-response"]')?.value;
     const requestData = {
@@ -154,52 +157,61 @@ const login = async () => {
       requestData['cf-turnstile-response'] = turnstileResponse;
     }
 
-    const response = await axios.post('https://gateway.berkompeten.id/api/student/login', requestData);
-
-    console.log(response);
-
-    // Assuming your backend returns a token upon successful login
-    const token = response.data.token;
-
-    console.log(token);
-
-    // Save the token in local storage or Vuex store for future requests
-    localStorage.setItem('token', token);
-
-    // Save email upon successful login
-    saveEmail(form.email)
-
-    // Redirect to the desired route upon successful login
-    router.push('/dashboard');
-  } catch (error) {
-    // Handle login error (display error message, redirect, etc.)
-    console.error('Login failed:', error);
-    if (error.response && error.response.data) {
-      loginError.value = error.response.data.message;
-
-      if (error.response.data.errors){
-        loginError.value = error.response.data.errors;
+    // Login API
+    try {
+      const response = await axios.post('https://gateway.berkompeten.id/api/student/login', requestData);
+      // Setelah login sukses, cek status membership di profile
+      try {
+        const profile = await axios.get('https://gateway.berkompeten.id/api/student/profile', {
+          headers: {
+            Authorization: `Bearer ${response.data.token}`,
+          },
+        });
+        // Jika profile sukses, lanjutkan login
+        localStorage.setItem('token', response.data.token);
+        saveEmail(form.email);
+        isLoading.value = false
+        router.push('/dashboard');
+      } catch (profileError) {
+        isLoading.value = false
+        // Jika membership tidak aktif (401), tampilkan pesan error dan JANGAN simpan token
+        if (
+          profileError.response &&
+          profileError.response.data && (
+            profileError.response.data.message?.toLowerCase().includes('keanggotaan tidak aktif') ||
+            profileError.response.data.message?.toLowerCase().includes('membership tidak aktif') ||
+            profileError.response.data.message?.toLowerCase().includes('unauthorized. your membership is expired')
+          )
+        ) {
+          loginError.value = 'Login Gagal: Keanggotaan Anda tidak aktif. Silakan perbarui keanggotaan atau hubungi support@berkompeten.id.';
+          return;
+        }
+        // Error lain pada profile
+        loginError.value = profileError.response?.data?.message || 'An unexpected error occurred during login.';
+        return;
       }
-      
-      // Special handling for captcha-related errors but don't explicitly mention captcha
-      if (error.response.status === 429 || 
-          (error.response.data.errors && typeof error.response.data.errors === 'string' && 
-           error.response.data.errors.toLowerCase().includes('captcha'))) {
-        // Refresh Turnstile widget for another attempt
-        initTurnstile();
-        loginError.value = "Please try again";
+    } catch (error) {
+      isLoading.value = false
+      // Membership tidak aktif atau salah password
+      if (
+        error.response &&
+        error.response.data && (
+          error.response.data.message?.toLowerCase().includes('keanggotaan tidak aktif') ||
+          error.response.data.message?.toLowerCase().includes('membership tidak aktif') ||
+          error.response.data.message?.toLowerCase().includes('unauthorized. your membership is expired')
+        )
+      ) {
+        loginError.value = 'Login Gagal: Keanggotaan Anda tidak aktif. Silakan perbarui keanggotaan atau hubungi support@berkompeten.id.';
+        return;
       }
-
-      // Check if the user does not exist and store email in local storage
-      if (error.response.data.is_exist === false) {
-        localStorage.setItem('email', form.email);
-        router.push('/register');
-      }
-      return
-    } else {
-      loginError.value = 'An unexpected error occurred during login.';
-      return
+      // Error lain (termasuk salah password)
+      loginError.value = error.response?.data?.message || 'An unexpected error occurred during login.';
+      return;
     }
+  } catch (error) {
+    isLoading.value = false
+    loginError.value = 'An unexpected error occurred during login.';
+    return;
   }
 }
 
@@ -343,6 +355,14 @@ const navigateToForgotPassword = () => {
         </VForm>
       </VCardText>
     </VCard>
+    <VDialog v-model="isLoading" persistent width="300">
+      <template #default>
+        <div class="d-flex flex-column align-center justify-center pa-6">
+          <VProgressCircular indeterminate color="#0080ff" size="48" />
+          <span class="mt-4">Memproses login...</span>
+        </div>
+      </template>
+    </VDialog>
   </div>
 </template>
 
